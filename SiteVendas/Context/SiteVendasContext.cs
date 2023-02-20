@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace SiteVendas.Models
+namespace SiteVendas.Context
 {
     public partial class SiteVendasContext : DbContext
     {
@@ -29,6 +29,7 @@ namespace SiteVendas.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
+
                 optionsBuilder.UseSqlServer("Data Source=ISRAEL\\SQLEXPRESS;Initial Catalog=SiteVendas;User ID=sa;Password=12345;TrustServerCertificate=True");
             }
         }

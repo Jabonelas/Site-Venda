@@ -1,4 +1,5 @@
-﻿@model SiteVendas.Models.ViewModel.CadastroClienteViewModel
+﻿@model SiteVendas.Models.ViewModel.VMLogin
+
 @{
     ViewData["Title"] = "Login";
 }
@@ -7,49 +8,68 @@
     <link href="~/css/Login/Login.css" rel="stylesheet" />
 }
 
-<h1>Login</h1>
+    <h1>Acessar</h1>
 
-<div class="row col-2">
+    <h4>Acesse sua conta:</h4>
 
-    <a class="rd-nav-link btn-primary" asp-area="" asp-controller="Home" asp-action="Index">Voltar ao Inicio</a>
-    
-</div>
+    <body>
+        <form asp-controller="Login" asp-action="Login" method="post">
 
-<br/>
 
-    <div>
-        <h4>Usuário</h4>
 
-        <hr />
+            <div class="card">
 
-        <div class="card">
-
-            <div class="card-body">
-
-                <div class="row d-flex justify-content-center">
-                    <div class="col-4">
-                        <label asp-for="cliente.cc_login" class="control-label">Login</label>
-                        <input asp-for="cliente.cc_login" class="form-control" minlength="5" maxlength="20" />
+                <div class="card-body">
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-4">
+                            <label asp-for="Email" class="control-label">Login</label>
+                            <input type="email" placeholder="Email" asp-for="Email" asp-for="Email" class="form-control" minlength="5" maxlength="50" />
+                        </div>
                     </div>
 
-                </div>
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-4">
+                            <label asp-for="Senha" class="control-label">Senha</label>
+                            <input type="password" placeholder="Senha" asp-for="Senha" asp-for="Senha" class="form-control" minlength="5" maxlength="20" id="cleave-senha" />
+                        </div>
+                    </div>
 
-                <div class="row d-flex justify-content-center">
-                    <div class="col-4">
-                        <label asp-for="cliente.cc_senha" class="control-label">Senha</label>
-                        <input asp-for="cliente.cc_senha" class="form-control" minlength="5" maxlength="20" id="cleave-senha" type="password" />
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-3">
+
+                            <button type="submit" value="Entrar" class="btn btn-primary botaoEntrar" id="exibirView">
+                                Entrar
+                            </button>
+
+                        </div>
+                    </div>
+
+
+                    <div class="d-flex justify-content-center">
+
+                        <label><input type="checkbox" asp-for="ManterConectado" /> Manter-se Conectado.</label>
+
+                    </div>
+
+                    <div class="d-flex justify-content-center">
+
+                    <a class="rd-nav-link" asp-area="" asp-controller="Cliente" asp-action="Inserir">Cadastrar-se</a>
+
+                    </div>
+
+
+                    <div class="row d-flex justify-content-center">
+                        <div class="col-3">
+                        @if (ViewData["ValidateMessage"] != null)
+                        {
+                            <label>@ViewData["ValidateMessage"]</label>
+                        }
+
                     </div>
                 </div>
-
-                <div class="row d-flex justify-content-center">
-                    <div class="col-2">
-                        <button type="submit" value="Entrar" class="btn btn-primary botaoEntrar" id="exibirView">Entrar</button>
-                    </div>
-                </div>
-
             </div>
 
         </div>
 
-    </div>
-  
+    </form>
+</body>

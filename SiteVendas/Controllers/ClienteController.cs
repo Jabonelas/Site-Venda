@@ -1,6 +1,5 @@
 ﻿using Correios;
 using Microsoft.AspNetCore.Mvc;
-using SiteVendas.Models;
 using SiteVendas.Models.ViewModel;
 using Correios.NET;
 using Correios.CorreiosServiceReference;
@@ -8,6 +7,7 @@ using Exception = Correios.CorreiosServiceReference.Exception;
 using Newtonsoft.Json;
 using System.Net;
 using SiteVendas.Class;
+using SiteVendas.Context;
 
 namespace SiteVendas.Controllers
 {

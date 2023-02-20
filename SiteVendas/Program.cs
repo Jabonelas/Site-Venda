@@ -1,7 +1,22 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
+using SiteVendas.Context;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Login/Login";
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+    });
+
+//builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+//    .AddEntityFrameworkStores<SiteVendasContext>()
+//    .AddDefaultTokenProviders();
 
 var app = builder.Build();
 
@@ -18,12 +33,14 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
 //pattern: "{controller=Login}/{action=Login}/{id?}");
 //pattern: "{controller=Cliente}/{action=Inserir}/{id?}");
+//pattern: "{controller=Login}/{action=Login}/{id?}");
 pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

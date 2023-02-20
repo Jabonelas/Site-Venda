@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace SiteVendas.Context
+namespace SiteVendas.Model
 {
     public partial class tb_dados_empresa
     {

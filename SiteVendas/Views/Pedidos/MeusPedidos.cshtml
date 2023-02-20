@@ -13,87 +13,82 @@
 
 <table class="table" id="myTable">
     <thead>
-    <tr>
-        
-        <th>
-            @Html.DisplayNameFor(model => model.pedido.pd_quantidade )
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.pedido.pd_valor)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.pedido.pd_data)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.produto.id_produto)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.produto.pd_despesa)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.produto.pd_nome)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.produto.pd_tamanho)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.produto.pd_preco)
-        </th>
+        <tr>
+
+            <th>
+                Nº Pedido
+            </th>
+            <th>
+                Data do Pedido
+            </th>
+            <th>
+                Produto
+            </th>
+            <th>
+                Tamanho/Dimenção
+            </th>
+            <th>
+                Qtd.
+            </th>
+            <th>
+                Preço Und.
+            </th>
+            <th>
+                Valor Total
+            </th>
 
 
-
-
-
-        <th></th>
-    </tr>
+            <th></th>
+        </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.pedido.pd_quantidade)
+                    @item.pedido.id_pedido
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.pedido.pd_valor)
+                    @item.pedido.pd_data.ToShortDateString()
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.pedido.pd_data)
+                    @item.produto.pd_nome
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.produto.id_produto)
+                    @item.produto.pd_tamanho
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.produto.pd_despesa)
+                    @item.pedido.pd_quantidade
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.produto.pd_nome)
+                    @item.produto.pd_preco.ToString("C2")
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.produto.pd_tamanho)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.produto.pd_preco)
+                    @item.pedido.pd_valor.ToString("C2")
                 </td>
 
 
 
-                 <td>
-            <a asp-action="Edit" asp-route-id="@item.pedido.id_pedido">Edit</a> |
-            <a asp-action="Details" asp-route-id="@item.pedido.id_pedido">Details</a> |
-            <a asp-action="Delete" asp-route-id="@item.pedido.id_pedido">Delete</a>
-            </td>
+                <td>
+                    @*<a asp-action="Edit" asp-route-id="@item.pedido.id_pedido">Edit</a> |*@
+                    @*<a asp-action="Details" asp-route-id="@item.pedido.id_pedido">Details</a> |*@
+                    @*<a asp-action="Delete" asp-route-id="@item.pedido.id_pedido">Delete</a>*@
+                </td>
 
             </tr>
         }
     </tbody>
 </table>
+
+
 @section Scripts {
 
 
     <script>
-        $(document).ready(function() {
-            $('#myTable').DataTable();
+        $(document).ready(function () {
+            $('#myTable').DataTable({
+                "language": { "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json" }
+            });
         });
     </script>
 }

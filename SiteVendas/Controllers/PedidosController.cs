@@ -1,6 +1,6 @@
 ﻿using Correios.CorreiosServiceReference;
 using Microsoft.AspNetCore.Mvc;
-using SiteVendas.Models;
+using SiteVendas.Context;
 using SiteVendas.Models.ViewModel;
 
 namespace SiteVendas.Controllers
@@ -16,7 +16,6 @@ namespace SiteVendas.Controllers
                 {
                     pedido = pedido,
                     produto = produto,
-
                 }).Where(x => x.pedido.fk_produto == x.produto.id_produto).ToList();
 
             return View(listaPedidos);
