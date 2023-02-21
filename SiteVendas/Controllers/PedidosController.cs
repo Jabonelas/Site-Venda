@@ -1,6 +1,6 @@
 ﻿using Correios.CorreiosServiceReference;
 using Microsoft.AspNetCore.Mvc;
-using SiteVendas.Context;
+using SiteVendas.Models;
 using SiteVendas.Models.ViewModel;
 
 namespace SiteVendas.Controllers

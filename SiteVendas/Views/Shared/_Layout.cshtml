@@ -90,7 +90,7 @@
                                     <li class="rd-nav-item">
                                         <a class="rd-nav-link" asp-area="" asp-controller="Home" asp-action="Index">Index</a>
                                     </li>
-                                    <li class="rd-nav-item">
+                                  @*  <li class="rd-nav-item">
                                         <a class="rd-nav-link" asp-area="" asp-controller="Cliente" asp-action="Inserir">Inserir</a>
                                     </li>
                                     <li class="rd-nav-item">
@@ -98,24 +98,50 @@
                                     </li>
                                     <li class="rd-nav-item">
                                         <a class="rd-nav-link" asp-area="" asp-controller="Pedidos" asp-action="MeusPedidos">Meus Pedidos</a>
+                                    </li>*@
+                                    <li class="rd-nav-item">
+                                        <a class="rd-nav-link" asp-area="" asp-controller="Login" asp-action="Login">Login</a>
                                     </li>
-                                    
-                                    
                                     <li class="rd-nav-item">
                                         <a class="rd-nav-link" asp-area="" asp-controller="Login" asp-action="LogOut">Log Out</a>
                                     </li>
-                                    @*@if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))*@
+
+                                            @if (User.Identity.IsAuthenticated)
+                                    {
+                                        <li class="rd-nav-item">
+                                            <a class="rd-nav-link" asp-area="" asp-controller="Cliente" asp-action="Inserir">Inserir</a>
+                                        </li>
+                                        <li class="rd-nav-item">
+                                            <a class="rd-nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                                        </li>
+                                        <li class="rd-nav-item">
+                                            <a class="rd-nav-link" asp-area="" asp-controller="Pedidos" asp-action="MeusPedidos">Meus Pedidos</a>
+                                        </li>
+                                    }   
                                     
-                                    @*<li class="rd-nav-item">
-                                    <a class="rd-nav-link" href="typography.html">Typography</a>
-                                    </li>
+                @*              
+                              @if (User.IsInRole("Admin@hotmail.com"))
+                                            {
+                                                <li class="rd-nav-item">
+                                                    <a class="rd-nav-link" asp-area="" asp-controller="Login" asp-action="LogOut">Log Out</a>
+                                                </li>
+                                            }   
+*@
+
+
+                                            @*
+                                    @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                                    {
                                     <li class="rd-nav-item">
-                                    <a class="rd-nav-link" href="contacts.html">Contacts</a>
-                                    </li>*@
+                                    <a class="rd-nav-link" asp-area="" asp-controller="Login" asp-action="LogOut">Log Out</a>
+                                    </li>
+                                    }*@
+
+
                                 </ul>
-                                
-                                @*@await Html.PartialAsync("LoginPartial")*@
-                                
+
+
+
                             </div>
                         </div>
                         <div class="rd-navbar-project-hamburger rd-navbar-project-hamburger-open rd-navbar-fixed-element-1" data-multitoggle=".rd-navbar-inner" data-multitoggle-blur=".rd-navbar-wrap" data-multitoggle-isolate="data-multitoggle-isolate">

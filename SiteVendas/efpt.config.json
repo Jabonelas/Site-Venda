@@ -7,7 +7,7 @@
    "IncludeConnectionString": true,
    "ModelNamespace": "",
    "OutputContextPath": null,
-   "OutputPath": "Model",
+   "OutputPath": "Models",
    "PreserveCasingWithRegex": true,
    "ProjectRootNamespace": "SiteVendas",
    "Schemas": null,

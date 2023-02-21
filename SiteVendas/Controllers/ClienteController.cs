@@ -2,12 +2,14 @@
 using Microsoft.AspNetCore.Mvc;
 using SiteVendas.Models.ViewModel;
 using Correios.NET;
+
 using Correios.CorreiosServiceReference;
 using Exception = Correios.CorreiosServiceReference.Exception;
 using Newtonsoft.Json;
 using System.Net;
+using Microsoft.AspNetCore.Authorization;
 using SiteVendas.Class;
-using SiteVendas.Context;
+using SiteVendas.Models;
 
 namespace SiteVendas.Controllers
 {
@@ -16,12 +18,14 @@ namespace SiteVendas.Controllers
         private SiteVendasContext db = new SiteVendasContext();
 
         [HttpGet]
+        [Authorize(Roles = "Admin@hotmail.com")]
         public IActionResult Inserir()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Inserir(CadastroClienteViewModel _cliente)
         {
             if (!ModelState.IsValid)

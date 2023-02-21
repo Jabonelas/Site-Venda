@@ -18,7 +18,6 @@ C:\Users\israe\source\repos\SiteVendas\SiteVendas\bin\Debug\net6.0\SiteVendas.pd
 C:\Users\israe\source\repos\SiteVendas\SiteVendas\bin\Debug\net6.0\AngleSharp.dll
 C:\Users\israe\source\repos\SiteVendas\SiteVendas\bin\Debug\net6.0\Azure.Core.dll
 C:\Users\israe\source\repos\SiteVendas\SiteVendas\bin\Debug\net6.0\Azure.Identity.dll
-C:\Users\israe\source\repos\SiteVendas\SiteVendas\bin\Debug\net6.0\Correios.dll
 C:\Users\israe\source\repos\SiteVendas\SiteVendas\bin\Debug\net6.0\Correios.NET.dll
 C:\Users\israe\source\repos\SiteVendas\SiteVendas\bin\Debug\net6.0\Humanizer.dll
 C:\Users\israe\source\repos\SiteVendas\SiteVendas\bin\Debug\net6.0\MessagePack.dll
@@ -298,3 +297,4 @@ C:\Users\israe\source\repos\SiteVendas\SiteVendas\obj\Debug\net6.0\refint\SiteVe
 C:\Users\israe\source\repos\SiteVendas\SiteVendas\obj\Debug\net6.0\SiteVendas.pdb
 C:\Users\israe\source\repos\SiteVendas\SiteVendas\obj\Debug\net6.0\SiteVendas.genruntimeconfig.cache
 C:\Users\israe\source\repos\SiteVendas\SiteVendas\obj\Debug\net6.0\ref\SiteVendas.dll
+C:\Users\israe\source\repos\SiteVendas\SiteVendas\bin\Debug\net6.0\Correios.dll

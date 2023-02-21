@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
-using SiteVendas.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 

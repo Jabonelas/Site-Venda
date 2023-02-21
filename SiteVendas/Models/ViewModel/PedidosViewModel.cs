@@ -1,5 +1,4 @@
 ﻿using SiteVendas.Class;
-using SiteVendas.Context;
 using SiteVendas.Controllers;
 
 namespace SiteVendas.Models.ViewModel

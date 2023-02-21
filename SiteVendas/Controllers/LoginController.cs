@@ -4,8 +4,6 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using SiteVendas.Models;
-using SiteVendas.Context;
-using SiteVendas.Model;
 using SiteVendas.Models.ViewModel;
 
 namespace SiteVendas.Controllers
@@ -21,6 +19,7 @@ namespace SiteVendas.Controllers
             if (claimsUser.Identity.IsAuthenticated)
             {
                 return RedirectToAction("Index", "Home");
+                //return View();
             }
 
             return View();
@@ -49,7 +48,7 @@ namespace SiteVendas.Controllers
                 List<Claim> claims = new List<Claim>()
                 {
                     new Claim(ClaimTypes.NameIdentifier, modeLogin.Email),
-                    new Claim("OtherProperties", "Example Role")
+                    new Claim(ClaimTypes.Role, modeLogin.Email)
                 };
                 ClaimsIdentity claimsIdentity =
                     new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
