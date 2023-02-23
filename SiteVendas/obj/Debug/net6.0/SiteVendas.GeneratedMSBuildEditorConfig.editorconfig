@@ -15,6 +15,10 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\israe\source\repos\SiteVendas\SiteVendas
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Users/israe/source/repos/SiteVendas/SiteVendas/Views/Cliente/BuscarCadastro.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZVxCdXNjYXJDYWRhc3Ryby5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/israe/source/repos/SiteVendas/SiteVendas/Views/Cliente/Inserir.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZVxJbnNlcmlyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 

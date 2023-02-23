@@ -1,6 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using Microsoft.VisualBasic
+@inject IHttpContextAccessor _httpContextAccessor;
+
 @*@inject SignInManager<ApplicationUser> signInManager;*@
 @*@inject SignInManager<IdentityUser> SignInManager;*@
 <!DOCTYPE html>
@@ -27,15 +29,33 @@
 
     <div class="row d-flex justify-content-end">
 
-        <div class="col-4">
 
-            @*          <button type="submit" value="Entrar" class="btn btn-primary" id="exibirView">Novo Cadastro</button>
-            <div id="viewContainer"></div>*@
 
-            <a class="btn btn-primary p-1 " asp-area="" asp-controller="Login" asp-action="Login">Entrar</a>
-            <a class="btn btn-secondary p-1 " style="text-transform: uppercase; font-weight: bold;" asp-area="" asp-controller="Cliente" asp-action="Inserir">Novo Cadastro</a>
 
-        </div>
+
+        @if (User.Identity.IsAuthenticated)
+        {
+            <div class="col-10 d-flex justify-content-end">
+                <li> Usuário: @_httpContextAccessor.HttpContext.Session.GetString("usuario")</li>
+            </div>
+            
+            <div class="col-2 d-flex justify-content-start">
+                <a class="btn btn-danger" style="text-transform: uppercase; font-weight: bold;" asp-area="" asp-controller="Login" asp-action="LogOut">Sair</a>
+            </div>
+        }
+        else
+
+        {
+            
+            <div class="col-4 d-flex justify-content-start">
+
+                <a style="margin: 0 15px;" class="btn btn-primary d-flex justify-content-end" asp-area="" asp-controller="Login" asp-action="Login">Entrar</a>
+
+                <a class="btn btn-secondary d-flex justify-content-end"
+               style="text-transform: uppercase; font-weight: bold;" asp-area="" asp-controller="Cliente" asp-action="Inserir">Novo Cadastro</a>
+
+            </div>
+        }
 
     </div>
 
@@ -88,48 +108,56 @@
                                 <!-- RD Navbar Nav-->
                                 <ul class="rd-navbar-nav">
                                     <li class="rd-nav-item">
-                                        <a class="rd-nav-link" asp-area="" asp-controller="Home" asp-action="Index">Index</a>
-                                    </li>
-                                  @*  <li class="rd-nav-item">
-                                        <a class="rd-nav-link" asp-area="" asp-controller="Cliente" asp-action="Inserir">Inserir</a>
+                                        <a class="rd-nav-link" asp-area="" asp-controller="Home" asp-action="Index">Início</a>
                                     </li>
                                     <li class="rd-nav-item">
-                                        <a class="rd-nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                                        <a class="rd-nav-link" asp-area="" asp-controller="Login" asp-action="Login">Cardápio</a>
                                     </li>
+                                    
+                                    
                                     <li class="rd-nav-item">
-                                        <a class="rd-nav-link" asp-area="" asp-controller="Pedidos" asp-action="MeusPedidos">Meus Pedidos</a>
-                                    </li>*@
-                                    <li class="rd-nav-item">
-                                        <a class="rd-nav-link" asp-area="" asp-controller="Login" asp-action="Login">Login</a>
+                                        <a class="rd-nav-link" asp-area="" asp-controller="Cliente" asp-action="teste">teste1</a>
                                     </li>
+                                    
                                     <li class="rd-nav-item">
-                                        <a class="rd-nav-link" asp-area="" asp-controller="Login" asp-action="LogOut">Log Out</a>
+                                        <a class="rd-nav-link" asp-area="" asp-controller="Cliente" asp-action="BuscarCadastro">teste2</a>
                                     </li>
-
-                                            @if (User.Identity.IsAuthenticated)
+                                    
+                                    
+                                    @if (User.IsInRole("Admin@hotmail.com"))
                                     {
                                         <li class="rd-nav-item">
-                                            <a class="rd-nav-link" asp-area="" asp-controller="Cliente" asp-action="Inserir">Inserir</a>
+                                            <a class="rd-nav-link" asp-area="" asp-controller="Pedidos" asp-action="MeusPedidos">Todos Pedidos</a>
                                         </li>
                                         <li class="rd-nav-item">
-                                            <a class="rd-nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                                            <a class="rd-nav-link" asp-area="" asp-controller="Pedidos" asp-action="MeusPedidos">Todos Clientes</a>
                                         </li>
+                                        <li class="rd-nav-item">
+                                            <a class="rd-nav-link" asp-area="" asp-controller="Pedidos" asp-action="MeusPedidos">Cadastrar Produto</a>
+                                        </li>
+                                    }  
+                                     else if (User.Identity.IsAuthenticated)
+                                    {
                                         <li class="rd-nav-item">
                                             <a class="rd-nav-link" asp-area="" asp-controller="Pedidos" asp-action="MeusPedidos">Meus Pedidos</a>
                                         </li>
-                                    }   
-                                    
-                @*              
-                              @if (User.IsInRole("Admin@hotmail.com"))
-                                            {
-                                                <li class="rd-nav-item">
-                                                    <a class="rd-nav-link" asp-area="" asp-controller="Login" asp-action="LogOut">Log Out</a>
-                                                </li>
-                                            }   
-*@
+                                        
+                                        <li class="rd-nav-item">
+                                            <a class="rd-nav-link" asp-area="" asp-controller="Cliente" asp-action="Inserir">Alterar Cadastro</a>
+                                        </li>
+                                    }
+
+                                    @*
+                                    @if (User.IsInRole("Admin@hotmail.com"))
+                                    {
+                                    <li class="rd-nav-item">
+                                    <a class="rd-nav-link" asp-area="" asp-controller="Login" asp-action="LogOut">Log Out</a>
+                                    </li>
+                                    }
+                                    *@
 
 
-                                            @*
+                                    @*
                                     @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
                                     {
                                     <li class="rd-nav-item">

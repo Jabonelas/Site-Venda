@@ -1,5 +1,6 @@
 ﻿using SiteVendas.Class;
 using SiteVendas.Controllers;
+using System.ComponentModel.DataAnnotations;
 
 namespace SiteVendas.Models.ViewModel
 {
@@ -7,5 +8,7 @@ namespace SiteVendas.Models.ViewModel
     {
         public tb_produto produto { get; set; }
         public tb_pedido pedido { get; set; }
+
+        public tb_cadastro_cliente cliente { get; set; }
     }
 }

@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Authentication;
 
 namespace SiteVendas.Controllers
 {
-    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

@@ -10,7 +10,7 @@ namespace SiteVendas.Models.ViewModel
 
         [Required(ErrorMessage = "Informe uma Senha Válida.")]
         [DataType(DataType.Password)]
-        [Display(Name = "E-mail")]
+        [Display(Name = "Senha")]
         public string Senha { get; set; }
 
         public bool ManterConectado { get; set; }

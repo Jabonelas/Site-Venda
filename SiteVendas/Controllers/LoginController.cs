@@ -25,6 +25,13 @@ namespace SiteVendas.Controllers
             return View();
         }
 
+        public readonly IHttpContextAccessor _httpContextAccessor;
+
+        public LoginController(IHttpContextAccessor httpContextAccessor)
+        {
+            _httpContextAccessor = httpContextAccessor;
+        }
+
         [HttpPost]
         public async Task<IActionResult> Login(VMLogin modeLogin)
         {
@@ -61,6 +68,10 @@ namespace SiteVendas.Controllers
 
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                     new ClaimsPrincipal(claimsIdentity), properties);
+
+                //passando como variavel global, irei ter acesso a esse dados em todas as controlers
+                //_httpContextAccessor.HttpContext.Session.SetString("usuario", modeLogin.Email);
+                HttpContext.Session.SetString("usuario", modeLogin.Email);
 
                 return RedirectToAction("Index", "Home");
             }
