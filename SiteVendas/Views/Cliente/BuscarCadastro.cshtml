@@ -2,6 +2,8 @@
 @using SiteVendas.Models.ViewModel
 @model SiteVendas.Models.ViewModel.CadastroClienteViewModel
 
+
+
 @{
     var listaCliente = ViewData["ListaCliente"] as List<CadastroClienteViewModel>;
 }
@@ -21,11 +23,7 @@
 
 <form asp-action="BuscarCadastro">
 
-
-
-
 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
 
     <div class="card">
 

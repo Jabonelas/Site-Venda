@@ -15,6 +15,10 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\israe\source\repos\SiteVendas\SiteVendas
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Users/israe/source/repos/SiteVendas/SiteVendas/Views/Cardapio/ListaProdutos.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FyZGFwaW9cTGlzdGFQcm9kdXRvcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/israe/source/repos/SiteVendas/SiteVendas/Views/Cliente/BuscarCadastro.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2xpZW50ZVxCdXNjYXJDYWRhc3Ryby5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -41,6 +45,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/israe/source/repos/SiteVendas/SiteVendas/Views/Pedidos/MeusPedidos.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVkaWRvc1xNZXVzUGVkaWRvcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/israe/source/repos/SiteVendas/SiteVendas/Views/Produto/Cadastrar.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHV0b1xDYWRhc3RyYXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/israe/source/repos/SiteVendas/SiteVendas/Views/Shared/Error.cshtml]

@@ -38,7 +38,7 @@
             <div class="col-10 d-flex justify-content-end">
                 <li> Usuário: @_httpContextAccessor.HttpContext.Session.GetString("usuario")</li>
             </div>
-            
+
             <div class="col-2 d-flex justify-content-start">
                 <a class="btn btn-danger" style="text-transform: uppercase; font-weight: bold;" asp-area="" asp-controller="Login" asp-action="LogOut">Sair</a>
             </div>
@@ -46,7 +46,7 @@
         else
 
         {
-            
+
             <div class="col-4 d-flex justify-content-start">
 
                 <a style="margin: 0 15px;" class="btn btn-primary d-flex justify-content-end" asp-area="" asp-controller="Login" asp-action="Login">Entrar</a>
@@ -111,18 +111,11 @@
                                         <a class="rd-nav-link" asp-area="" asp-controller="Home" asp-action="Index">Início</a>
                                     </li>
                                     <li class="rd-nav-item">
-                                        <a class="rd-nav-link" asp-area="" asp-controller="Login" asp-action="Login">Cardápio</a>
+                                        <a class="rd-nav-link" asp-area="" asp-controller="Cardapio" asp-action="ListaProdutos">Cardápio</a>
                                     </li>
-                                    
-                                    
                                     <li class="rd-nav-item">
-                                        <a class="rd-nav-link" asp-area="" asp-controller="Cliente" asp-action="teste">teste1</a>
+                                        <a class="rd-nav-link" asp-area="" asp-controller="Produto" asp-action="Cadastrar">Cadastrar Produto</a>
                                     </li>
-                                    
-                                    <li class="rd-nav-item">
-                                        <a class="rd-nav-link" asp-area="" asp-controller="Cliente" asp-action="BuscarCadastro">teste2</a>
-                                    </li>
-                                    
                                     
                                     @if (User.IsInRole("Admin@hotmail.com"))
                                     {
@@ -133,17 +126,19 @@
                                             <a class="rd-nav-link" asp-area="" asp-controller="Pedidos" asp-action="MeusPedidos">Todos Clientes</a>
                                         </li>
                                         <li class="rd-nav-item">
-                                            <a class="rd-nav-link" asp-area="" asp-controller="Pedidos" asp-action="MeusPedidos">Cadastrar Produto</a>
+                                            <a class="rd-nav-link" asp-area="" asp-controller="Produto" asp-action="Cadastrar">Cadastrar Produto</a>
                                         </li>
-                                    }  
-                                     else if (User.Identity.IsAuthenticated)
+                                        <li class="rd-nav-item">
+                                            <a class="rd-nav-link" asp-area="" asp-controller="Cliente" asp-action="BuscarCadastro">Alterar Cadastro</a>
+                                        </li>
+                                    }
+                                    else if (User.Identity.IsAuthenticated)
                                     {
                                         <li class="rd-nav-item">
                                             <a class="rd-nav-link" asp-area="" asp-controller="Pedidos" asp-action="MeusPedidos">Meus Pedidos</a>
                                         </li>
-                                        
                                         <li class="rd-nav-item">
-                                            <a class="rd-nav-link" asp-area="" asp-controller="Cliente" asp-action="Inserir">Alterar Cadastro</a>
+                                            <a class="rd-nav-link" asp-area="" asp-controller="Cliente" asp-action="BuscarCadastro">Alterar Cadastro</a>
                                         </li>
                                     }
 

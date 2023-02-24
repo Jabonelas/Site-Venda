@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using SiteVendas.Models.ViewModel;
 using Correios.NET;
-
 using Correios.CorreiosServiceReference;
 using Exception = Correios.CorreiosServiceReference.Exception;
 using Newtonsoft.Json;
@@ -39,19 +38,6 @@ namespace SiteVendas.Controllers
         [HttpPost]
         public IActionResult Inserir(CadastroClienteViewModel _cliente)
         {
-            if (!ModelState.IsValid)
-            {
-                foreach (var modelState in ViewData.ModelState.Values)
-                {
-                    foreach (var error in modelState.Errors)
-                    {
-                        ModelState.AddModelError(string.Empty, error.ErrorMessage);
-                    }
-                }
-
-                return View(_cliente);
-            }
-
             try
             {
                 context.tb_endereco.Add(_cliente.endereco);
@@ -80,47 +66,59 @@ namespace SiteVendas.Controllers
             }
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult BuscarCadastro()
         {
-            string usuario = HttpContext.Session.GetString("usuario");
-
-            var dadosCliente = context.tb_cadastro_cliente.Join(context.tb_endereco, cliente => cliente.fk_endereco, endereco => endereco.id_endereco, (cliente, endereco) => new CadastroClienteViewModel
-            {
-                cliente = cliente,
-                endereco = endereco
-            }).Where(x => x.cliente.cc_email.Equals(usuario)).ToList();
-
-            //var teste = new CadastroClienteViewModel();
-
-            //foreach (var VARIABLE in dadosCliente)
-            //{
-            //    teste.cliente.cc_nome = VARIABLE.cliente.cc_nome;
-            //    teste.cliente.cc_cpf = VARIABLE.cliente.cc_cpf;
-            //    teste.cliente.cc_rg = VARIABLE.cliente.cc_rg;
-            //    teste.cliente.cc_data_nascimento = VARIABLE.cliente.cc_data_nascimento;
-            //    teste.cliente.cc_email = VARIABLE.cliente.cc_email;
-            //    teste.cliente.cc_celular = VARIABLE.cliente.cc_celular;
-            //    teste.cliente.cc_telefone = VARIABLE.cliente.cc_telefone;
-
-            //    teste.endereco.ed_tipo = VARIABLE.endereco.ed_tipo;
-            //    teste.endereco.ed_cep = VARIABLE.endereco.ed_cep;
-            //    teste.endereco.ed_estado = VARIABLE.endereco.ed_estado;
-            //    teste.endereco.ed_logradouro = VARIABLE.endereco.ed_logradouro;
-            //    teste.endereco.ed_numero = VARIABLE.endereco.ed_numero;
-            //    teste.endereco.ed_complemento = VARIABLE.endereco.ed_complemento;
-            //    teste.endereco.ed_bairro = VARIABLE.endereco.ed_bairro;
-            //    teste.endereco.ed_cidade = VARIABLE.endereco.ed_cidade;
-            //}
-
-            ViewData["ListaCliente"] = dadosCliente;
+            BuscarDadosClienteCadastrado();
 
             return View();
         }
 
+        [Authorize]
+        private IActionResult BuscarDadosClienteCadastrado()
+        {
+            try
+            {
+                string usuario = HttpContext.Session.GetString("usuario");
+
+                var dadosCliente = context.tb_cadastro_cliente.Join(context.tb_endereco, cliente => cliente.fk_endereco, endereco => endereco.id_endereco, (cliente, endereco) => new CadastroClienteViewModel
+                {
+                    cliente = cliente,
+                    endereco = endereco
+                }).Where(x => x.cliente.cc_email.Equals(usuario)).ToList();
+
+                ViewData["ListaCliente"] = dadosCliente;
+
+                return View();
+            }
+            catch (System.Exception e)
+            {
+                TempData["errorMessage"] = e.Message;
+
+                return View("~/Views/Home/Index.cshtml");
+            }
+        }
+
         [HttpPost]
+        [Authorize]
         public IActionResult BuscarCadastro(CadastroClienteViewModel _dadosCliente)
         {
+            if (!ModelState.IsValid)
+            {
+                foreach (var modelState in ViewData.ModelState.Values)
+                {
+                    foreach (var error in modelState.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.ErrorMessage);
+                    }
+                }
+
+                BuscarDadosClienteCadastrado();
+
+                return View();
+            }
+
             string usuario = HttpContext.Session.GetString("usuario");
 
             var dadosCadastroCliente = context.tb_cadastro_cliente.Where(x => x.cc_email.Equals(usuario)).ToList();

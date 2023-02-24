@@ -20,17 +20,24 @@ namespace SiteVendas.Models
         [Required]
         [StringLength(200)]
         [Unicode(false)]
-        public string pd_despesa { get; set; }
+        public string pd_tipo { get; set; }
         [Required]
         [StringLength(200)]
         [Unicode(false)]
         public string pd_nome { get; set; }
+        [Required]
+        [StringLength(200)]
+        [Unicode(false)]
+        public string pd_descricao { get; set; }
         [Required]
         [StringLength(50)]
         [Unicode(false)]
         public string pd_tamanho { get; set; }
         [Column(TypeName = "decimal(10, 2)")]
         public decimal pd_preco { get; set; }
+        public bool pd_disponivel { get; set; }
+        [Column(TypeName = "image")]
+        public byte[] pd_imagem { get; set; }
 
         [InverseProperty("fk_produtoNavigation")]
         public virtual ICollection<tb_pedido> tb_pedido { get; set; }

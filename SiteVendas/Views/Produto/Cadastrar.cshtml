@@ -1,0 +1,126 @@
+﻿@model SiteVendas.Models.tb_produto
+
+
+
+@*<form action="@Url.Action("Upload", "NomeController")" method="post" enctype="multipart/form-data">
+    <input type="file" name="Arquivo" />
+    <button type="submit">Enviar</button>
+</form>
+*@
+
+
+
+
+<h1>Cadastrar Produtos</h1>
+
+<br />
+
+<div class="row col-2">
+
+    <a class="rd-nav-link btn-primary" asp-area="" asp-controller="Home" asp-action="Index">Voltar ao Inicio</a>
+</div>
+<br />
+
+@*<form action="@Url.Action("Upload", "Cadastrar")" method="post" enctype="multipart/form-data">*@
+<form asp-action="Cadastrar">
+    
+    
+
+    <div class="row">
+        <div class="col-md-4">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="pd_tipo" class="control-label">Tipo Produto</label>
+                <select asp-for="pd_tipo" class="form-control" asp-items="ViewBag.ed_tipo">
+
+                    <option selected value="">Escolha uma Opção...</option>
+                    <option>Pizza</option>
+                    <option>Bebida</option>
+
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-4">
+
+            <div class="form-group">
+                <label asp-for="pd_nome" class="control-label">Nome</label>
+                <input asp-for="pd_nome" class="form-control"/>
+                <span asp-validation-for="pd_nome" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="col-8">
+
+            <div class="form-group">
+                <label asp-for="pd_descricao" class="control-label">Descrição</label>
+                <input asp-for="pd_descricao" class="form-control"/>
+                <span asp-validation-for="pd_descricao" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-4">
+            <div class="form-group">
+                <label asp-for="pd_tamanho" class="control-label">Tamanho</label>
+                <input asp-for="pd_tamanho" class="form-control"/>
+                <span asp-validation-for="pd_tamanho" class="text-danger"></span>
+            </div>
+        </div>
+
+
+        <div class="col-4">
+            <div class="form-group">
+                <label asp-for="pd_preco" class="control-label">Preço</label>
+                <input asp-for="pd_preco" class="form-control"/>
+                <span asp-validation-for="pd_preco" class="text-danger"></span>
+            </div>
+        </div>
+
+
+
+    </div>
+
+    @*    <div class="row">
+        <div class="col-6">
+            <div class="form-group">
+                <label asp-for="pd_imagem" class="control-label">Imagem</label>
+                <input asp-for="pd_imagem" class="form-control" />
+                <span asp-validation-for="pd_imagem" class="text-danger"></span>
+            </div>
+        </div>
+        
+        
+     
+        
+
+    </div>*@
+
+    <br/>
+
+    <div>
+        <input type="file" class="form-control-file" name="pd_imagem" required/>
+        @*<input type="file" asp-for="pd_imagem" class="form-control-file" name="ImageFile" required="" />*@
+    </div>
+
+    <div class="form-group form-check">
+        <label class="form-check-label">
+            <input class="form-check-input" asp-for="pd_disponivel"/> Disponível
+        </label>
+    </div>
+
+
+
+
+    <br/>
+    <div class="form-group">
+        <input type="submit" value="Cadastar" class="btn btn-primary"/>
+    </div>
+
+</form>
+
+
