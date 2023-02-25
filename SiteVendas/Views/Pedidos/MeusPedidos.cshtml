@@ -6,8 +6,6 @@
 
 <h1>Meus Pedidos</h1>
 
-
-
 <div class="col-2 justify-content-center d-flex ">
     <div class="row">
         <a style="border: 2px solid  mediumslateblue;" asp-controller="Home" asp-action="Index">Voltar ao Inicio</a>
@@ -46,7 +44,6 @@
                 Valor Total
             </th>
 
-
             <th></th>
         </tr>
     </thead>
@@ -76,8 +73,6 @@
                     @item.pedido.pd_valor.ToString("C2")
 
                 </td>
-
-
 
                 <td>
                     @*<a asp-action="Edit" asp-route-id="@item.pedido.id_pedido">Edit</a> |*@

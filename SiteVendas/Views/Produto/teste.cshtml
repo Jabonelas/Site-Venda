@@ -1,18 +1,27 @@
-﻿
-
-
-<div class="justify-content-center d-flex" style="position: absolute; top: 50px; left: 50px; z-index: 9999;">
+﻿<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Butao de teste</button>
 
 
 
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+     aria-hidden="true">
 
+    <div class="modal-dialog">
+        <div class="modal-content">
 
-    @*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-    *@
-
-
-    <h4>Israel</h4>
-    <br />
-    <h4>Israel</h4>
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Titulo</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Teste</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dimiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" data-bs-dimiss="modal">Sim</button>
+            </div>
+        </div>
+    </div>
 </div>
+
+
+

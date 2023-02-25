@@ -20,11 +20,13 @@
         <a style="margin: 0 15px;" class="btn btn-primary " asp-area="" asp-controller="Produto" asp-action="Cadastrar">Novo Produto</a>
     </div>
 </div>
+
 <br />
 
-<table class="table" id="myTable">
+<table class="table" id="myTable2">
     <thead>
         <tr>
+
             <th>
                 Tipo
             </th>
@@ -46,13 +48,12 @@
             <th>
                 Imagem
             </th>
-            <th>
-                Opções
-            </th>
+
             <th></th>
         </tr>
     </thead>
     <tbody>
+
         @foreach (var item in Model)
         {
             <tr>
@@ -69,10 +70,9 @@
                     @item.pd_tamanho
                 </td>
                 <td>
-                    R$ @item.pd_preco
+                    @item.pd_preco.ToString("C2")
                 </td>
                 <td>
-
                     @if (item.pd_disponivel == true)
                     {
                         <p>Disponivel</p>
@@ -81,36 +81,37 @@
                     {
                         <p>Indisponivel</p>
                     }
-
                 </td>
                 <td>
+
                     <img width="180" height="100" src="data:image/png;base64,@Convert.ToBase64String(@item.pd_imagem)" />
-                </td>
-                <td>
-                    @*<div class="row">*@
-                    <a class="btn btn-info">Editar</a>
-                    @*</div>*@
-                    
-                    <br/>
-                    <br/>
-                    
 
-                    @*<div class="row">*@
-                    <a class="btn btn-danger">Delete</a>
-                    @*</div>*@
                 </td>
+
+                <td>
+
+                    <a class="btn btn-info">Editar</a>
+                    <br />
+                    <br />
+                    <a class="btn btn-danger">Delete</a>
+
+                </td>
+
             </tr>
         }
     </tbody>
 </table>
 
-                    
+
+
+
+
 @section Scripts {
 
 
     <script>
         $(document).ready(function () {
-            $('#myTable').DataTable({
+            $('#myTable2').DataTable({
                 "language": { "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json" }
             });
         });
