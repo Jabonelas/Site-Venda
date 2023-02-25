@@ -2,29 +2,40 @@
 
 
 
-@*<form action="@Url.Action("Upload", "NomeController")" method="post" enctype="multipart/form-data">
-    <input type="file" name="Arquivo" />
-    <button type="submit">Enviar</button>
-</form>
-*@
+<h1>Cadastrar Produto</h1>
 
 
-
-
-<h1>Cadastrar Produtos</h1>
-
-<br />
-
-<div class="row col-2">
-
-    <a class="rd-nav-link btn-primary" asp-area="" asp-controller="Home" asp-action="Index">Voltar ao Inicio</a>
+<div class="col-2 justify-content-center d-flex ">
+    <div class="row">
+        <a style="border: 2px solid  mediumslateblue;" asp-controller="Home" asp-action="Index">Voltar ao Inicio</a>
+    </div>
 </div>
+
 <br />
 
-@*<form action="@Url.Action("Upload", "Cadastrar")" method="post" enctype="multipart/form-data">*@
-<form asp-action="Cadastrar">
+<h4>Produto:</h4>
+
+<br />
+
+<form method="post" enctype="multipart/form-data" onsubmit="removerSimboloR$()">
+
+
+    @if (TempData["mensagem"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            @TempData["mensagem"]
+        </div>
+    }
     
-    
+
+
+
+
+
+
+
+
+
 
     <div class="row">
         <div class="col-md-4">
@@ -47,7 +58,7 @@
 
             <div class="form-group">
                 <label asp-for="pd_nome" class="control-label">Nome</label>
-                <input asp-for="pd_nome" class="form-control"/>
+                <input asp-for="pd_nome" class="form-control" />
                 <span asp-validation-for="pd_nome" class="text-danger"></span>
             </div>
         </div>
@@ -56,7 +67,7 @@
 
             <div class="form-group">
                 <label asp-for="pd_descricao" class="control-label">Descrição</label>
-                <input asp-for="pd_descricao" class="form-control"/>
+                <input asp-for="pd_descricao" class="form-control" />
                 <span asp-validation-for="pd_descricao" class="text-danger"></span>
             </div>
         </div>
@@ -67,7 +78,7 @@
         <div class="col-4">
             <div class="form-group">
                 <label asp-for="pd_tamanho" class="control-label">Tamanho</label>
-                <input asp-for="pd_tamanho" class="form-control"/>
+                <input asp-for="pd_tamanho" class="form-control" />
                 <span asp-validation-for="pd_tamanho" class="text-danger"></span>
             </div>
         </div>
@@ -76,51 +87,61 @@
         <div class="col-4">
             <div class="form-group">
                 <label asp-for="pd_preco" class="control-label">Preço</label>
-                <input asp-for="pd_preco" class="form-control"/>
+                <input asp-for="pd_preco" class="form-control" id="cleave-dinheiro" />
+                @*<input asp-for="pd_preco" class="form-control" />*@
                 <span asp-validation-for="pd_preco" class="text-danger"></span>
             </div>
         </div>
 
-
-
     </div>
 
-    @*    <div class="row">
-        <div class="col-6">
-            <div class="form-group">
-                <label asp-for="pd_imagem" class="control-label">Imagem</label>
-                <input asp-for="pd_imagem" class="form-control" />
-                <span asp-validation-for="pd_imagem" class="text-danger"></span>
-            </div>
-        </div>
-        
-        
-     
-        
-
-    </div>*@
-
-    <br/>
-
-    <div>
-        <input type="file" class="form-control-file" name="pd_imagem" required/>
-        @*<input type="file" asp-for="pd_imagem" class="form-control-file" name="ImageFile" required="" />*@
-    </div>
+    <br />
 
     <div class="form-group form-check">
+
         <label class="form-check-label">
-            <input class="form-check-input" asp-for="pd_disponivel"/> Disponível
+            <input class="form-check-input" asp-for="pd_disponivel" /> Disponível
         </label>
     </div>
 
 
 
+    <br />
+    <h6>Inserir Imagem:</h6>
+    <input type="file" name="imagem" />
+    <br />
+    <label asp-for="pd_preco" style="color: red;" class="control-label">Atenção ao Formato de imagens compativeis: JPG e PNG.</label>
 
-    <br/>
-    <div class="form-group">
-        <input type="submit" value="Cadastar" class="btn btn-primary"/>
+
+    <div class="row col-2 form-group">
+
+        <input type="submit" value="Cadastrar" class="btn btn-primary" />
+
     </div>
 
 </form>
 
 
+@section Scripts
+    {
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js"></script>
+    <script src="~/js/InputMasked.js"></script>
+                await Html.RenderPartialAsync("_ValidationScriptsPartial");
+
+
+    <script>
+
+
+        function removerSimboloR$() {
+            var input = document.getElementById("cleave-dinheiro");
+            var valorSemSimbolo = input.value.replace("R$ ", "").trim();
+            input.value = valorSemSimbolo;
+        }
+
+
+
+    </script>
+
+
+}
