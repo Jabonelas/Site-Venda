@@ -98,7 +98,6 @@ if (document.querySelector("#cleave-telefone")) {
 //    });
 //}
 
-
 //if (document.querySelector("#cleave-dinheiro")) {
 //    var cleavePrefix = new Cleave("#cleave-dinheiro", {
 //        delimiters: ["R$ ", ","],
@@ -115,7 +114,6 @@ if (document.querySelector("#cleave-telefone")) {
 //        },
 //    });
 //}
-
 
 if (document.querySelector("#cleave-dinheiro")) {
     var cleavePrefix = new Cleave("#cleave-dinheiro", {

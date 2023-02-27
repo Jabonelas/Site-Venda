@@ -51,16 +51,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHV0b1xDYWRhc3RyYXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/israe/source/repos/SiteVendas/SiteVendas/Views/Produto/EditarProduto.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHV0b1xFZGl0YXJQcm9kdXRvLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/israe/source/repos/SiteVendas/SiteVendas/Views/Produto/Exibir.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHV0b1xFeGliaXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/israe/source/repos/SiteVendas/SiteVendas/Views/Produto/teste.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHV0b1x0ZXN0ZS5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/israe/source/repos/SiteVendas/SiteVendas/Views/Produto/TodosProdutos.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHV0b1xUb2Rvc1Byb2R1dG9zLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/israe/source/repos/SiteVendas/SiteVendas/Views/Produto/_TodosProdutos.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHV0b1xfVG9kb3NQcm9kdXRvcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/israe/source/repos/SiteVendas/SiteVendas/Views/Shared/Error.cshtml]

@@ -1,0 +1,138 @@
+﻿@model SiteVendas.Models.tb_produto
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-dialog-scrollable " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 class="modal-title text-center" id="myModalLabel">Cadastrar Produto</h4>
+
+                <button type="button" class="btn btn-close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"></span></button>
+
+            </div>
+            <div class="modal-body">
+                <form method="post" enctype="multipart/form-data" onsubmit="removerSimboloR$()">
+
+                    @if (TempData["mensagem"] != null)
+                    {
+                        <div class="alert alert-success" role="alert">
+                            @TempData["mensagem"]
+                        </div>
+                    }
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <label class="control-label">Tipo Produto</label>
+                                <select asp-for="pd_tipo" class="form-control">
+
+                                    <option selected value="">Escolha uma Opção...</option>
+                                    <option>Pizza</option>
+                                    <option>Bebida</option>
+
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label asp-for="pd_nome" class="control-label">Nome</label>
+                                <input asp-for="pd_nome" class="form-control" />
+                                <span asp-validation-for="pd_nome" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-8">
+                            <div class="form-group">
+                                <label asp-for="pd_descricao" class="control-label">Descrição</label>
+                                <input asp-for="pd_descricao" class="form-control" />
+                                <span asp-validation-for="pd_descricao" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label asp-for="pd_tamanho" class="control-label">Tamanho</label>
+                                <input asp-for="pd_tamanho" class="form-control" />
+                                <span asp-validation-for="pd_tamanho" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label asp-for="pd_preco" class="control-label">Preço</label>
+                                <input asp-for="pd_preco" class="form-control" id="cleave-dinheiro" />
+                                <span asp-validation-for="pd_preco" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <br />
+
+                    <div class="form-group form-check">
+
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="pd_disponivel" /> Disponível
+                        </label>
+                    </div>
+
+                    <br />
+                    <h6>Inserir Imagem:</h6>
+                    <input type="file" name="imagem" />
+                    <br />
+                    <label asp-for="pd_preco" style="color: red;" class="control-label">Atenção ao Formato de imagens compativeis: JPG e PNG.</label>
+
+                    <div class="row d-flex justify-content-end">
+
+                        <div class="col-4"></div>
+
+                        <div class="col-3">
+
+                            <input type="submit" value="Cadastrar" class="btn btn-primary" />
+
+                        </div>
+
+                        <div class="col-1"></div>
+
+                        <div class="col-3">
+
+                            <button type="button" style="text-transform: uppercase; font-weight: bold;"
+                                    class="btn btn-secondary" data-dismiss="modal">
+                                Cancelar
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+
+                @*        <form method="post" enctype="multipart/form-data" onsubmit="removerSimboloR$()">
+
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+
+                <input type="submit" value="Cadastrar" class="btn btn-primary" />
+
+                </form>*@
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+

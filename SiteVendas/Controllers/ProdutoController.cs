@@ -68,7 +68,7 @@ namespace SiteVendas.Controllers
                 string formatoImagem = imagem.FileName.Split(".")[1];
 
                 //Verifica se a imagem esta no formato correto
-                if (formatoImagem == "jpg" || formatoImagem == "jpeg")
+                if (formatoImagem == "jpg" || formatoImagem == "png")
                 {
                     var image = new Image
                     {
@@ -115,11 +115,99 @@ namespace SiteVendas.Controllers
             }
         }
 
-        public IActionResult TodosProdutos()
+        public async Task<IActionResult> TodosProdutos()
         {
-            var listaProdutos = context.tb_produto.Select(x => x);
+            var listaProdutos = context.tb_produto.Select(x => x).ToList();
 
-            return View(listaProdutos);
+            ViewData["ListaProdutos"] = listaProdutos;
+            return View();
+        }
+
+        public async Task<IActionResult> EditarProduto(int _idProduto)
+        {
+            BuscarProduto(_idProduto);
+
+            return View();
+        }
+
+        private List<tb_produto> BuscarProduto(int _idProduto)
+        {
+            var produto = context.tb_produto.Select(x => x).Where(x => x.id_produto.Equals(_idProduto)).ToList();
+
+            ViewData["EditarProduto"] = produto;
+
+            return produto;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditarProduto(tb_produto _produto, IFormFile imagem)
+        {
+            try
+            {
+                //Verifica se todos os campos estao preenchidos
+                if (!ModelState.IsValid)
+                {
+                    foreach (var modelState in ViewData.ModelState.Values)
+                    {
+                        foreach (var error in modelState.Errors)
+                        {
+                            ModelState.AddModelError(string.Empty, error.ErrorMessage);
+                        }
+                    }
+
+                    BuscarProduto(_produto.id_produto);
+
+                    return View();
+                }
+
+                string formatoImagem = imagem.FileName.Split(".")[1];
+
+                //Verifica se a imagem esta no formato correto
+                if (formatoImagem == "jpg" || formatoImagem == "png")
+                {
+                    var image = new Image
+                    {
+                        Nome = imagem.FileName,
+                        Tipo = imagem.ContentType
+                    };
+
+                    //Converter imgaem em byte
+                    using var stream = new MemoryStream();
+                    await imagem.CopyToAsync(stream);
+                    image.Dados = stream.ToArray();
+
+                    foreach (var item in BuscarProduto(_produto.id_produto))
+                    {
+                        item.pd_nome = _produto.pd_nome;
+                        item.pd_preco = _produto.pd_preco;
+                        item.pd_tipo = _produto.pd_tipo;
+                        item.pd_tamanho = _produto.pd_tamanho;
+                        item.pd_descricao = _produto.pd_descricao;
+                        item.pd_disponivel = _produto.pd_disponivel;
+                        item.pd_imagem = image.Dados;
+                    }
+
+                    context.SaveChanges();
+
+                    var listaProdutos = context.tb_produto.Select(x => x).ToList();
+
+                    ViewData["ListaProdutos"] = listaProdutos;
+
+                    return View("~/Views/Produto/TodosProdutos.cshtml");
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Imagem em formato invalido!");
+                }
+
+                return View();
+            }
+            catch (Exception e)
+            {
+                TempData["errorMessage"] = e.Message;
+
+                return View("~/Views/Home/Index.cshtml");
+            }
         }
 
         public IActionResult Exibir()

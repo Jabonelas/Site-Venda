@@ -1,32 +1,78 @@
 ﻿@model IEnumerable<SiteVendas.Models.tb_produto>
 
+
+@{
+    var listaProdutos = ViewData["ListaProdutos"] as List<tb_produto>;
+}
+
+
+@*Exibicao carregamento do Triangulo*@
+<div class="preloader">
+    <div class="wrapper-triangle">
+        <div class="pen">
+            <div class="line-triangle">
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+            </div>
+            <div class="line-triangle">
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+            </div>
+            <div class="line-triangle">
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <h1>Todos Os Produtos</h1>
 
 <br />
 
-<div class="col-2 justify-content-center d-flex">
-    <div class="row">
-        <a style="border: 2px solid  mediumslateblue;" asp-controller="Home" asp-action="Index">Voltar ao Inicio</a>
+@*<div class="col-2 justify-content-center d-flex">*@
+<div class="row">
+    <div class=" row col-2 justify-content-center d-flex">
+        <a class="btn " style=" border: 2px solid  mediumslateblue;" asp-controller="Home" asp-action="Index">Voltar ao Inicio</a>
+    </div>
+    <div class="col-2 justify-content-center d-flex">
+        <a class=" btn btn-primary form-group" asp-controller="Produto" asp-action="Cadastrar">Novo Produto</a>
     </div>
 </div>
+
+@*
+<div class="row col-2">
+
+    <a class=" btn btn-primary form-group" asp-controller="Produto" asp-action="Cadastrar">Novo Produto</a>
+
+</div>*@
+
 
 <br />
 
 <h4>Produtos:</h4>
 
-<div class="row">
-
-    <div class="row col-2">
-        <a style="margin: 0 15px;" class="btn btn-primary " asp-area="" asp-controller="Produto" asp-action="Cadastrar">Novo Produto</a>
-    </div>
-</div>
-
 <br />
 
-<table class="table" id="myTable2">
-    <thead>
-        <tr>
 
+<table class="table text-center"  id="myTable2">
+    <thead>
+        <tr >
             <th>
                 Tipo
             </th>
@@ -54,25 +100,28 @@
     </thead>
     <tbody>
 
-        @foreach (var item in Model)
+
+
+
+        @foreach (var item in @listaProdutos)
         {
             <tr>
-                <td>
+                <td class="align-middle">
                     @item.pd_tipo
                 </td>
-                <td>
+                <td class="align-middle">
                     @item.pd_nome
                 </td>
-                <td>
+                <td class ="align-middle">
                     @item.pd_descricao
                 </td>
-                <td>
+                <td class="align-middle">
                     @item.pd_tamanho
                 </td>
-                <td>
+                <td class="align-middle">
                     @item.pd_preco.ToString("C2")
                 </td>
-                <td>
+                <td class="align-middle">
                     @if (item.pd_disponivel == true)
                     {
                         <p>Disponivel</p>
@@ -82,18 +131,19 @@
                         <p>Indisponivel</p>
                     }
                 </td>
-                <td>
+                <td class="align-middle">
 
-                    <img width="180" height="100" src="data:image/png;base64,@Convert.ToBase64String(@item.pd_imagem)" />
+                    <img width="160" height="100" src="data:image/png;base64,@Convert.ToBase64String(@item.pd_imagem)" />
 
                 </td>
 
-                <td>
+                <td class="align-middle">
 
-                    <a class="btn btn-info">Editar</a>
-                    <br />
-                    <br />
-                    <a class="btn btn-danger">Delete</a>
+                    <a class="btn btn-info form-group" asp-controller="Produto" asp-action="EditarProduto" asp-route-_idProduto="@item.id_produto">Editar</a>
+
+                    @*<button class="btn btn-info form-group" asp-controller="Produto" asp-action="EditarProduto" asp-route-_idProduto="@item.id_produto">Editar</button>*@
+
+                    <button class="btn btn-danger form-group" asp-controller="Produto" asp-action="EditarProduto" asp-route-_idProduto="@item.id_produto">Deletar</button>
 
                 </td>
 
@@ -103,11 +153,7 @@
 </table>
 
 
-
-
-
 @section Scripts {
-
 
     <script>
         $(document).ready(function () {
@@ -116,4 +162,21 @@
             });
         });
     </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js"></script>
+    <script src="~/js/InputMasked.js"></script>
+                                await Html.RenderPartialAsync("_ValidationScriptsPartial");
+
+    <script>
+
+        function removerSimboloR$() {
+            var input = document.getElementById("cleave-dinheiro");
+            var valorSemSimbolo = input.value.replace("R$ ", "").trim();
+            input.value = valorSemSimbolo;
+        }
+
+    </script>
+
 }
+
+
