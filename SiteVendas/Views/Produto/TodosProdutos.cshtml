@@ -5,7 +5,6 @@
     var listaProdutos = ViewData["ListaProdutos"] as List<tb_produto>;
 }
 
-
 @*Exibicao carregamento do Triangulo*@
 <div class="preloader">
     <div class="wrapper-triangle">
@@ -49,8 +48,8 @@
 <div class="row">
     <div class=" row col-2 justify-content-center d-flex">
 
-        <a class="btn " style="border: 2px solid mediumslateblue;font-family: Arial, sans-serif;" asp-controller="Home" asp-action="Index">Voltar ao Inicio</a>
-        @*<a class="btn " style="border: 2px solid mediumslateblue;font-family: Arial, sans-serif;" asp-controller="Home" asp-action="Index"><b>Voltar ao Inicio</b></a>*@
+        <a class="btn " style="border: 2px solid rgb(96, 70, 182);font-family: Arial, sans-serif;" asp-controller="Home" asp-action="Index">Voltar ao Inicio</a>
+        @*<a class="btn " style="border: 2px solid rgb(96, 70, 182);font-family: Arial, sans-serif;" asp-controller="Home" asp-action="Index"><b>Voltar ao Inicio</b></a>*@
 
     </div>
     <div class="col-2 justify-content-center d-flex">
@@ -146,25 +145,17 @@
                 </td>
 
                 <td class="align-middle">
-
+                    
                     <a class="btn btn-info form-group" asp-controller="Produto" asp-action="EditarProduto" asp-route-_idProduto="@item.id_produto">Editar</a>
-
-                    @*<button class="btn btn-info form-group" asp-controller="Produto" asp-action="EditarProduto" asp-route-_idProduto="@item.id_produto">Editar</button>*@
-
-
-
+                    
+                    <br/>
+                    <br/>
+                    
                     <button type="button" class="btn btn-danger form-group" data-toggle="modal" data-target="#myModal-@item.id_produto">Deletar</button>
-
-
-                    @*     <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-                Launch demo modal
-                </button>*@
-
-
-
+                    
                     <!-- Modal -->
                     <div class="modal fade" id="myModal-@item.id_produto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                        <div class="modal-dialog" role="document">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
 
@@ -180,7 +171,7 @@
                                 </div>
                                 <div class="modal-footer">
 
-                                    <button type="button" class="btn btn-default" data-dismiss="modal" style=" border: 2px solid  mediumslateblue;">Cancelar</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal" style=" border: 2px solid  rgb(96, 70, 182);">Cancelar</button>
 
 
 
@@ -216,8 +207,10 @@
 @section Scripts {
 
     <script>
-        $(document).ready(function () {
-            $('#myTable2').DataTable({
+        $(document).cache(function () {
+            $('#buscarProduto').DataTable({
+
+                
                 "language": { "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json" }
             });
         });

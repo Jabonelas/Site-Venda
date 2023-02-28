@@ -6,7 +6,7 @@
 
 <div class="col-2 justify-content-center d-flex ">
     <div class="row">
-        <a style="border: 2px solid  mediumslateblue;" asp-controller="Home" asp-action="Index">Voltar ao Inicio</a>
+        <a style="border: 2px solid  rgb(96, 70, 182);" asp-controller="Home" asp-action="Index">Voltar ao Inicio</a>
     </div>
 </div>
 
@@ -14,7 +14,7 @@
 
 <h4>DADOS:</h4>
 
-<br />
+
 
 <form asp-action="Inserir">
 
@@ -260,19 +260,10 @@
 
         <input type="submit" value="Cadastrar" class="btn btn-primary" />
 
-
     </div>
 
 </form>
 
-
-
-
-@*fim da linha*@
-
-@*<div>
-    <a asp-action="Inserir">Back to List</a>
-</div>*@
 
 @section Scripts {
 
@@ -286,9 +277,6 @@
 
             var senha = $("#cleave-senha").val();
             var confirmarSenha = $("#cleave-confirmarSenha").val();
-
-            console.log("senha", senha);
-            console.log("Confirmar Senha", confirmarSenha);
 
             if (senha != confirmarSenha) {
 
@@ -344,11 +332,5 @@
         });
 
     </script>
-
-
-
-
-
-
 }
 

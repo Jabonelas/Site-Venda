@@ -1,91 +1,208 @@
-﻿@model IEnumerable<SiteVendas.Models.tb_produto>
+﻿@*@model IEnumerable<SiteVendas.Models.tb_produto>*@
 
 
-<h4>Produtos</h4>
+@{
+    var listaProdutosSelecionado = ViewData["ListaProdutosSelecionado"] as List<tb_produto>;
+}
 
-
-
-<section class="section section-lg bg-default">
-    <div class="container">
-        <h3 class="oh-desktop"><span class="d-inline-block wow slideInUp">Selecione seu Pedido</span></h3>
-        <div class="row row-lg row-30">
-            <div class="col-sm-6 col-lg-4 col-xl-3">
-                <!-- Product-->
-                <article class="product wow fadeInLeft" data-wow-delay=".15s">
-                    <div class="product-figure">
-                        <img src="images/product-1-161x162.png" alt="" width="161" height="162" />
-                    </div>
-                    <div class="product-rating">
-                        <span class="mdi mdi-star"></span><span class="mdi mdi-star"></span><span class="mdi mdi-star"></span><span class="mdi mdi-star"></span><span class="mdi mdi-star text-gray-13"></span>
-                    </div>
-                    <h6 class="product-title">Margherita Pizza</h6>
-                    <div class="product-price-wrap">
-                        <div class="product-price">$24.00</div>
-                    </div>
-                    <div class="product-button">
-                        <div class="button-wrap"><a class="button button-xs button-primary button-winona" href="#">Add to cart</a></div>
-                        <div class="button-wrap"><a class="button button-xs button-secondary button-winona" href="#">View Product</a></div>
-                    </div>
-                </article>
+@*Exibicao carregamento do Triangulo*@
+<div class="preloader">
+    <div class="wrapper-triangle">
+        <div class="pen">
+            <div class="line-triangle">
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
             </div>
-            <div class="col-sm-6 col-lg-4 col-xl-3">
-                <!-- Product-->
-                <article class="product wow fadeInLeft" data-wow-delay=".1s">
-                    <div class="product-figure">
-                        <img src="images/product-2-161x162.png" alt="" width="161" height="162" />
-                    </div>
-                    <div class="product-rating">
-                        <span class="mdi mdi-star"></span><span class="mdi mdi-star"></span><span class="mdi mdi-star"></span><span class="mdi mdi-star"></span><span class="mdi mdi-star"></span>
-                    </div>
-                    <h6 class="product-title">Mushroom Pizza</h6>
-                    <div class="product-price-wrap">
-                        <div class="product-price">$24.00</div>
-                    </div>
-                    <div class="product-button">
-                        <div class="button-wrap"><a class="button button-xs button-primary button-winona" href="#">Add to cart</a></div>
-                        <div class="button-wrap"><a class="button button-xs button-secondary button-winona" href="#">View Product</a></div>
-                    </div><span class="product-badge product-badge-new">New</span>
-                </article>
+            <div class="line-triangle">
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
             </div>
-            <div class="col-sm-6 col-lg-4 col-xl-3">
-                <!-- Product-->
-                <article class="product wow fadeInLeft" data-wow-delay=".05s">
-                    <div class="product-figure">
-                        <img src="images/product-3-161x162.png" alt="" width="161" height="162" />
-                    </div>
-                    <div class="product-rating">
-                        <span class="mdi mdi-star"></span><span class="mdi mdi-star"></span><span class="mdi mdi-star"></span><span class="mdi mdi-star"></span><span class="mdi mdi-star text-gray-13"></span>
-                    </div>
-                    <h6 class="product-title">Hawaiian Pizza</h6>
-                    <div class="product-price-wrap">
-                        <div class="product-price">$24.00</div>
-                    </div>
-                    <div class="product-button">
-                        <div class="button-wrap"><a class="button button-xs button-primary button-winona" href="#">Add to cart</a></div>
-                        <div class="button-wrap"><a class="button button-xs button-secondary button-winona" href="#">View Product</a></div>
-                    </div>
-                </article>
-            </div>
-            <div class="col-sm-6 col-lg-4 col-xl-3">
-                <!-- Product-->
-                <article class="product wow fadeInLeft">
-                    <div class="product-figure">
-                        <img src="images/product-4-161x162.png" alt="" width="161" height="162" />
-                    </div>
-                    <div class="product-rating">
-                        <span class="mdi mdi-star"></span><span class="mdi mdi-star"></span><span class="mdi mdi-star"></span><span class="mdi mdi-star"></span><span class="mdi mdi-star"></span>
-                    </div>
-                    <h6 class="product-title">Pesto Pizza</h6>
-                    <div class="product-price-wrap">
-                        <div class="product-price product-price-old">$40.00</div>
-                        <div class="product-price">$24.00</div>
-                    </div>
-                    <div class="product-button">
-                        <div class="button-wrap"><a class="button button-xs button-primary button-winona" href="#">Add to cart</a></div>
-                        <div class="button-wrap"><a class="button button-xs button-secondary button-winona" href="#">View Product</a></div>
-                    </div><span class="product-badge product-badge-sale">Sale</span>
-                </article>
+            <div class="line-triangle">
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
             </div>
         </div>
     </div>
+</div>
+
+@*<h1>Cardápio</h1>*@
+
+@*<a class="btn " style="border: 2px solid rgb(96, 70, 182);font-family: Arial, sans-serif;" asp-controller="Home" asp-action="Index">Voltar ao Inicio</a>*@
+
+<section class="section section-lg bg-default">
+
+    <div class="container">
+
+        <h4>Selecione seu Pedido</h4>
+
+        <br />
+        @if (Model.Select(x => x.pd_tipo).First() == "Pizza")
+        {
+            <a class="btn btn-primary" asp-controller="Cardapio" asp-action="ListaProdutos">Pizza</a>
+            <a class="btn " style="border: 2px solid rgb(96, 70, 182);font-family: Arial, sans-serif;" asp-controller="Cardapio" asp-action="ListaProdutosBebida">Bebida</a>
+
+            <div class="form-group">
+                <label class="control-label">Buscar Produto</label>
+                <input asp-for="confirmarSenha" class="form-control" id="cleave-BuscarProduto" />
+            </div>
+
+        }
+        else
+        {
+            <a class="btn " style="border: 2px solid rgb(96, 70, 182); font-family: Arial, sans-serif;" asp-controller="Cardapio" asp-action="ListaProdutos">Pizza</a>
+            <a class="btn  btn-primary" asp-controller="Cardapio" asp-action="ListaProdutosBebida">Bebida</a>
+
+            
+        <div class="form-group">
+                <label class="control-label">Buscar Produto</label>
+        <input asp-for="nome" class="form-control" id="cleave-BuscarProduto" />
+        </div>
+
+        }
+
+        <div class="row row-lg row-30">
+
+            @foreach (var item in @listaProdutosSelecionado)
+            {
+                <div class="col-sm-6 col-lg-4 col-xl-3" id="cleave-bebidaExibicao">
+
+                    <!-- Product-->
+                    <article class="product wow fadeInLeft" data-wow-delay=".15s">
+                        <div class="product-figure">
+
+
+                            <img alt="" width="161" height="162" src="data:image/png;base64,@Convert.ToBase64String(@item.pd_imagem)" />
+
+                            @*<img src="images/product-1-161x162.png" alt="" width="161" height="162"/>*@
+                        </div>
+                        <div class="product-rating">
+
+                            <span class="mdi mdi-star"></span><span class="mdi mdi-star"></span><span class="mdi mdi-star"></span><span class="mdi mdi-star"></span><span class="mdi mdi-star text-gray-13"></span>
+
+                        </div>
+
+                        <h6 class="product-title">@item.pd_nome</h6>
+
+                        <div class="product-price-wrap">
+
+                            <div class="product-price">@item.pd_preco.ToString("C2")</div>
+                        </div>
+                        <div class="product-button">
+
+                            <div class="button-wrap"><a class="button button-xs button-primary button-winona" href="#">Adicionar no Carrinho</a></div>
+
+                            <div class="button-wrap"><a type="button" data-toggle="modal" data-target="#myModal-@item.id_produto" class="button button-xs button-secondary button-winona" href="#">Ver Detalhes</a></div>
+
+
+                            <!-- Modal -->
+                            @*<div class="modal fade" id="myModal-@item.id_produto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">*@
+                            @*<div class="modal-dialog" role="document">*@
+                            @*<div class="modal-content">*@
+
+                            <div class="modal" id="myModal-@item.id_produto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+
+                                            <h4 class="modal-title text-center" id="myModalLabel">@item.pd_nome</h4>
+
+                                            <button type="button" class="btn btn-close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"></span></button>
+
+                                        </div>
+                                        <div class="modal-body text-center">
+
+                                            <img alt="" width="161" height="162" src="data:image/png;base64,@Convert.ToBase64String(@item.pd_imagem)" />
+
+                                            <br />
+                                            <br />
+
+                                            <div class="card">
+
+                                                <h6>
+
+                                                    <b>Descrição:</b>
+                                                </h6>
+
+
+                                                @item.pd_descricao
+                                            </div>
+
+                                            <br />
+
+                                            <div class="card justify-content-center d-flex ">
+
+                                                <h6>Valor:</h6>
+
+                                                @*<b>Valor:</b>*@
+
+                                                <h6>
+                                                    <b>
+                                                        @item.pd_preco.ToString("C2")
+                                                    </b>
+                                                </h6>
+
+                                            </div>
+
+
+                                        </div>
+                                        <div class="modal-footer">
+
+                                            <button type="button" class="btn btn-default" data-dismiss="modal" style="border: 2px solid rgb(96, 70, 182);">Voltar</button>
+
+                                            @*<a class=" btn btn-primary form-group" asp-controller="Produto" asp-action="Cadastrar">Novo Produto</a>*@
+
+                                            <a class=" btn btn-primary form-group" asp-controller="Produto" asp-action="DeletarProduto" asp-route-_idProduto="@item.id_produto">Adicionar no Carrinho</a>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            }
+        </div>
+    </div>
 </section>
+
+
+@section Scripts {
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js"></script>
+    <script src="~/js/InputMasked.js"></script>
+                                                        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+
+    <script>
+
+        $("#cleave-BuscarProduto").blur(function () {
+            $.ajax({
+                url: "/cardapio/BuscarProduto",
+                type: "GET",
+                success: function (data) {
+                    // Aqui você pode manipular a resposta da requisição AJAX
+                    console.log(data);
+                },
+                error: function (xhr, status, error) {
+                    // Aqui você pode tratar os erros que ocorrem durante a requisição AJAX
+                    console.log("Ocorreu um erro durante a requisição AJAX: " + error);
+                }
+            });
+        });
+
+    </script>
+}
