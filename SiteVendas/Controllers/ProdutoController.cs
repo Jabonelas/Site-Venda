@@ -89,7 +89,8 @@ namespace SiteVendas.Controllers
                         pd_descricao = _produto.pd_descricao,
                         pd_disponivel = _produto.pd_disponivel,
                         pd_imagem = image.Dados,
-                        pd_nome = _produto.pd_nome
+                        pd_nome = _produto.pd_nome,
+                        pd_data = DateTime.Now
                     };
 
                     context.tb_produto.Add(dadosProduto);
@@ -115,14 +116,22 @@ namespace SiteVendas.Controllers
             }
         }
 
-        public async Task<IActionResult> TodosProdutos()
+        private void CarregarListaProdutos()
         {
-            var listaProdutos = context.tb_produto.Select(x => x).ToList();
+            var listaProdutos = context.tb_produto.Select(x => x).OrderBy(x => x.pd_data).ToList();
 
             ViewData["ListaProdutos"] = listaProdutos;
+        }
+
+        [Authorize(Roles = "Admin@hotmail.com")]
+        public async Task<IActionResult> TodosProdutos()
+        {
+            CarregarListaProdutos();
+
             return View();
         }
 
+        [Authorize(Roles = "Admin@hotmail.com")]
         public async Task<IActionResult> EditarProduto(int _idProduto)
         {
             BuscarProduto(_idProduto);
@@ -130,6 +139,7 @@ namespace SiteVendas.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Admin@hotmail.com")]
         private List<tb_produto> BuscarProduto(int _idProduto)
         {
             var produto = context.tb_produto.Select(x => x).Where(x => x.id_produto.Equals(_idProduto)).ToList();
@@ -140,42 +150,38 @@ namespace SiteVendas.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin@hotmail.com")]
         public async Task<IActionResult> EditarProduto(tb_produto _produto, IFormFile imagem)
         {
             try
             {
-                //Verifica se todos os campos estao preenchidos
+                bool isCampoVazio = false;
+
                 if (!ModelState.IsValid)
                 {
-                    foreach (var modelState in ViewData.ModelState.Values)
+                    foreach (var VARIABLE in ModelState)
                     {
-                        foreach (var error in modelState.Errors)
+                        if (VARIABLE.Key != "imagem" && !ModelState.IsValid)
                         {
-                            ModelState.AddModelError(string.Empty, error.ErrorMessage);
+                            foreach (var error in VARIABLE.Value.Errors)
+                            {
+                                ModelState.AddModelError(string.Empty, error.ErrorMessage);
+
+                                isCampoVazio = true;
+                            }
                         }
                     }
 
-                    BuscarProduto(_produto.id_produto);
+                    if (isCampoVazio == true)
+                    {
+                        BuscarProduto(_produto.id_produto);
 
-                    return View();
+                        return View();
+                    }
                 }
 
-                string formatoImagem = imagem.FileName.Split(".")[1];
-
-                //Verifica se a imagem esta no formato correto
-                if (formatoImagem == "jpg" || formatoImagem == "png")
+                if (imagem == null)
                 {
-                    var image = new Image
-                    {
-                        Nome = imagem.FileName,
-                        Tipo = imagem.ContentType
-                    };
-
-                    //Converter imgaem em byte
-                    using var stream = new MemoryStream();
-                    await imagem.CopyToAsync(stream);
-                    image.Dados = stream.ToArray();
-
                     foreach (var item in BuscarProduto(_produto.id_produto))
                     {
                         item.pd_nome = _produto.pd_nome;
@@ -184,7 +190,6 @@ namespace SiteVendas.Controllers
                         item.pd_tamanho = _produto.pd_tamanho;
                         item.pd_descricao = _produto.pd_descricao;
                         item.pd_disponivel = _produto.pd_disponivel;
-                        item.pd_imagem = image.Dados;
                     }
 
                     context.SaveChanges();
@@ -197,10 +202,46 @@ namespace SiteVendas.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Imagem em formato invalido!");
-                }
+                    string formatoImagem = imagem.FileName.Split(".")[1];
 
-                return View();
+                    //Verifica se a imagem esta no formato correto
+                    if (formatoImagem == "jpg" || formatoImagem == "png")
+                    {
+                        var image = new Image
+                        {
+                            Nome = imagem.FileName,
+                            Tipo = imagem.ContentType
+                        };
+
+                        //Converter imgaem em byte
+                        using var stream = new MemoryStream();
+                        await imagem.CopyToAsync(stream);
+                        image.Dados = stream.ToArray();
+
+                        foreach (var item in BuscarProduto(_produto.id_produto))
+                        {
+                            item.pd_nome = _produto.pd_nome;
+                            item.pd_preco = _produto.pd_preco;
+                            item.pd_tipo = _produto.pd_tipo;
+                            item.pd_tamanho = _produto.pd_tamanho;
+                            item.pd_descricao = _produto.pd_descricao;
+                            item.pd_disponivel = _produto.pd_disponivel;
+                            item.pd_imagem = image.Dados;
+                        }
+
+                        context.SaveChanges();
+
+                        CarregarListaProdutos();
+
+                        return View("~/Views/Produto/TodosProdutos.cshtml");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "Imagem em formato invalido!");
+                    }
+
+                    return View();
+                }
             }
             catch (Exception e)
             {
@@ -208,6 +249,19 @@ namespace SiteVendas.Controllers
 
                 return View("~/Views/Home/Index.cshtml");
             }
+        }
+
+        [Authorize(Roles = "Admin@hotmail.com")]
+        public IActionResult DeletarProduto(int _idProduto)
+        {
+            var produtoDeletar = context.tb_produto.Where(x => x.id_produto.Equals(_idProduto)).First();
+
+            context.tb_produto.Remove(produtoDeletar);
+            context.SaveChanges();
+
+            CarregarListaProdutos();
+
+            return View("~/Views/Produto/TodosProdutos.cshtml");
         }
 
         public IActionResult Exibir()

@@ -49,10 +49,12 @@
 
             <div class="col-4 d-flex justify-content-start">
 
-                <a style="margin: 0 15px;" class="btn btn-primary d-flex justify-content-end" asp-area="" asp-controller="Login" asp-action="Login">Entrar</a>
+                <a class="btn " style=" border: 2px solid  mediumslateblue;" asp-controller="Cliente" asp-action="Inserir">Novo Cadastro</a>
 
-                <a class="btn btn-secondary d-flex justify-content-end"
-               style="text-transform: uppercase; font-weight: bold;" asp-area="" asp-controller="Cliente" asp-action="Inserir">Novo Cadastro</a>
+                @*     <a class="btn btn-secondary d-flex justify-content-end"
+            style="text-transform: uppercase; font-weight: bold;" asp-area="" asp-controller="Cliente" asp-action="Inserir">Novo Cadastro</a>*@
+
+                <a style="margin: 0 15px;" class="btn btn-primary d-flex justify-content-end" asp-area="" asp-controller="Login" asp-action="Login">Entrar</a>
 
             </div>
         }
@@ -113,32 +115,31 @@
                                     <li class="rd-nav-item">
                                         <a class="rd-nav-link" asp-area="" asp-controller="Cardapio" asp-action="ListaProdutos">Cardápio</a>
                                     </li>
-                               
-                                    <li class="rd-nav-item">
-                                        <a class="rd-nav-link" asp-area="" asp-controller="Produto" asp-action="TodosProdutos">Produtos</a>
-                                    </li>
-                                
-                                    
+
+                                  
+
+
                                     <li class="rd-nav-item">
                                         <a class="rd-nav-link" asp-area="" asp-controller="Produto" asp-action="Exibir">Exibir Produtos</a>
                                     </li>
-                                   
-                                  
+
+
 
                                     @if (User.IsInRole("Admin@hotmail.com"))
                                     {
+
+                                        <li class="rd-nav-item">
+                                            <a class="rd-nav-link" asp-area="" asp-controller="Produto" asp-action="TodosProdutos">Produtos</a>
+                                        </li>
+
                                         <li class="rd-nav-item">
                                             <a class="rd-nav-link" asp-area="" asp-controller="Pedidos" asp-action="MeusPedidos">Todos Pedidos</a>
                                         </li>
                                         <li class="rd-nav-item">
                                             <a class="rd-nav-link" asp-area="" asp-controller="Pedidos" asp-action="MeusPedidos">Todos Clientes</a>
                                         </li>
-                                        <li class="rd-nav-item">
-                                            <a class="rd-nav-link" asp-area="" asp-controller="Produto" asp-action="Cadastrar">Cadastrar Produto</a>
-                                        </li>
-                                        <li class="rd-nav-item">
-                                            <a class="rd-nav-link" asp-area="" asp-controller="Cliente" asp-action="BuscarCadastro">Alterar Cadastro</a>
-                                        </li>
+                                    
+                                      
                                     }
                                     else if (User.Identity.IsAuthenticated)
                                     {

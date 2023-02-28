@@ -4,10 +4,21 @@
     var editaProduto = ViewData["EditarProduto"] as List<tb_produto>;
 }
 
-<h4>Editar Produto</h4>
+
+
+<div class=" row col-2 justify-content-center d-flex">
+
+    <a class="btn " style="border: 2px solid mediumslateblue;font-family: Arial, sans-serif;" asp-controller="Produto" asp-action="TodosProdutos">Voltar</a>
+    @*<a class="btn " style="border: 2px solid mediumslateblue;font-family: Arial, sans-serif;" asp-controller="Home" asp-action="Index"><b>Voltar ao Inicio</b></a>*@
+
+</div>
+
+<br/>
+
+<h4>Editar Produto:</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    
         @foreach (var item in editaProduto)
         {
             <form method="post" enctype="multipart/form-data" onsubmit="removerSimboloR$()">
@@ -15,7 +26,7 @@
 
 
                 @*Passando Id de produto remotamente*@
-                <input value="@item.id_produto" asp-for="@Model.id_produto" class="d-none" >
+                <input value="@item.id_produto" asp-for="@Model.id_produto" class="d-none">
 
 
                 <div class="row">
@@ -27,9 +38,19 @@
                                 asp-for="@Model.pd_tipo"
                                 class="form-control" asp-items="ViewBag.ed_tipo">
 
-                                <option selected value="">Escolha uma Opção...</option>
-                                <option>Pizza</option>
-                                <option>Bebida</option>
+                                @if (@item.pd_tipo == "Pizza")
+                                {
+                                    <option selected>@item.pd_tipo</option>
+                                    <option>Bebida</option>
+
+                                }
+                                else
+                                {
+                                    <option selected>@item.pd_tipo</option>
+                                    <option>Pizza</option>
+
+                                }
+
 
                             </select>
                         </div>
@@ -87,21 +108,28 @@
                 </div>
 
                 <br />
+                
+                @if (@item.pd_disponivel == true)
+                {
+                    <div class="form-group form-check">
 
-                <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="@Model.pd_disponivel" checked="" /> Disponível
+                        </label>
 
-                    <label class="form-check-label">
-                        <input value="@item.pd_disponivel"
-                           asp-for="@Model.pd_disponivel"
-                           class="form-check-input" /> Disponível
-                    </label>
-                </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="form-group form-check">
 
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="@Model.pd_disponivel" /> Disponível
+                        </label>
 
-
-
-
-
+                    </div>
+                }
+                
                 <br />
                 <h6>Inserir Imagem:</h6>
                 <input value="@item.pd_imagem"
@@ -111,22 +139,20 @@
                 <label style="color: red;" class="control-label">Atenção ao Formato de imagens compativeis: JPG e PNG.</label>
 
 
-
                 <div class="row col-2 form-group">
 
-                    <input type="submit" value="EditarProduto" class="btn btn-primary" />
+                    <input type="submit" value="Editar Produto" class="btn btn-primary" />
 
                 </div>
+                
+                
             </form>
 
 
         }
-    </div>
 </div>
 
-<div>
-    <a asp-action="Index">Voltar ao Inicio</a>
-</div>
+
 
 
 @section Scripts
@@ -134,7 +160,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js"></script>
     <script src="~/js/InputMasked.js"></script>
-            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+                            await Html.RenderPartialAsync("_ValidationScriptsPartial");
 
     <script>
 

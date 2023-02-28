@@ -36,6 +36,8 @@ namespace SiteVendas.Models
         [Column(TypeName = "decimal(10, 2)")]
         public decimal pd_preco { get; set; }
         public bool pd_disponivel { get; set; }
+        [Column(TypeName = "date")]
+        public DateTime pd_data { get; set; }
         [Column(TypeName = "image")]
         public byte[] pd_imagem { get; set; }
 

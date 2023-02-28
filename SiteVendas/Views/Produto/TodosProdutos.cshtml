@@ -48,10 +48,13 @@
 @*<div class="col-2 justify-content-center d-flex">*@
 <div class="row">
     <div class=" row col-2 justify-content-center d-flex">
-        <a class="btn " style=" border: 2px solid  mediumslateblue;" asp-controller="Home" asp-action="Index">Voltar ao Inicio</a>
+
+        <a class="btn " style="border: 2px solid mediumslateblue;font-family: Arial, sans-serif;" asp-controller="Home" asp-action="Index">Voltar ao Inicio</a>
+        @*<a class="btn " style="border: 2px solid mediumslateblue;font-family: Arial, sans-serif;" asp-controller="Home" asp-action="Index"><b>Voltar ao Inicio</b></a>*@
+
     </div>
     <div class="col-2 justify-content-center d-flex">
-        <a class=" btn btn-primary form-group" asp-controller="Produto" asp-action="Cadastrar">Novo Produto</a>
+        <a class=" btn btn-primary form-group;" asp-controller="Produto" asp-action="Cadastrar">Novo Produto</a>
     </div>
 </div>
 
@@ -70,9 +73,11 @@
 <br />
 
 
-<table class="table text-center"  id="myTable2">
+
+
+<table class="table text-center" id="myTable2">
     <thead>
-        <tr >
+        <tr>
             <th>
                 Tipo
             </th>
@@ -98,6 +103,9 @@
             <th></th>
         </tr>
     </thead>
+
+
+
     <tbody>
 
 
@@ -112,7 +120,7 @@
                 <td class="align-middle">
                     @item.pd_nome
                 </td>
-                <td class ="align-middle">
+                <td class="align-middle">
                     @item.pd_descricao
                 </td>
                 <td class="align-middle">
@@ -143,13 +151,65 @@
 
                     @*<button class="btn btn-info form-group" asp-controller="Produto" asp-action="EditarProduto" asp-route-_idProduto="@item.id_produto">Editar</button>*@
 
-                    <button class="btn btn-danger form-group" asp-controller="Produto" asp-action="EditarProduto" asp-route-_idProduto="@item.id_produto">Deletar</button>
+
+
+                    <button type="button" class="btn btn-danger form-group" data-toggle="modal" data-target="#myModal-@item.id_produto">Deletar</button>
+
+
+                    @*     <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+                Launch demo modal
+                </button>*@
+
+
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="myModal-@item.id_produto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+
+                                    <h4 class="modal-title text-center" id="myModalLabel">Atenção!</h4>
+
+                                    <button type="button" class="btn btn-close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"></span></button>
+
+                                </div>
+                                <div class="modal-body">
+
+                                    Deseja Excluir Este Produto?
+
+                                </div>
+                                <div class="modal-footer">
+
+                                    <button type="button" class="btn btn-default" data-dismiss="modal" style=" border: 2px solid  mediumslateblue;">Cancelar</button>
+
+
+
+
+                                    @*<a class=" btn btn-primary form-group" asp-controller="Produto" asp-action="Cadastrar">Novo Produto</a>*@
+
+
+
+
+                                    <a class=" btn btn-primary form-group" asp-controller="Produto" asp-action="DeletarProduto" asp-route-_idProduto="@item.id_produto">Excluir</a>
+
+
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
 
                 </td>
 
             </tr>
         }
     </tbody>
+
 </table>
 
 
@@ -165,7 +225,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js"></script>
     <script src="~/js/InputMasked.js"></script>
-                                await Html.RenderPartialAsync("_ValidationScriptsPartial");
+                                                                await Html.RenderPartialAsync("_ValidationScriptsPartial");
 
     <script>
 
