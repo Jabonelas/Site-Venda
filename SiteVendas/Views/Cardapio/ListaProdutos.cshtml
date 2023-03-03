@@ -1,4 +1,6 @@
 ﻿@*@model IEnumerable<SiteVendas.Models.tb_produto>*@
+@model SiteVendas.Models.ViewModel.ProdutoViewModel
+
 
 
 @{
@@ -51,14 +53,15 @@
         <h4>Selecione seu Pedido</h4>
 
         <br />
-        @if (Model.Select(x => x.pd_tipo).First() == "Pizza")
+
+        @if (listaProdutosSelecionado.Select(x => x.pd_tipo).First() == "Pizza")
         {
             <a class="btn btn-primary" asp-controller="Cardapio" asp-action="ListaProdutos">Pizza</a>
             <a class="btn " style="border: 2px solid rgb(96, 70, 182);font-family: Arial, sans-serif;" asp-controller="Cardapio" asp-action="ListaProdutosBebida">Bebida</a>
-
+                
             <div class="form-group">
                 <label class="control-label">Buscar Produto</label>
-                <input asp-for="confirmarSenha" class="form-control" id="cleave-BuscarProduto" />
+                <input asp-for="nomeProduto" class="form-control" id="cleave-BuscarProduto" />
             </div>
 
         }
@@ -66,13 +69,11 @@
         {
             <a class="btn " style="border: 2px solid rgb(96, 70, 182); font-family: Arial, sans-serif;" asp-controller="Cardapio" asp-action="ListaProdutos">Pizza</a>
             <a class="btn  btn-primary" asp-controller="Cardapio" asp-action="ListaProdutosBebida">Bebida</a>
-
             
-        <div class="form-group">
+             <div class="form-group">
                 <label class="control-label">Buscar Produto</label>
-        <input asp-for="nome" class="form-control" id="cleave-BuscarProduto" />
-        </div>
-
+                <input asp-for="nomeProduto" class="form-control" id="cleave-BuscarProduto" />
+             </div>
         }
 
         <div class="row row-lg row-30">

@@ -46,9 +46,9 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-pattern: "{controller=Cardapio}/{action=ListaProdutos}/{id?}");
+//pattern: "{controller=Cardapio}/{action=ListaProdutos}/{id?}");
 //pattern: "{controller=Produto}/{action=TodosProdutos}/{id?}");
 //pattern: "{controller=Cliente}/{action=Inserir}/{id?}");
-//pattern: "{controller=Home}/{action=Index}/{id?}");
+pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
