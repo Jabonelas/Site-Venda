@@ -1,5 +1,5 @@
-﻿@*@model IEnumerable<SiteVendas.Models.tb_produto>*@
-@model SiteVendas.Models.ViewModel.ProdutoViewModel
+﻿@model IEnumerable<SiteVendas.Models.tb_produto>
+@*@model SiteVendas.Models.tb_produto*@
 
 
 
@@ -46,6 +46,11 @@
 
 @*<a class="btn " style="border: 2px solid rgb(96, 70, 182);font-family: Arial, sans-serif;" asp-controller="Home" asp-action="Index">Voltar ao Inicio</a>*@
 
+
+
+
+
+
 <section class="section section-lg bg-default">
 
     <div class="container">
@@ -54,26 +59,34 @@
 
         <br />
 
+
+
+
         @if (listaProdutosSelecionado.Select(x => x.pd_tipo).First() == "Pizza")
         {
             <a class="btn btn-primary" asp-controller="Cardapio" asp-action="ListaProdutos">Pizza</a>
             <a class="btn " style="border: 2px solid rgb(96, 70, 182);font-family: Arial, sans-serif;" asp-controller="Cardapio" asp-action="ListaProdutosBebida">Bebida</a>
-                
-            <div class="form-group">
-                <label class="control-label">Buscar Produto</label>
-                <input asp-for="nomeProduto" class="form-control" id="cleave-BuscarProduto" />
-            </div>
 
+            <br />
+            <br />
+
+            <form method="post" asp-controller="Cardapio" asp-action="BuscarProduto">
+                <input type="text" name="pesquisa" />
+                <button type="submit">Pesquisar</button>
+            </form>
         }
         else
         {
             <a class="btn " style="border: 2px solid rgb(96, 70, 182); font-family: Arial, sans-serif;" asp-controller="Cardapio" asp-action="ListaProdutos">Pizza</a>
             <a class="btn  btn-primary" asp-controller="Cardapio" asp-action="ListaProdutosBebida">Bebida</a>
-            
-             <div class="form-group">
-                <label class="control-label">Buscar Produto</label>
-                <input asp-for="nomeProduto" class="form-control" id="cleave-BuscarProduto" />
-             </div>
+
+            <br />
+            <br />
+
+            <form method="post" asp-controller="Cardapio" asp-action="BuscarProduto">
+                <input type="text" name="pesquisa" />
+                <button type="submit">Pesquisar</button>
+            </form>
         }
 
         <div class="row row-lg row-30">
@@ -186,7 +199,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js"></script>
     <script src="~/js/InputMasked.js"></script>
-                                                        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+                                                                        await Html.RenderPartialAsync("_ValidationScriptsPartial");
 
     <script>
 

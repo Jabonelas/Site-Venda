@@ -28,9 +28,10 @@ namespace SiteVendas.Controllers
             return View("~/Views/Cardapio/ListaProdutos.cshtml", listaProdutosBebida);
         }
 
-        public IActionResult BuscarProduto(string _nome)
+        public IActionResult BuscarProduto(string pesquisa)
         {
-            var produto = context.tb_produto.Where(x => x.pd_nome.Contains(_nome)).ToList();
+
+            var produto = context.tb_produto.Where(x => x.pd_nome.Contains(pesquisa)).ToList();
 
             ViewData["ListaProdutosSelecionado"] = produto;
 
