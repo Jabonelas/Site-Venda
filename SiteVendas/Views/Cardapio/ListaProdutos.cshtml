@@ -1,8 +1,6 @@
 ﻿@model IEnumerable<SiteVendas.Models.tb_produto>
 @*@model SiteVendas.Models.tb_produto*@
 
-
-
 @{
     var listaProdutosSelecionado = ViewData["ListaProdutosSelecionado"] as List<tb_produto>;
 }
@@ -42,16 +40,14 @@
     </div>
 </div>
 
-@*<h1>Cardápio</h1>*@
-
-@*<a class="btn " style="border: 2px solid rgb(96, 70, 182);font-family: Arial, sans-serif;" asp-controller="Home" asp-action="Index">Voltar ao Inicio</a>*@
-
-
-
-
-
-
 <section class="section section-lg bg-default">
+
+    <h1>Cardápio</h1>
+
+    <br />
+    @* <a class="btn " style="border: 2px solid rgb(96, 70, 182);font-family: Arial, sans-serif;" asp-controller="Home"
+    asp-action="Index">Voltar ao Inicio</a> *@
+
 
     <div class="container">
 
@@ -59,34 +55,67 @@
 
         <br />
 
-
-
-
         @if (listaProdutosSelecionado.Select(x => x.pd_tipo).First() == "Pizza")
+
+
+
         {
-            <a class="btn btn-primary" asp-controller="Cardapio" asp-action="ListaProdutos">Pizza</a>
-            <a class="btn " style="border: 2px solid rgb(96, 70, 182);font-family: Arial, sans-serif;" asp-controller="Cardapio" asp-action="ListaProdutosBebida">Bebida</a>
-
-            <br />
-            <br />
-
             <form method="post" asp-controller="Cardapio" asp-action="BuscarProduto">
-                <input type="text" name="pesquisa" />
-                <button type="submit">Pesquisar</button>
+
+                <div class="row ">
+                    <div class="col-1">
+                        <a class="btn btn-primary" asp-controller="Cardapio" asp-action="ListaProdutos">Pizza</a>
+                    </div>
+
+                    <div class="col-2">
+                        <a class="btn " style="border: 2px solid rgb(96, 70, 182);font-family: Arial, sans-serif;"
+                        asp-controller="Cardapio" asp-action="ListaProdutosBebida">Bebida</a>
+                    </div>
+
+                    <div class="col-3">
+                        <input class="form-control" type="text" name="pesquisa" placeholder="Buscar..." />
+                    </div>
+
+                    <div class="col-2">
+                        <button class="btn btn-primary" type="submit">Pesquisar</button>
+                    </div>
+                </div>
             </form>
         }
+
+
+
         else
+
+
+
         {
-            <a class="btn " style="border: 2px solid rgb(96, 70, 182); font-family: Arial, sans-serif;" asp-controller="Cardapio" asp-action="ListaProdutos">Pizza</a>
-            <a class="btn  btn-primary" asp-controller="Cardapio" asp-action="ListaProdutosBebida">Bebida</a>
+            
+            
 
-            <br />
-            <br />
+              <form method="post" asp-controller="Cardapio" asp-action="BuscarProduto">
 
-            <form method="post" asp-controller="Cardapio" asp-action="BuscarProduto">
-                <input type="text" name="pesquisa" />
-                <button type="submit">Pesquisar</button>
+                <div class="row ">
+                    <div class="col-1">
+                        <a class="btn " style="border: 2px solid rgb(96, 70, 182); font-family: Arial, sans-serif;"
+            asp-controller="Cardapio" asp-action="ListaProdutos">Pizza</a>
+                    </div>
+
+                    <div class="col-2">
+                     <a class="btn  btn-primary" asp-controller="Cardapio" asp-action="ListaProdutosBebida">Bebida</a>
+                    </div>
+
+                    <div class="col-3">
+                        <input class="form-control" type="text" name="pesquisa" placeholder="Buscar..." />
+                    </div>
+
+                    <div class="col-2">
+                        <button class="btn btn-primary" type="submit">Pesquisar</button>
+                    </div>
+                </div>
             </form>
+
+           
         }
 
         <div class="row row-lg row-30">
@@ -100,13 +129,16 @@
                         <div class="product-figure">
 
 
-                            <img alt="" width="161" height="162" src="data:image/png;base64,@Convert.ToBase64String(@item.pd_imagem)" />
+                            <img alt="" width="161" height="162"
+                                src="data:image/png;base64,@Convert.ToBase64String(@item.pd_imagem)" />
 
                             @*<img src="images/product-1-161x162.png" alt="" width="161" height="162"/>*@
                         </div>
                         <div class="product-rating">
 
-                            <span class="mdi mdi-star"></span><span class="mdi mdi-star"></span><span class="mdi mdi-star"></span><span class="mdi mdi-star"></span><span class="mdi mdi-star text-gray-13"></span>
+                            <span class="mdi mdi-star"></span><span class="mdi mdi-star"></span><span
+                                class="mdi mdi-star"></span><span class="mdi mdi-star"></span><span
+                                class="mdi mdi-star text-gray-13"></span>
 
                         </div>
 
@@ -118,29 +150,36 @@
                         </div>
                         <div class="product-button">
 
-                            <div class="button-wrap"><a class="button button-xs button-primary button-winona" href="#">Adicionar no Carrinho</a></div>
+                            <div class="button-wrap"><a class="button button-xs button-primary button-winona"
+                                    href="#">Adicionar no Carrinho</a></div>
 
-                            <div class="button-wrap"><a type="button" data-toggle="modal" data-target="#myModal-@item.id_produto" class="button button-xs button-secondary button-winona" href="#">Ver Detalhes</a></div>
+                            <div class="button-wrap"><a type="button" data-toggle="modal"
+                                    data-target="#myModal-@item.id_produto"
+                                    class="button button-xs button-secondary button-winona" href="#">Ver Detalhes</a></div>
 
 
                             <!-- Modal -->
-                            @*<div class="modal fade" id="myModal-@item.id_produto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">*@
+                            @*<div class="modal fade" id="myModal-@item.id_produto" tabindex="-1" role="dialog"
+                        aria-labelledby="myModalLabel">*@
                             @*<div class="modal-dialog" role="document">*@
                             @*<div class="modal-content">*@
 
-                            <div class="modal" id="myModal-@item.id_produto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal" id="myModal-@item.id_produto" tabindex="-1" role="dialog"
+                                aria-labelledby="myModalLabel">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
 
                                             <h4 class="modal-title text-center" id="myModalLabel">@item.pd_nome</h4>
 
-                                            <button type="button" class="btn btn-close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"></span></button>
+                                            <button type="button" class="btn btn-close" data-dismiss="modal"
+                                                aria-label="Close"><span aria-hidden="true"></span></button>
 
                                         </div>
                                         <div class="modal-body text-center">
 
-                                            <img alt="" width="161" height="162" src="data:image/png;base64,@Convert.ToBase64String(@item.pd_imagem)" />
+                                            <img alt="" width="161" height="162"
+                                                src="data:image/png;base64,@Convert.ToBase64String(@item.pd_imagem)" />
 
                                             <br />
                                             <br />
@@ -176,11 +215,15 @@
                                         </div>
                                         <div class="modal-footer">
 
-                                            <button type="button" class="btn btn-default" data-dismiss="modal" style="border: 2px solid rgb(96, 70, 182);">Voltar</button>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal"
+                                                style="border: 2px solid rgb(96, 70, 182);">Voltar</button>
 
-                                            @*<a class=" btn btn-primary form-group" asp-controller="Produto" asp-action="Cadastrar">Novo Produto</a>*@
+                                            @*<a class=" btn btn-primary form-group" asp-controller="Produto"
+                                        asp-action="Cadastrar">Novo Produto</a>*@
 
-                                            <a class=" btn btn-primary form-group" asp-controller="Produto" asp-action="DeletarProduto" asp-route-_idProduto="@item.id_produto">Adicionar no Carrinho</a>
+                                            <a class=" btn btn-primary form-group" asp-controller="Produto"
+                                            asp-action="DeletarProduto"
+                                            asp-route-_idProduto="@item.id_produto">Adicionar no Carrinho</a>
 
                                         </div>
                                     </div>
@@ -199,7 +242,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js"></script>
     <script src="~/js/InputMasked.js"></script>
-                                                                        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
 
     <script>
 

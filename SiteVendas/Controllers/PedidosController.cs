@@ -53,5 +53,19 @@ namespace SiteVendas.Controllers
 
             return View(listaPedidos);
         }
+
+        public IActionResult CriandoPedido(tb_pedido _pedido)
+        {
+            string usuario = HttpContext.Session.GetString("usuario");
+
+            var bucsarProdutosCarrinho = context.tb_cadastro_cliente.Join(context.tb_pedido, cliente => cliente.id_cadastro_cliente,
+                pedido => pedido.fk_cadastro_cliente, (cliente, pedido) => new
+                {
+                    Cliente = cliente,
+                    Pedido = pedido,
+                }).Where(x => x.Cliente.cc_email == usuario && x.Pedido.pd_confirmado == false);
+
+            return View("~/Views/Cardapio/ListaProdutos.cshtml");
+        }
     }
 }
