@@ -1,5 +1,4 @@
-﻿using System.Security.Policy;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SiteVendas.Models;
 
 namespace SiteVendas.Controllers
@@ -11,11 +10,21 @@ namespace SiteVendas.Controllers
         [HttpGet]
         public IActionResult ListaProdutos()
         {
-            var listaprodutos = context.tb_produto.Where(x => x.pd_disponivel == true && x.pd_tipo == "Pizza").OrderBy(x => x.pd_tipo).ToList();
+            try
+            {
+                var listaprodutos = context.tb_produto.Where(x => x.pd_disponivel == true && x.pd_tipo == "Pizza")
+                        .OrderBy(x => x.pd_tipo).ToList();
 
-            ViewData["ListaProdutosSelecionado"] = listaprodutos;
+                ViewData["ListaProdutosSelecionado"] = listaprodutos;
 
-            return View(listaprodutos);
+                return View(listaprodutos);
+            }
+            catch (Exception x)
+            {
+                Console.WriteLine($"teste {x.ToString()}");
+
+                return View();
+            }
         }
 
         public IActionResult ListaProdutosBebida()
@@ -30,7 +39,6 @@ namespace SiteVendas.Controllers
 
         public IActionResult BuscarProduto(string pesquisa)
         {
-
             var produto = context.tb_produto.Where(x => x.pd_nome.Contains(pesquisa)).ToList();
 
             ViewData["ListaProdutosSelecionado"] = produto;

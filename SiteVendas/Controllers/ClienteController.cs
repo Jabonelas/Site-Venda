@@ -1,9 +1,5 @@
-﻿using Correios;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SiteVendas.Models.ViewModel;
-using Correios.NET;
-using Correios.CorreiosServiceReference;
-using Exception = Correios.CorreiosServiceReference.Exception;
 using Newtonsoft.Json;
 using System.Net;
 using Microsoft.AspNetCore.Authorization;

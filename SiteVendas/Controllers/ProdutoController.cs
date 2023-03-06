@@ -1,25 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Drawing;
-using System.Resources;
 using SiteVendas.Models;
-using static System.Net.Mime.MediaTypeNames;
-using System.Web;
-using SiteVendas.Class;
-using System.Net;
 using Microsoft.AspNetCore.Authorization;
-
-using Microsoft.AspNetCore.Mvc;
-
-using Newtonsoft.Json;
-
-using SiteVendas.Class;
-using SiteVendas.Models;
-
-using SiteVendas.Models.ViewModel;
-using static SiteVendas.Controllers.ProdutoController;
-using Microsoft.JSInterop;
-using static Microsoft.AspNetCore.Razor.Language.TagHelperMetadata;
-using System;
 
 namespace SiteVendas.Controllers
 {
@@ -81,6 +62,8 @@ namespace SiteVendas.Controllers
                     await imagem.CopyToAsync(stream);
                     image.Dados = stream.ToArray();
 
+                    //DateOnly dataHoje = DateOnly.FromDateTime(DateTime.Now);
+
                     var dadosProduto = new tb_produto()
                     {
                         pd_preco = _produto.pd_preco,
@@ -90,7 +73,7 @@ namespace SiteVendas.Controllers
                         pd_disponivel = _produto.pd_disponivel,
                         pd_imagem = image.Dados,
                         pd_nome = _produto.pd_nome,
-                        pd_data = DateTime.Now
+                        pd_data = DateTime.Today
                     };
 
                     context.tb_produto.Add(dadosProduto);

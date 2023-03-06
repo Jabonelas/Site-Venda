@@ -28,8 +28,7 @@ namespace SiteVendas.Models
         [StringLength(50)]
         [Unicode(false)]
         public string cc_rg { get; set; }
-        [Column(TypeName = "date")]
-        public DateTime cc_data_nascimento { get; set; }
+        public DateOnly cc_data_nascimento { get; set; }
         [StringLength(200)]
         [Unicode(false)]
         public string cc_email { get; set; }

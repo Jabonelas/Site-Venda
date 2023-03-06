@@ -17,8 +17,9 @@ namespace SiteVendas.Models
 
         [Key]
         public int id_pedido { get; set; }
+        public int? pd_numero_pedido { get; set; }
         public int pd_quantidade { get; set; }
-        [Column(TypeName = "date")]
+        [Column(TypeName = "datetime")]
         public DateTime pd_data { get; set; }
         [Column(TypeName = "decimal(10, 2)")]
         public decimal pd_valor { get; set; }
