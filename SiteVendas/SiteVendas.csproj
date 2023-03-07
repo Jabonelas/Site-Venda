@@ -27,4 +27,8 @@
     <PackageReference Include="System.ServiceModel.Primitives" Version="4.10.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ViewComponents\" />
+  </ItemGroup>
+
 </Project>
