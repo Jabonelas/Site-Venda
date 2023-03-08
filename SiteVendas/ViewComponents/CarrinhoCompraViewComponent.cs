@@ -39,7 +39,7 @@ public class CarrinhoCompraViewComponent : ViewComponent
                 valorUnitario = x.Produto.pd_preco
             }).ToList();
 
-        int a = quantidadePedidos.Count();
+        ViewData["quantidadePedidos"] = null;
 
         ViewData["quantidadePedidos"] = quantidadePedidos;
 

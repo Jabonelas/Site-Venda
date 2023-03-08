@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.ComponentModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 using SiteVendas.Models;
 using SiteVendas.Models.ViewModel;
 
@@ -8,8 +8,15 @@ namespace SiteVendas.Controllers
 {
     public class PedidosController : Controller
     {
+        private int idPedido = 0;
+        private int idUsuario = 0;
+        private int idProduto = 0;
+        private int quantidade = 0;
+        private decimal valor = 0;
+
         private SiteVendasContext context = new SiteVendasContext();
 
+        [HttpGet]
         [Authorize]
         public IActionResult MeusPedidos()
         {
@@ -54,18 +61,8 @@ namespace SiteVendas.Controllers
             return View(listaPedidos);
         }
 
-        public IActionResult AdicionarPedidos(tb_pedido _pedido)
-        {
-            return View();
-        }
-
-        private int idProduto = 0;
-
-        private int quantidade = 0;
-
-        private decimal valor = 0;
-
         [HttpPost]
+        [Authorize]
         public IActionResult BuscarPedidosCarrinho(int _idProduto, string _valor, int _quantidade)
         {
             idProduto = _idProduto;
@@ -80,7 +77,7 @@ namespace SiteVendas.Controllers
 
             if (IsCarrinhoExiste == true)
             {
-                AdicionarPedidosNoCarrinhoJaExistente(IdPedido);
+                AdicionarPedidosNoCarrinhoJaExistente(idPedido);
             }
             else
             {
@@ -88,8 +85,6 @@ namespace SiteVendas.Controllers
             }
 
             return Ok();
-
-            //return View("~/Views/Cardapio/ListaProdutos.cshtml");
         }
 
         private void AdicionarPedidoPrimeiroProdutoNoCarrinho()
@@ -100,16 +95,16 @@ namespace SiteVendas.Controllers
                 pd_data = DateTime.Today,
                 pd_valor = valor,
                 pd_confirmado = false,
-                fk_cadastro_cliente = IdUsuario,
+                fk_cadastro_cliente = idUsuario,
                 fk_produto = idProduto,
             };
 
-            //context.tb_pedido.Add(pedido);
-            //context.SaveChanges();
+            context.tb_pedido.Add(pedido);
+            context.SaveChanges();
 
-            //int idPedido = pedido.id_pedido;
+            int idPedido = pedido.id_pedido;
 
-            //InserirNumeroPedido(idPedido);
+            InserirNumeroPedido(idPedido);
         }
 
         private void InserirNumeroPedido(int _idPedido)
@@ -133,15 +128,13 @@ namespace SiteVendas.Controllers
                 pd_data = DateTime.Today,
                 pd_valor = valor,
                 pd_confirmado = false,
-                fk_cadastro_cliente = IdUsuario,
+                fk_cadastro_cliente = idUsuario,
                 fk_produto = idProduto,
             };
 
-            //context.tb_pedido.Add(pedido);
-            //context.SaveChanges();
+            context.tb_pedido.Add(pedido);
+            context.SaveChanges();
         }
-
-        private int IdUsuario = 0;
 
         private void BuscarIdUsuario()
         {
@@ -149,10 +142,8 @@ namespace SiteVendas.Controllers
 
             var idUsuario = context.tb_cadastro_cliente.Where(x => x.cc_email.Equals(usuario)).Select(x => x.id_cadastro_cliente).FirstOrDefault();
 
-            IdUsuario = idUsuario;
+            this.idUsuario = idUsuario;
         }
-
-        private int IdPedido = 0;
 
         private bool VerificarExistenciaPedido()
         {
@@ -163,21 +154,93 @@ namespace SiteVendas.Controllers
                 {
                     Cliente = cliente,
                     Pedido = pedido,
-                }).Where(x => x.Cliente.id_cadastro_cliente == IdUsuario && x.Pedido.pd_confirmado == false).Select(x => x.Pedido.pd_numero_pedido);
+                }).Where(x => x.Cliente.id_cadastro_cliente == idUsuario && x.Pedido.pd_confirmado == false).Select(x => x.Pedido.pd_numero_pedido).FirstOrDefault();
 
-            if (!buscarProdutosCarrinho.IsNullOrEmpty())
+            if (buscarProdutosCarrinho != null)
             {
-                foreach (var VARIABLE in buscarProdutosCarrinho)
-                {
-                    IdPedido = VARIABLE.Value;
+                idPedido = Convert.ToInt32(buscarProdutosCarrinho);
 
-                    //AdicionarPedidosNoCarrinhoJaExistente(IdPedido);
-                }
                 return true;
             }
 
             return false;
-            //AdicionarPedidoPrimeiroProdutoNoCarrinho();
+        }
+
+        [HttpDelete]
+        [Authorize]
+        public IActionResult ExcluirPedido(int _idProduto)
+        {
+            var pedidoExcluir = context.tb_pedido.Where(x => x.id_pedido.Equals(_idProduto)).FirstOrDefault();
+
+            context.tb_pedido.Remove(pedidoExcluir);
+            context.SaveChanges();
+
+            return Ok();
+        }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult CarrinhoCompra()
+        {
+            //string usuario = "Admin@hotmail.com";
+            string usuario = HttpContext.Session.GetString("usuario");
+
+            var quantidadePedidos = context.tb_cadastro_cliente.Join(context.tb_pedido, cliente => cliente.id_cadastro_cliente,
+                    pedido => pedido.fk_cadastro_cliente, (cliente, pedido) => new
+                    {
+                        Cliente = cliente,
+                        Pedido = pedido,
+                    }).Join(context.tb_produto, pedido => pedido.Pedido.fk_produto, produto => produto.id_produto, (pedido1, produto) => new
+                    {
+                        Pedido = pedido1.Pedido,
+                        Produto = produto,
+                        Cliente = pedido1.Cliente
+                    })
+                .Where(x => x.Cliente.cc_email == usuario && x.Pedido.pd_confirmado == false)
+                .Select(x => new CarrinhoViewModel
+                {
+                    idPedido = x.Pedido.id_pedido,
+                    idProduto = x.Produto.id_produto,
+                    numeroPedido = x.Pedido.pd_numero_pedido,
+                    quantidade = x.Pedido.pd_quantidade,
+                    valorTotal = x.Pedido.pd_valor,
+                    imagem = x.Produto.pd_imagem,
+                    nome = x.Produto.pd_nome,
+                    tamanho = x.Produto.pd_tamanho,
+                    valorUnitario = x.Produto.pd_preco
+                }).ToList();
+
+            ViewData["quantidadePedidos1"] = null;
+
+            ViewData["quantidadePedidos1"] = quantidadePedidos;
+
+            BuscarChaviPix();
+
+            return View();
+        }
+
+        private void BuscarChaviPix()
+        {
+            var chavePix = context.tb_dados_empresa.Select(x => x.de_cnpj).FirstOrDefault();
+
+            ViewData["chavePix"] = null;
+
+            ViewData["chavePix"] = chavePix;
+        }
+
+        public IActionResult FinalizarPedido(int _idPedido, string _tipoPagamento, decimal _troco)
+        {
+            var finalizarPEdido = context.tb_pedido.Where(x => x.pd_numero_pedido.Equals(_idPedido)).ToList();
+
+            foreach (var item in finalizarPEdido)
+            {
+                item.pd_confirmado = true;
+                item.pd_data = DateTime.Today;
+                item.pd_tipo_pagamento = _tipoPagamento;
+                item.pd_troco_para = _troco;
+            }
+
+            context.SaveChanges();
         }
     }
 }

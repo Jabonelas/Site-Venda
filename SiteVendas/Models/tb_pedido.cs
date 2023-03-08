@@ -23,6 +23,11 @@ namespace SiteVendas.Models
         public DateTime pd_data { get; set; }
         [Column(TypeName = "decimal(10, 2)")]
         public decimal pd_valor { get; set; }
+        [StringLength(50)]
+        [Unicode(false)]
+        public string pd_tipo_pagamento { get; set; }
+        [Column(TypeName = "decimal(10, 2)")]
+        public decimal? pd_troco_para { get; set; }
         public bool pd_confirmado { get; set; }
         public int fk_cadastro_cliente { get; set; }
         public int fk_produto { get; set; }

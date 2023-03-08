@@ -15,11 +15,6 @@ namespace SiteVendas.Controllers
             public byte[] Dados { get; set; }
         }
 
-        public async Task<IActionResult> teste()
-        {
-            return View();
-        }
-
         [Authorize(Roles = "Admin@hotmail.com")]
         public async Task<IActionResult> Cadastrar()
         {
@@ -127,6 +122,7 @@ namespace SiteVendas.Controllers
         {
             var produto = context.tb_produto.Select(x => x).Where(x => x.id_produto.Equals(_idProduto)).ToList();
 
+            ViewData["EditarProduto"] = null;
             ViewData["EditarProduto"] = produto;
 
             return produto;
@@ -179,6 +175,7 @@ namespace SiteVendas.Controllers
 
                     var listaProdutos = context.tb_produto.Select(x => x).ToList();
 
+                    ViewData["ListaProdutos"] = null;
                     ViewData["ListaProdutos"] = listaProdutos;
 
                     return View("~/Views/Produto/TodosProdutos.cshtml");

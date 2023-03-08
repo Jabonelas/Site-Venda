@@ -84,6 +84,8 @@ namespace SiteVendas.Controllers
                     endereco = endereco
                 }).Where(x => x.cliente.cc_email.Equals(usuario)).ToList();
 
+                ViewData["ListaCliente"] = null;
+
                 ViewData["ListaCliente"] = dadosCliente;
 
                 return View();

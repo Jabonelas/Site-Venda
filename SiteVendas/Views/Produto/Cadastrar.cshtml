@@ -1,6 +1,42 @@
 ﻿@model SiteVendas.Models.tb_produto
 
 
+@*Exibicao carregamento do Triangulo*@
+<div class="preloader">
+    <div class="wrapper-triangle">
+        <div class="pen">
+            <div class="line-triangle">
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+            </div>
+            <div class="line-triangle">
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+            </div>
+            <div class="line-triangle">
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <h1>Cadastrar Produto</h1>
 
 
@@ -115,8 +151,9 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js"></script>
     <script src="~/js/InputMasked.js"></script>
-                    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+                        await Html.RenderPartialAsync("_ValidationScriptsPartial");
 
+    @*Remover o simbolo de R$ no momento do input*@
     <script>
 
         function removerSimboloR$() {

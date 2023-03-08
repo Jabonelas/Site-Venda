@@ -15,6 +15,7 @@ namespace SiteVendas.Controllers
                 var listaprodutos = context.tb_produto.Where(x => x.pd_disponivel == true && x.pd_tipo == "Pizza")
                         .OrderBy(x => x.pd_tipo).ToList();
 
+                ViewData["ListaProdutosSelecionado"] = null;
                 ViewData["ListaProdutosSelecionado"] = listaprodutos;
 
                 return View(listaprodutos);
@@ -32,6 +33,7 @@ namespace SiteVendas.Controllers
             var listaProdutosBebida =
                 context.tb_produto.Where(x => x.pd_disponivel == true && x.pd_tipo == "Bebida").ToList();
 
+            ViewData["ListaProdutosSelecionado"] = null;
             ViewData["ListaProdutosSelecionado"] = listaProdutosBebida;
 
             return View("~/Views/Cardapio/ListaProdutos.cshtml", listaProdutosBebida);
@@ -41,6 +43,7 @@ namespace SiteVendas.Controllers
         {
             var produto = context.tb_produto.Where(x => x.pd_nome.Contains(pesquisa)).ToList();
 
+            ViewData["ListaProdutosSelecionado"] = null;
             ViewData["ListaProdutosSelecionado"] = produto;
 
             return View("~/Views/Cardapio/ListaProdutos.cshtml", produto);

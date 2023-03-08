@@ -408,11 +408,38 @@
 
     </script>
 
+    
 
 
 
 
-    @await RenderSectionAsync("Scripts", required: false)
+@*Coonfirmar Exclusao*@
+<script>
+    function confirmarExclusao(idPedido) {
+        if (confirm("Tem certeza que deseja excluir?")) {
+
+            $.ajax({
+                type: "DELETE",
+                    url: "/Pedidos/ExcluirPedido",
+                data: { _idProduto: idPedido },
+                success: function () {
+
+                        location.reload();
+                },
+                error: function (xhr, status, error) {
+
+                    console.log("Ocorreu um erro durante a requisição AJAX: " + error);
+                }
+            });
+
+        } 
+    }
+
+</script>
+
+
+
+@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
 
