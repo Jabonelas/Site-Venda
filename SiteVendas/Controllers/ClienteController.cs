@@ -15,6 +15,8 @@ namespace SiteVendas.Controllers
         [HttpGet]
         public IActionResult Inserir()
         {
+
+
             string usuario = HttpContext.Session.GetString("usuario");
 
             if (usuario != null)
@@ -34,11 +36,28 @@ namespace SiteVendas.Controllers
         [HttpPost]
         public IActionResult Inserir(CadastroClienteViewModel _cliente)
         {
+
+            if (!ModelState.IsValid)
+            {
+                foreach (var stat in ModelState.Values)
+                {
+                    foreach (var erro in stat.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, erro.ErrorMessage);
+                    }
+                }
+
+                return View(_cliente);
+            }
+
             try
             {
+
                 context.tb_endereco.Add(_cliente.endereco);
                 context.SaveChanges();
+
                 _cliente.cliente.fk_endereco = _cliente.endereco.id_endereco;
+
                 context.tb_cadastro_cliente.Add(_cliente.cliente);
                 context.SaveChanges();
             }

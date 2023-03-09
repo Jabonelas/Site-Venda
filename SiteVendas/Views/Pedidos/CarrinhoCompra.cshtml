@@ -49,11 +49,15 @@
 @*
 <div class=" d-flex justify-content-center">
 
-    <h4>Meu Carrinho <img src="~/images/shopping_cart_30px.png" /> </h4>
+<h4>Meu Carrinho <img src="~/images/shopping_cart_30px.png" /> </h4>
 
 </div>*@
 
 <br />
+
+@{
+    int? numeroPedido = 0;
+}
 
 <table class="table text-center" id="myTable">
 
@@ -93,6 +97,7 @@
         @foreach (var item in quantiadeProduto)
         {
             somarValoresCarrinho += @item.valorTotal;
+            numeroPedido = @item.numeroPedido;
 
             <tr>
                 <td>
@@ -114,7 +119,8 @@
                     @item.tamanho
                 </td>
                 <td>
-                    <img alt="" width="100" height="100" src="data:image/png;base64,@Convert.ToBase64String(@item.imagem)" />
+                    <img alt="" width="100" height="100"
+                        src="data:image/png;base64,@Convert.ToBase64String(@item.imagem)" />
                 </td>
 
                 <td>
@@ -122,6 +128,7 @@
                         <span style="color: black"></span>
                         <span><img src="~/images/trash_30px.png" /></span>
                     </a>
+
                 </td>
             </tr>
         }
@@ -130,8 +137,12 @@
 
     <tfoot>
         <tr>
-            <td colspan="4"><h6><b>Total:</b></h6></td>
-            <td><h6><b>@somarValoresCarrinho.ToString("C2")</b></h6></td>
+            <td colspan="4">
+                <h6><b>Total:</b></h6>
+            </td>
+            <td>
+                <h6><b>@somarValoresCarrinho.ToString("C2")</b></h6>
+            </td>
         </tr>
     </tfoot>
 
@@ -147,7 +158,7 @@
             <label class="control-label">Forma de Pagamento</label>
 
 
-            <select id="cleave-TipoPagamento" class="form-control" asp-items="ViewBag.ed_tipo">
+            <select id="cleave-tipoPagamento" class="form-control" asp-items="ViewBag.ed_tipo">
 
                 <option selected value="">Escolha uma Opção...</option>
                 <option>Cartão</option>
@@ -155,6 +166,8 @@
                 <option>Pix</option>
 
             </select>
+            <label class="text-danger d-none" id="cleave-opcaoPagamento">Escolha um tipo de pagamento</label>
+
         </div>
 
         <div class="col-5">
@@ -171,11 +184,15 @@
 
 <br />
 
+
 <div class=" d-flex justify-content-end">
 
-    <a asp-controller="Cardapio" asp-action="ListaProdutos" type="button" class="btn btn-default" style="border: 2px solid rgb(96, 70, 182);">Voltar</a>
+    <a asp-controller="Cardapio" asp-action="ListaProdutos" type="button" class="btn btn-default"
+        style="border: 2px solid rgb(96, 70, 182);">Voltar</a>
 
-    <a style="margin: 0 15px;" class="btn btn-primary d-flex justify-content-end" asp-area="" asp-controller="Login" asp-action="Login">Finalizar Pedido</a>
+    <a style="margin: 0 15px;" onclick="passarParametro(@numeroPedido)"
+        class="btn btn-primary d-flex justify-content-end" asp-controller="Pedidos"
+        asp-action="FinalizarPedido">Finalizar Pedido</a>
 
 </div>
 
@@ -186,37 +203,64 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js"></script>
     <script src="~/js/InputMasked.js"></script>
-                await Html.RenderPartialAsync("_ValidationScriptsPartial");
-                
-    
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+
+
     @*Passando parametros para inserir na minha tabela de pedidos*@
     <script>
-        function passarParametro(_idProduto1) {
-            var tipoPagamento = document.getElementById(cleave - TipoPagamento).value;
-            var valorTroco = document.getElementById(cleave - formaPagamentoDinheiro).value;
+        function passarParametro(numeroPedido) {
 
-            $.ajax({
-                type: "POST",
-                url: "/Pedidos/FinalizarPedido",
-                data: { _idProduto: _idProduto1, _valor: resultado.toString(), _quantidade: quantidade },
-                success: function (data) {
-                    // Aqui você pode manipular a resposta da requisição AJAX
-                    console.log(data);
+            var tipoPagamento = document.getElementById("cleave-tipoPagamento").value;
 
-                    //$(modal).modal('hide');
+            var valorTroco = document.getElementById("cleave-formaPagamentoDinheiro").value;
 
-                    //location.reload();
-                },
-                error: function (xhr, status, error) {
-                    // Aqui você pode tratar os erros que ocorrem durante a requisição AJAX
-                    console.log("Ocorreu um erro durante a requisição AJAX: " + error);
-                }
-            });
+            console.log("Entrou no script");
+            
+            if (tipoPagamento != "") {
+
+
+                console.log("entrou aqui");
+            }
+
+
+
+            if (tipoPagamento != "" && tipoPagamento != "Escolha uma Opção...") {
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Pedidos/FinalizarPedido",
+                    data: { _numeroPedido: numeroPedido, _tipoPagamento: tipoPagamento, _troco: valorTroco },
+                    success: function (data) {
+                        // Aqui você pode manipular a resposta da requisição AJAX
+
+                        $("#cleave-opcaoPagamento").addClass("d-none");
+
+                        console.log(data);
+
+                        //$(modal).modal('hide');
+
+                        //location.reload();
+                    },
+                    error: function (xhr, status, error) {
+                        // Aqui você pode tratar os erros que ocorrem durante a requisição AJAX
+                        console.log("Ocorreu um erro durante a requisição AJAX: " + error);
+                    }
+                });
+
+
+            } else {
+
+                $("#cleave-opcaoPagamento").removeClass("d-none");
+
+            }
+
+
+
         }
     </script>
-    
 
-    
+
+
 
     @*Colocando o R$ no campo de dinheiro*@
     <script>
@@ -228,15 +272,14 @@
         }
 
     </script>
-    
+
     @*Setando tipo pagamento*@
     <script>
 
-        $("#cleave-TipoPagamento").change(function () {
+        $("#cleave-tipoPagamento").change(function () {
 
-            console.log("Entrou");
 
-            var formaPagamento = $("#cleave-TipoPagamento").val();
+            var formaPagamento = $("#cleave-tipoPagamento").val();
 
             if (formaPagamento == "Cartão") {
 

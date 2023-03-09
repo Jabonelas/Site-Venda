@@ -1,6 +1,42 @@
 ﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model SiteVendas.Models.ViewModel.CadastroClienteViewModel
 
+
+@*Exibicao carregamento do Triangulo*@
+<div class="preloader">
+    <div class="wrapper-triangle">
+        <div class="pen">
+            <div class="line-triangle">
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+            </div>
+            <div class="line-triangle">
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+            </div>
+            <div class="line-triangle">
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <h1>Cadastrar Cliente</h1>
 
 
@@ -14,28 +50,25 @@
 
 <h4>DADOS:</h4>
 
+<form asp-controller="Cliente" asp-action="Inserir" method="post">
 
-
-<form asp-action="Inserir">
-
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
+    @* <div asp-validation-summary="ModelOnly" class="text-danger"></div> *@
 
     <div class="card">
 
-
         <div class="card-body">
-
 
             <div class="row">
 
                 <div class="col-md-8">
-              
+
 
                     <div class="form-group">
+
                         <label class="control-label">Nome</label>
                         <input asp-for="cliente.cc_nome" class="form-control" minlength="10" maxlength="200" />
-                        @*<span asp-validation-for="cc_email" class="text-danger"></span>*@
+                        <span asp-validation-for="cliente.cc_nome" class="text-danger"></span>
+
                     </div>
 
                 </div>
@@ -49,6 +82,7 @@
                     <div class="form-group">
                         <label class="control-label">CPF</label>
                         <input asp-for="cliente.cc_cpf" class="form-control" id="cleave-cpf" minlength="14" />
+                        <span asp-validation-for="cliente.cc_cpf" class="text-danger"></span>
                     </div>
 
                 </div>
@@ -58,6 +92,7 @@
                     <div class="form-group">
                         <label class="control-label">RG</label>
                         <input asp-for="cliente.cc_rg" class="form-control" id="cleave-rg" minlength="12" />
+                        <span asp-validation-for="cliente.cc_rg" class="text-danger"></span>
                     </div>
 
                 </div>
@@ -66,7 +101,9 @@
 
                     <div class="form-group">
                         <label class="control-label">Data Nascimento</label>
-                        <input asp-for="cliente.cc_data_nascimento" class="form-control" minlength="10" type="text" id="cleave-date" />
+                        <input asp-for="cliente.cc_data_nascimento" class="form-control" minlength="10" type="text"
+                            id="cleave-date" />
+                        <span asp-validation-for="cliente.cc_data_nascimento" class="text-danger"></span>
                     </div>
 
                 </div>
@@ -80,6 +117,7 @@
                     <div class="form-group">
                         <label class="control-label">Telefone</label>
                         <input asp-for="cliente.cc_telefone" class="form-control" id="cleave-telefone" minlength="15" />
+                        <span asp-validation-for="cliente.cc_telefone" class="text-danger"></span>
                     </div>
 
                 </div>
@@ -89,6 +127,7 @@
                     <div class="form-group">
                         <label class="control-label">Celular</label>
                         <input asp-for="cliente.cc_celular" class="form-control" id="cleave-celular" minlength="15" />
+                        <span asp-validation-for="cliente.cc_celular" class="text-danger"></span>
                     </div>
 
                 </div>
@@ -102,7 +141,6 @@
     <br />
 
     <h4>ENDEREÇO:</h4>
-
 
     <div class="card">
 
@@ -134,6 +172,7 @@
                         <label class="control-label">CEP</label>
                         <input asp-for="endereco.ed_cep" class="form-control" minlength="9" id="cleave-cep1" />
                         <label class="text-danger d-none" id="cleave-cep2">CEP Inválido</label>
+                        <span asp-validation-for="endereco.ed_cep" class="text-danger"></span>
 
                     </div>
 
@@ -144,6 +183,7 @@
                     <div class="form-group">
                         <label class="control-label">Estado</label>
                         <input asp-for="endereco.ed_estado" class="form-control" minlength="2" id="cleave-estado" />
+                        <span asp-validation-for="endereco.ed_estado" class="text-danger"></span>
 
                     </div>
 
@@ -153,7 +193,9 @@
 
                     <div class="form-group">
                         <label class="control-label">Cidade</label>
-                        <input asp-for="endereco.ed_cidade" class="form-control" minlength="5" maxlength="100" id="cleave-cidade" />
+                        <input asp-for="endereco.ed_cidade" class="form-control" minlength="5" maxlength="100"
+                            id="cleave-cidade" />
+                        <span asp-validation-for="endereco.ed_cidade" class="text-danger"></span>
                     </div>
 
                 </div>
@@ -168,6 +210,7 @@
                     <div class="form-group">
                         <label class="control-label">Número</label>
                         <input asp-for="endereco.ed_numero" class="form-control" minlength="1" maxlength="10" />
+                        <span asp-validation-for="endereco.ed_numero" class="text-danger"></span>
                     </div>
 
                 </div>
@@ -178,7 +221,9 @@
 
                     <div class="form-group">
                         <label class="control-label">Bairro</label>
-                        <input asp-for="endereco.ed_bairro" class="form-control" minlength="5" maxlength="100" id="cleave-bairro" />
+                        <input asp-for="endereco.ed_bairro" class="form-control" minlength="5" maxlength="100"
+                            id="cleave-bairro" />
+                        <span asp-validation-for="endereco.ed_bairro" class="text-danger"></span>
                     </div>
 
                 </div>
@@ -187,7 +232,9 @@
 
                     <div class="form-group">
                         <label class="control-label">Logradouro</label>
-                        <input asp-for="endereco.ed_logradouro" class="form-control" minlength="5" maxlength="100" id="cleave-logradouro" />
+                        <input asp-for="endereco.ed_logradouro" class="form-control" minlength="5" maxlength="100"
+                            id="cleave-logradouro" />
+                        <span asp-validation-for="endereco.ed_logradouro" class="text-danger"></span>
                     </div>
 
                 </div>
@@ -201,7 +248,9 @@
 
                     <div class="form-group">
                         <label class="control-label">Complemento</label>
-                        <input asp-for="endereco.ed_complemento" class="form-control" minlength="0" maxlength="200" id="cleave-comlemento" />
+                        <input asp-for="endereco.ed_complemento" class="form-control" minlength="0" maxlength="200"
+                            id="cleave-comlemento" />
+                        <span asp-validation-for="endereco.ed_complemento" class="text-danger"></span>
                     </div>
 
                 </div>
@@ -225,6 +274,7 @@
                 <div class="form-group">
                     <label class="control-label">E-mail</label>
                     <input asp-for="cliente.cc_email" class="form-control" minlength="10" maxlength="100" />
+                    <span asp-validation-for="cliente.cc_email" class="text-danger"></span>
                 </div>
 
             </div>
@@ -233,7 +283,9 @@
 
                 <div class="form-group">
                     <label class="control-label">Senha</label>
-                    <input asp-for="cliente.cc_senha" class="form-control" minlength="5" maxlength="20" id="cleave-senha" type="password" />
+                    <input asp-for="cliente.cc_senha" class="form-control" minlength="5" maxlength="20"
+                        id="cleave-senha" type="password" />
+                    <span asp-validation-for="cliente.cc_senha" class="text-danger"></span>
                 </div>
 
             </div>
@@ -242,9 +294,11 @@
 
                 <div class="form-group">
                     <label class="control-label">Confirmar Senha</label>
-                    <input asp-for="confirmarSenha" class="form-control" minlength="5" maxlength="20" id="cleave-confirmarSenha" type="password" />
+                    <input asp-for="confirmarSenha" class="form-control" minlength="5" maxlength="20"
+                        id="cleave-confirmarSenha" type="password" />
                     <label class="text-danger d-none" id="cleave-confirmarSenha1">senha diferente</label>
-                    @* <span asp-validation-for="confirmarSenha" class="text-danger" id="cleave-confirmarSenha"></span>*@
+                    @* <span asp-validation-for="confirmarSenha" class="text-danger"
+                    id="cleave-confirmarSenha"></span>*@
                 </div>
 
             </div>
@@ -252,7 +306,6 @@
         </div>
 
     </div>
-
 
     <br />
 
@@ -262,7 +315,9 @@
 
     </div>
 
+
 </form>
+
 
 
 @section Scripts {
@@ -270,8 +325,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js"></script>
     <script src="~/js/InputMasked.js"></script>
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    
-    
+
+
     @*Verificação se as senhas informadas são iguais*@
     <script>
         $("#cleave-confirmarSenha").blur(function () {
@@ -289,8 +344,8 @@
             }
         });
     </script>
-    
-    
+
+
     @*Setando Endereço com base no CEP*@
     <script>
 

@@ -228,19 +228,37 @@ namespace SiteVendas.Controllers
             ViewData["chavePix"] = chavePix;
         }
 
-        public IActionResult FinalizarPedido(int _idPedido, string _tipoPagamento, decimal _troco)
+        public IActionResult FinalizarPedido(int _numeroPedido, string _tipoPagamento, string _troco)
         {
-            var finalizarPEdido = context.tb_pedido.Where(x => x.pd_numero_pedido.Equals(_idPedido)).ToList();
+
+            if (!ModelState.IsValid)
+            {
+                foreach (var stat in ModelState.Values)
+                {
+                    foreach (var erro in stat.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, erro.ErrorMessage);
+                    }
+                }
+
+              return RedirectToAction("CarrinhoCompra");
+            }
+
+
+
+            var finalizarPEdido = context.tb_pedido.Where(x => x.pd_numero_pedido.Equals(_numeroPedido)).ToList();
 
             foreach (var item in finalizarPEdido)
             {
                 item.pd_confirmado = true;
                 item.pd_data = DateTime.Today;
                 item.pd_tipo_pagamento = _tipoPagamento;
-                item.pd_troco_para = _troco;
+                item.pd_troco_para = Convert.ToDecimal(_troco.Replace("R$ ", ""));
             }
 
-            context.SaveChanges();
+            //context.SaveChanges();
+
+            return RedirectToAction("CarrinhoCompra");
         }
     }
 }

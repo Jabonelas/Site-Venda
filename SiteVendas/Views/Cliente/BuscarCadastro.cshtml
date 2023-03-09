@@ -24,7 +24,7 @@
 
 <form asp-action="BuscarCadastro">
 
-<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
     <div class="card">
 
@@ -46,8 +46,8 @@
                             <input asp-for="@Model.cliente.cc_nome" value="@item.cliente.cc_nome" class="form-control" minlength="10" maxlength="200" />
                             @*<span asp-validation-for="cc_email" class="text-danger"></span>*@
                         </div>
-                        
-                      
+
+
 
                     </div>
 
@@ -123,7 +123,7 @@
             @foreach (var item in @listaCliente)
             {
 
-                
+
                 <div class="row">
 
                     <div class="col-md-3">
@@ -284,16 +284,15 @@
 
 
 
-@*fim da linha*@
 
-@*<div>
-    <a asp-action="Inserir">Back to List</a>
-</div>*@
 
 @section Scripts {
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js"></script>
+    <script src="~/js/InputMasked.js"></script>
+                                                            await Html.RenderPartialAsync("_ValidationScriptsPartial");
 
-
+    @*Verificar se as senhas indicadas sao iguais*@
     <script>
 
         $("#cleave-confirmarSenha").blur(function () {
@@ -314,15 +313,7 @@
 
     </script>
 
-
-
-
-
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js"></script>
-    <script src="~/js/InputMasked.js"></script>
-                                                    await Html.RenderPartialAsync("_ValidationScriptsPartial");
-
+    @*Buscando e inserindo o endereco com base no cep*@
     <script>
 
         $(document).ready(function () {
@@ -363,10 +354,4 @@
         });
 
     </script>
-
-
-
-
-
-
 }
