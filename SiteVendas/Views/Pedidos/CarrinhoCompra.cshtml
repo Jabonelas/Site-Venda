@@ -190,9 +190,13 @@
     <a asp-controller="Cardapio" asp-action="ListaProdutos" type="button" class="btn btn-default"
         style="border: 2px solid rgb(96, 70, 182);">Voltar</a>
 
-    <a style="margin: 0 15px;" onclick="passarParametro(@numeroPedido)"
+    @* <a style="margin: 0 15px;" onclick="passarParametro(@numeroPedido)"
         class="btn btn-primary d-flex justify-content-end" asp-controller="Pedidos"
-        asp-action="FinalizarPedido">Finalizar Pedido</a>
+        asp-action="FinalizarPedido">Finalizar Pedido</a> *@
+
+
+ <button style="margin: 0 15px;" onclick="passarParametro(@numeroPedido)" class="btn btn-primary d-flex justify-content-end">Finalizar Pedido</button>
+
 
 </div>
 
@@ -214,16 +218,6 @@
 
             var valorTroco = document.getElementById("cleave-formaPagamentoDinheiro").value;
 
-            console.log("Entrou no script");
-            
-            if (tipoPagamento != "") {
-
-
-                console.log("entrou aqui");
-            }
-
-
-
             if (tipoPagamento != "" && tipoPagamento != "Escolha uma Opção...") {
 
                 $.ajax({
@@ -233,9 +227,12 @@
                     success: function (data) {
                         // Aqui você pode manipular a resposta da requisição AJAX
 
+                        console.log("essa merda")
+
+
                         $("#cleave-opcaoPagamento").addClass("d-none");
 
-                        console.log(data);
+                     window.location.href = "/Pedidos/FinalizarPedido";
 
                         //$(modal).modal('hide');
 
@@ -247,20 +244,13 @@
                     }
                 });
 
-
             } else {
 
                 $("#cleave-opcaoPagamento").removeClass("d-none");
 
             }
-
-
-
         }
     </script>
-
-
-
 
     @*Colocando o R$ no campo de dinheiro*@
     <script>

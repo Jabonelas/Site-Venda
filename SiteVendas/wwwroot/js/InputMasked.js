@@ -136,3 +136,45 @@ if (document.querySelector("#cleave-dinheiro")) {
         },
     });
 }
+
+
+if (document.querySelector("#cleave-cnpj")) {
+   var cleaveDate = new Cleave('#cleave-cnpj', {
+       delimiters: ['.', '.', '/', '-'],
+       blocks: [2, 3, 3, 4, 2]
+   });
+}
+
+ if (document.querySelector("#cleave-horarioInicio")) {
+    var cleaveHorario = new Cleave('#cleave-horarioInicio', {
+      delimiter: ':',
+      blocks: [2, 2],
+      numericOnly: true,
+      onValueChanged: function (e) {
+        var hora = parseInt(e.target.value.substr(0, 2));
+        var minuto = parseInt(e.target.value.substr(3, 2));
+        
+        // valida se a hora está entre 0 e 23 e se os minutos estão entre 0 e 59
+        if (hora < 0 || hora > 23 || minuto < 0 || minuto > 59) {
+          e.target.value = '';
+        }
+      }
+    });
+  }
+
+ if (document.querySelector("#cleave-horarioFechamento")) {
+    var cleaveHorario = new Cleave('#cleave-horarioFechamento', {
+      delimiter: ':',
+      blocks: [2, 2],
+      numericOnly: true,
+      onValueChanged: function (e) {
+        var hora = parseInt(e.target.value.substr(0, 2));
+        var minuto = parseInt(e.target.value.substr(3, 2));
+        
+        // valida se a hora está entre 0 e 23 e se os minutos estão entre 0 e 59
+        if (hora < 0 || hora > 23 || minuto < 0 || minuto > 59) {
+          e.target.value = '';
+        }
+      }
+    });
+  }

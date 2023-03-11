@@ -146,8 +146,6 @@
 
         <div class="card-body">
 
-
-
             <div class="row">
 
                 <div class="col-md-3">
@@ -200,7 +198,6 @@
 
                 </div>
 
-
             </div>
 
             <div class="row">
@@ -214,8 +211,6 @@
                     </div>
 
                 </div>
-
-
 
                 <div class="col-md-3">
 
@@ -268,7 +263,6 @@
 
         <div class="card-body row">
 
-
             <div class="col-6">
 
                 <div class="form-group">
@@ -296,7 +290,7 @@
                     <label class="control-label">Confirmar Senha</label>
                     <input asp-for="confirmarSenha" class="form-control" minlength="5" maxlength="20"
                         id="cleave-confirmarSenha" type="password" />
-                    <label class="text-danger d-none" id="cleave-confirmarSenha1">senha diferente</label>
+                    <label class="text-danger d-none" id="cleave-confirmarSenha1">Senha diferente</label>
                     @* <span asp-validation-for="confirmarSenha" class="text-danger"
                     id="cleave-confirmarSenha"></span>*@
                 </div>
@@ -342,9 +336,9 @@
 
                 $("#cleave-confirmarSenha1").addClass("d-none");
             }
+
         });
     </script>
-
 
     @*Setando Endereço com base no CEP*@
     <script>
@@ -378,13 +372,9 @@
 
                 } else {
 
-
                     $("#cleave-cep2").removeClass("d-none");
-
                 }
-
             });
-
         });
 
     </script>

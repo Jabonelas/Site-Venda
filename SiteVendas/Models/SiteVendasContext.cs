@@ -2,15 +2,12 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace SiteVendas.Models
 {
-    //public partial class SiteVendasContext : DbContext
-    public partial class SiteVendasContext : IdentityDbContext<IdentityUser>
+    public partial class SiteVendasContext : DbContext
     {
         public SiteVendasContext()
         {
@@ -37,21 +34,8 @@ namespace SiteVendas.Models
             }
         }
 
-
-        //protected override void OnModelCreating(ModelBuilder builder)
-        //{
-        //    base.OnModelCreating(builder);
-
-        //    builder.Entity<IdentityUserLogin<string>>()
-        //        .HasKey(l => new { l.LoginProvider, l.ProviderKey });
-        //}
-
-
-
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
             modelBuilder.Entity<tb_cadastro_cliente>(entity =>
             {
                 entity.HasOne(d => d.fk_enderecoNavigation)
@@ -95,8 +79,6 @@ namespace SiteVendas.Models
             });
 
             OnModelCreatingPartial(modelBuilder);
-
-
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

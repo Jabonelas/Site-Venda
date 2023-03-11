@@ -20,11 +20,13 @@ namespace SiteVendas.Models
         [StringLength(50)]
         [Unicode(false)]
         public string de_cnpj { get; set; }
+        [StringLength(50)]
+        [Unicode(false)]
+        public string de_horario_inicio { get; set; }
+        [StringLength(50)]
+        [Unicode(false)]
+        public string de_horario_fechamento { get; set; }
         public int fk_endereco { get; set; }
-        [Column(TypeName = "decimal(10, 2)")]
-        public decimal? de_horario_inicio { get; set; }
-        [Column(TypeName = "decimal(10, 2)")]
-        public decimal? de_horario_fechamento { get; set; }
 
         [ForeignKey("fk_endereco")]
         [InverseProperty("tb_dados_empresa")]

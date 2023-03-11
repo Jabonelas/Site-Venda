@@ -85,6 +85,10 @@ namespace SiteVendas.Controllers
             //HttpContext.Session.Clear();
             //HttpContext.User = null;
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+
+            HttpContext.Session.Clear();
+HttpContext.Session.Remove("usuario");
             return RedirectToAction("Login", "Login");
         }
     }

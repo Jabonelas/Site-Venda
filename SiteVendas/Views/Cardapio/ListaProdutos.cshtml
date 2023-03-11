@@ -1,7 +1,13 @@
-﻿@model IEnumerable<SiteVendas.Models.tb_produto>
+﻿@using Azure
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model IEnumerable<SiteVendas.Models.tb_produto>
+@inject IHttpContextAccessor _httpContextAccessor;
+
 
 @{
     var listaProdutosSelecionado = ViewData["ListaProdutosSelecionado"] as List<tb_produto>;
+
+    var Usuario = _httpContextAccessor.HttpContext.Session.GetString("usuario");
 }
 
 @*Exibicao carregamento do Triangulo*@
@@ -53,6 +59,7 @@
 
         @*Verificação do tipo do produto se no caso e PIZZA ou BEBIDA*@
         @if (listaProdutosSelecionado.Select(x => x.pd_tipo).First() == "Pizza")
+
         {
             <form method="post" asp-controller="Cardapio" asp-action="BuscarProduto">
 
@@ -63,7 +70,7 @@
 
                     <div class="col-2">
                         <a class="btn " style="border: 2px solid rgb(96, 70, 182);font-family: Arial, sans-serif;"
-                       asp-controller="Cardapio" asp-action="ListaProdutosBebida">Bebida</a>
+                        asp-controller="Cardapio" asp-action="ListaProdutosBebida">Bebida</a>
                     </div>
 
                     <div class="col-3">
@@ -76,7 +83,9 @@
                 </div>
             </form>
         }
+
         else
+
         {
 
             <form method="post" asp-controller="Cardapio" asp-action="BuscarProduto">
@@ -84,7 +93,7 @@
                 <div class="row ">
                     <div class="col-1">
                         <a class="btn " style="border: 2px solid rgb(96, 70, 182); font-family: Arial, sans-serif;"
-                       asp-controller="Cardapio" asp-action="ListaProdutos">Pizza</a>
+                        asp-controller="Cardapio" asp-action="ListaProdutos">Pizza</a>
                     </div>
 
                     <div class="col-2">
@@ -100,10 +109,9 @@
                     </div>
                 </div>
             </form>
-
-
         }
 
+        @*<button type="button" class="btn btn-primary" id="myBtn">Abrir modal</button>*@
         <div class="row row-lg row-30">
 
             @foreach (var item in @listaProdutosSelecionado)
@@ -115,12 +123,14 @@
                         <div class="product-figure">
 
                             <img alt="" width="161" height="162"
-                             src="data:image/png;base64,@Convert.ToBase64String(@item.pd_imagem)" />
+                                src="data:image/png;base64,@Convert.ToBase64String(@item.pd_imagem)" />
 
                         </div>
                         <div class="product-rating">
 
-                            <span class="mdi mdi-star"></span><span class="mdi mdi-star"></span><span class="mdi mdi-star"></span><span class="mdi mdi-star"></span><span class="mdi mdi-star text-gray-13"></span>
+                            <span class="mdi mdi-star"></span><span class="mdi mdi-star"></span><span
+                                class="mdi mdi-star"></span><span class="mdi mdi-star"></span><span
+                                class="mdi mdi-star text-gray-13"></span>
 
                         </div>
 
@@ -131,23 +141,33 @@
                             <div class="product-price">@item.pd_preco.ToString("C2")</div>
 
                         </div>
+
                         <div class="product-button">
+                            @*
+                        <div class="button-wrap">
+                        <a type="button" data-toggle="modal"
+                        data-target="#ModalCarrinho-@item.id_produto"
+                        class="button button-xs button-secondary button-winona" href="#">Adicionar ao Carrinho</a>
+                        </div>*@
+
+
 
                             <div class="button-wrap">
-                                <a type="button" data-toggle="modal"
-                               data-target="#ModalCarrinho-@item.id_produto"
-                               class="button button-xs button-secondary button-winona" href="#">Adicionar ao Carrinho</a>
+                                <button onclick="botaoModal(@item.id_produto)"
+                                    class="button button-xs button-secondary button-winona" href="#">Adicionar ao
+                                    Carrinho</button>
                             </div>
 
                             <div class="button-wrap">
-                                <a type="button" data-toggle="modal"
-                               data-target="#ModalDetalhe-@item.id_produto"
-                               class="button button-xs button-secondary button-winona" href="#">Ver Detalhes</a>
+                                <a type="button" data-toggle="modal" data-target="#ModalDetalhe-@item.id_produto"
+                                    class="button button-xs button-secondary button-winona" href="#">Ver Detalhes</a>
                             </div>
+
+
 
                             <!-- Modal Detalher Produto -->
                             <div class="modal" id="ModalDetalhe-@item.id_produto" tabindex="-1" role="dialog"
-                             aria-labelledby="myModalLabel">
+                                aria-labelledby="myModalLabel">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -163,7 +183,7 @@
                                         <div class="modal-body text-center">
 
                                             <img alt="" width="161" height="162"
-                                             src="data:image/png;base64,@Convert.ToBase64String(@item.pd_imagem)" />
+                                                src="data:image/png;base64,@Convert.ToBase64String(@item.pd_imagem)" />
 
                                             <br />
                                             <br />
@@ -201,8 +221,9 @@
                                                 Voltar
                                             </button>
 
-                                            <button class=" btn btn-primary form-group" onclick="passarParametro(@item.id_produto)" type="submit" id="passarParametros">Adicionar no Carrinho</button>
-
+                                            <button class=" btn btn-primary form-group"
+                                                onclick="passarParametro(@item.id_produto)" type="submit"
+                                                id="passarParametros">Adicionar no Carrinho</button>
 
                                         </div>
                                     </div>
@@ -211,9 +232,17 @@
 
 
 
+
+
+
                             <!-- Modal Adicionar Carrinho -->
                             <div class="modal" id="ModalCarrinho-@item.id_produto" tabindex="-1" role="dialog"
-                             aria-labelledby="myModalLabel">
+                                aria-labelledby="myModalLabel">
+
+
+
+
+
                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -229,29 +258,23 @@
                                         <div class="modal-body text-center">
 
                                             <img alt="" width="161" height="162"
-                                             src="data:image/png;base64,@Convert.ToBase64String(@item.pd_imagem)" />
+                                                src="data:image/png;base64,@Convert.ToBase64String(@item.pd_imagem)" />
 
                                             <br />
                                             <br />
 
                                             <div class="card">
 
-                                                <h6>
-
-                                                    @*<b>Quantidade:</b>*@
-
-                                                    @*<input type="number" id="num1-@item.id_produto" value="1" min="1" max="99" onchange="multiplicar(@item.id_produto)">*@
-
-                                                </h6>
-
                                                 <br />
 
-                                                <div style="text-align:center;">
+                                                <div style="text-align: center;">
                                                     <h6>
 
                                                         <b>Quantidade:</b>
 
-                                                        <input name="quantidade" type="number" id="num1-@item.id_produto" value="1" min="1" max="99" onchange="multiplicar(@item.id_produto)">
+                                                        <input name="quantidade" type="number" id="num1-@item.id_produto"
+                                                            value="1" min="1" max="99"
+                                                            onchange="multiplicar(@item.id_produto)">
                                                     </h6>
 
                                                 </div>
@@ -268,11 +291,13 @@
 
                                                 <h6>
                                                     <b>
-                                                        <input class="d-none" id="num2-@item.id_produto" value="@item.pd_preco" readonly>
+                                                        <input class="d-none" id="num2-@item.id_produto"
+                                                            value="@item.pd_preco" readonly>
 
                                                         <h4>
 
-                                                            <label name="valor" id="resultadoMultiplicacao-@item.id_produto">@item.pd_preco.ToString("C2")</label>
+                                                            <label name="valor"
+                                                                id="resultadoMultiplicacao-@item.id_produto">@item.pd_preco.ToString("C2")</label>
 
                                                         </h4>
                                                     </b>
@@ -288,11 +313,14 @@
                                                 Voltar
                                             </button>
 
-                                            <button class=" btn btn-primary form-group" onclick="passarParametro(@item.id_produto)" type="submit" id="passarParametros">Adicionar no Carrinho</button>
+                                            <button class=" btn btn-primary form-group"
+                                                onclick="passarParametro(@item.id_produto)" type="submit"
+                                                id="passarParametros">Adicionar no Carrinho</button>
 
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
 
                         </div>
@@ -308,7 +336,37 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js"></script>
     <script src="~/js/InputMasked.js"></script>
-                            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+
+
+
+    <script>
+        function botaoModal(_idProduto) {
+            console.log("Entrou na função");
+            console.log(_idProduto);
+            var session = "@Usuario";
+
+            if (session == "") {
+
+                window.location.href = "/Login/Login";
+
+            } else {
+
+                $(`#ModalCarrinho-${_idProduto}`).modal();
+
+            }
+        }
+    </script>
+
+
+    <script>
+        $(document).ready(function () {
+            $("#myBtn").click(function () {
+                $("#myModal").modal();
+            });
+        });
+    </script>
+
+
 
     @*Calcular Valor Total de Itens conforme a quantidade*@
     <script>
@@ -319,9 +377,17 @@
             var resultado = num1 * num2.replace(",", ".");
 
             document.getElementById(`resultadoMultiplicacao-${_idProduto}`).innerHTML = resultado.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
         }
     </script>
-    
+
+
+    <script>
+        function ChamarModal() {
+            var modal = `#ModalCarrinho-${_idProduto1}`;
+            (modal).modal('hide');
+        }
+    </script>
     @*Passando parametros para inserir na minha tabela de pedidos*@
     <script>
         function passarParametro(_idProduto1) {
@@ -349,7 +415,7 @@
             });
         }
     </script>
-    
+
     @*Passando parametro para buscar produto no banco com base na requisição do usuario*@
     <script>
 

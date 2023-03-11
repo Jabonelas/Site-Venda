@@ -231,33 +231,49 @@ namespace SiteVendas.Controllers
         public IActionResult FinalizarPedido(int _numeroPedido, string _tipoPagamento, string _troco)
         {
 
-            if (!ModelState.IsValid)
-            {
-                foreach (var stat in ModelState.Values)
-                {
-                    foreach (var erro in stat.Errors)
-                    {
-                        ModelState.AddModelError(string.Empty, erro.ErrorMessage);
-                    }
-                }
+            // if (!ModelState.IsValid)
+            // {
+            //     foreach (var stat in ModelState.Values)
+            //     {
+            //         foreach (var erro in stat.Errors)
+            //         {
+            //             ModelState.AddModelError(string.Empty, erro.ErrorMessage);
+            //         }
+            //     }
 
-              return RedirectToAction("CarrinhoCompra");
+            //     return RedirectToAction("CarrinhoCompra");
+            // }
+
+
+
+            var finalizarPedido = context.tb_pedido.Where(x => x.pd_numero_pedido.Equals(_numeroPedido)).ToList();
+
+            decimal valorTroco = 0;
+
+            if (_troco != null)
+            {
+                valorTroco = Convert.ToDecimal(_troco.Replace("R$ ", ""));
+
             }
 
-
-
-            var finalizarPEdido = context.tb_pedido.Where(x => x.pd_numero_pedido.Equals(_numeroPedido)).ToList();
-
-            foreach (var item in finalizarPEdido)
+            foreach (var item in finalizarPedido)
             {
                 item.pd_confirmado = true;
                 item.pd_data = DateTime.Today;
                 item.pd_tipo_pagamento = _tipoPagamento;
-                item.pd_troco_para = Convert.ToDecimal(_troco.Replace("R$ ", ""));
+                item.pd_troco_para = valorTroco;
+
+                var inserirNF = new tb_nota_fiscal()
+                {
+                    fk_pedido = item.id_pedido
+                };
+
+                context.tb_nota_fiscal.Add(inserirNF);
+                context.SaveChanges();
+
             }
 
             //context.SaveChanges();
-
             return RedirectToAction("CarrinhoCompra");
         }
     }
