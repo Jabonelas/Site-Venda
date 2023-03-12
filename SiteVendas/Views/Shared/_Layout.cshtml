@@ -38,6 +38,8 @@
 
         @if (User.Identity.IsAuthenticated)
 
+
+
         {
             <div class="col-10 d-flex justify-content-end">
                 <li> Usuário: @_httpContextAccessor.HttpContext.Session.GetString("usuario")</li>
@@ -49,7 +51,13 @@
             </div>
         }
 
+
+
         else
+
+
+
+
 
 
 
@@ -148,14 +156,12 @@
                                     </li>
 
 
-                                    <li class="rd-nav-item">
-                                        <a class="rd-nav-link" asp-area="" asp-controller="DadosEmpresa"
-                                            asp-action="Cadastrar">Dados Empresa</a>
-                                    </li>
+
 
                                     @*@await Component.InvokeAsync("CarrinhoCompra")*@
 
                                     @if (User.IsInRole("Admin@hotmail.com"))
+
                                     {
 
                                         <li class="rd-nav-item">
@@ -174,9 +180,18 @@
 
                                         @await Component.InvokeAsync("CarrinhoCompra")
 
+                                        <li class="rd-nav-item">
+                                            <a class="rd-nav-link" asp-area="" asp-controller="DadosEmpresa"
+                                            asp-action="Cadastrar">Dados Empresa</a>
+                                        </li>
+
                                     }
 
+
+
                                     else if (User.Identity.IsAuthenticated)
+
+
 
                                     {
                                         <li class="rd-nav-item">

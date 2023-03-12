@@ -11,25 +11,31 @@ namespace SiteVendas.Controllers
         private SiteVendasContext context = new SiteVendasContext();
 
         [HttpGet]
-        // [Authorize(Roles = "Admin@hotmail.com")]
+        [Authorize(Roles = "Admin@hotmail.com")]
         public IActionResult Cadastrar()
         {
-            var dadosEmpresa = context.tb_endereco.Join(context.tb_dados_empresa, endereco => endereco.id_endereco, empresa => empresa.fk_endereco,
-            (endereco, empresa) => new DadosEmpresaViewModel
-            {
-                endereco = endereco,
-                dadosEmpresa = empresa,
-                
-            }).Where(x => x.dadosEmpresa.id_dados_empresa.Equals(1)).ToList();
-
-            ViewData["DadosEmpresa"] = null;
-            ViewData["DadosEmpresa"] = dadosEmpresa;
+            BuscarDadosEmpresa();
 
             return View();
         }
 
+
+        private void BuscarDadosEmpresa()
+        {
+            var dadosEmpresa = context.tb_endereco.Join(context.tb_dados_empresa, endereco => endereco.id_endereco, empresa => empresa.fk_endereco,
+                       (endereco, empresa) => new DadosEmpresaViewModel
+                       {
+                           endereco = endereco,
+                           dadosEmpresa = empresa,
+
+                       }).Where(x => x.dadosEmpresa.id_dados_empresa.Equals(1)).ToList();
+
+            ViewData["DadosEmpresa"] = null;
+            ViewData["DadosEmpresa"] = dadosEmpresa;
+        }
+
         [HttpPost]
-        // [Authorize(Roles = "Admin@hotmail.com")]
+        [Authorize(Roles = "Admin@hotmail.com")]
         public IActionResult CadastrarDados(DadosEmpresaViewModel _dadosEmpresa)
         {
             if (!ModelState.IsValid)
@@ -42,7 +48,7 @@ namespace SiteVendas.Controllers
                     }
                 }
 
-                return View(_dadosEmpresa);
+                return View("Cadastrar", _dadosEmpresa);
             }
 
             var endereco = context.tb_endereco.Where(x => x.id_endereco.Equals(1));
@@ -59,6 +65,8 @@ namespace SiteVendas.Controllers
                 item.ed_cidade = _dadosEmpresa.endereco.ed_cidade;
             }
 
+            context.SaveChanges();
+
             var dadosEmpresa = context.tb_dados_empresa.Where(x => x.id_dados_empresa.Equals(1));
 
             foreach (var item in dadosEmpresa)
@@ -71,7 +79,12 @@ namespace SiteVendas.Controllers
 
             context.SaveChanges();
 
-            return View();
+            BuscarDadosEmpresa();
+
+            string mensagem = "Operação realizada com sucesso!";
+            TempData["mensagem"] = mensagem;
+
+            return View("Cadastrar");
         }
     }
 }

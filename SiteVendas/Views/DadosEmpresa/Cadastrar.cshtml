@@ -58,9 +58,15 @@
 
 <h4>Dados Empresa:</h4>
 
-<form asp-controller="DadosEmpresa" asp-action="Cadastrar" method="post">
+<form asp-controller="DadosEmpresa" asp-action="CadastrarDados" method="post">
 
+ @if (TempData["mensagem"] != null)
 
+    {
+        <div class="alert alert-success" role="alert">
+            @TempData["mensagem"]
+        </div>
+    }
 
     <div class="card">
 
@@ -68,8 +74,6 @@
 
             @foreach (var item in listaDadosEmpresa)
             {
-
-
                 <div class="col-md-8">
                     <div class="form-group">
 
@@ -100,12 +104,13 @@
                             <span asp-validation-for="dadosEmpresa.de_horario_inicio" class="text-danger"></span>
 
                         </div>
+
                     </div>
 
                     <div class="col-md-3">
                         <div class="form-group">
                             <label class="control-label">Horáio de Fechamento</label>
-                            <input asp-for="dadosEmpresa.de_horario_inicio" class="form-control"
+                            <input asp-for="dadosEmpresa.de_horario_fechamento" class="form-control"
                                 id="cleave-horarioFechamento" minlength="5" maxlength="5" value="@item.dadosEmpresa.de_horario_fechamento"/>
                             <span asp-validation-for="dadosEmpresa.de_horario_inicio" class="text-danger"></span>
                         </div>
@@ -137,12 +142,23 @@
                 <div class="col-md-3">
 
                     <div class="form-group">
-                        <label class="control-label">Tipo</label>
-                        <select asp-for="endereco.ed_tipo" class="form-control" asp-items="ViewBag.ed_tipo">
 
-                            <option selected value="">Escolha uma Opção...</option>
-                            <option>Principal</option>
+                        <label class="control-label">Tipo</label>
+                        <select asp-for="endereco.ed_tipo" value="@item.endereco.ed_tipo" class="form-control" asp-items="ViewBag.ed_tipo">
+
+@if (item.endereco.ed_tipo == "Principal")
+{
+    
+                            <option selected >@item.endereco.ed_tipo</option>
                             <option>Trabalho</option>
+}else
+{
+                            <option selected >@item.endereco.ed_tipo</option>
+                            <option>Principal</option>
+
+}
+
+                   
 
                         </select>
                     </div>
@@ -242,8 +258,6 @@
     </div>
 
 
-
-
     <br />
 
     <div class="form-group">
@@ -300,8 +314,4 @@
         });
 
     </script>
-
-
-
-
 }

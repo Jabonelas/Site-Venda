@@ -12,11 +12,11 @@
     </div>
 </div>
 
-<br/>
+<br />
 
 <h4>Meus Pedidos:</h4>
 
-<br/>
+<br />
 
 <table class="table text-center" id="myTable">
     <thead>
@@ -49,6 +49,7 @@
     </thead>
     <tbody>
         @foreach (var item in Model)
+
         {
             <tr>
                 <td>
@@ -76,8 +77,11 @@
 
                 <td>
                     @*<a asp-action="Edit" asp-route-id="@item.pedido.id_pedido">Edit</a> |*@
-                    @*<a asp-action="Details" asp-route-id="@item.pedido.id_pedido">Details</a> |*@
+                    @* <a asp-action="Details" asp-route-id="@item.pedido.id_pedido">Details</a> | *@
                     @*<a asp-action="Delete" asp-route-id="@item.pedido.id_pedido">Delete</a>*@
+
+                    <a class="btn btn-info form-group" asp-route="Pedidos" asp-action="DetalhePedido" asp-route-id=@item.pedido.pd_numero_pedido>Detalhes</a>
+
                 </td>
 
             </tr>
