@@ -26,55 +26,103 @@ namespace SiteVendas.Controllers
 
             if (usuario == "Admin@hotmail.com")
             {
-
                 listaPedidos = (from pedido in context.tb_pedido
-                                join produto in context.tb_produto
-                                     on pedido.fk_produto equals produto.id_produto
                                 join cliente in context.tb_cadastro_cliente
-                                     on pedido.fk_cadastro_cliente equals cliente.id_cadastro_cliente
+                                on pedido.fk_cadastro_cliente equals cliente.id_cadastro_cliente
                                 where pedido.pd_confirmado == true
-                                orderby pedido.pd_data
+
+                                group pedido by pedido.pd_numero_pedido into pedidosGroup
+                                orderby pedidosGroup.Key descending
                                 select new PedidosViewModel
                                 {
-                                    produto = produto,
-                                    pedido = pedido,
-                                    cliente = cliente
+                                    pedido = pedidosGroup.First(),
+                                    //    cliente = pedidosGroup.First().context.tb_cadastro_cliente,
+                                    //    cliente = pedidosGroup.First().tb_cadastro_cliente,
+                                    valorTotal = pedidosGroup.Sum(p => p.pd_valor)
                                 }).ToList();
 
+                // Essa aqui e a certa ate entao
+                //                 listaPedidos = (from pedido in context.tb_pedido
+                //                                 join cliente in context.tb_cadastro_cliente
+                //                                 on pedido.fk_cadastro_cliente equals cliente.id_cadastro_cliente
+                //                                 where pedido.pd_confirmado == true
+                //                                 orderby pedido.pd_numero_pedido
+                //                                 select new PedidosViewModel
+                //                                 {
+                //                                     pedido = pedido,
+                //                                     cliente = cliente
+                //                                 }).ToList();
+
+
+
+                //   listaPedidos = (from pedido in context.tb_pedido
+                // join produto in context.tb_produto
+                //      on pedido.fk_produto equals produto.id_produto
+                // join cliente in context.tb_cadastro_cliente
+                //      on pedido.fk_cadastro_cliente equals cliente.id_cadastro_cliente
+                // where pedido.pd_confirmado == true
+                // orderby pedido.pd_numero_pedido
+                // select new PedidosViewModel
+                // {
+                //     produto = produto,
+                //     pedido = pedido,
+                //     cliente = cliente
+                // }).ToList();
             }
             else
             {
-                listaPedidos =
-                   (from pedido in context.tb_pedido
-                    join produto in context.tb_produto
-                        on pedido.fk_produto equals produto.id_produto
-                    join cliente in context.tb_cadastro_cliente
-                        on pedido.fk_cadastro_cliente equals cliente.id_cadastro_cliente
-                    where cliente.cc_email == usuario && pedido.pd_confirmado == true
-                    orderby pedido.pd_data
-                    select new PedidosViewModel
-                    {
-                        produto = produto,
-                        pedido = pedido,
-                        cliente = cliente
-                    }).ToList();
-            }
 
-            listaPedidos =
-                           (from pedido in context.tb_pedido
-                            join produto in context.tb_produto
-                                on pedido.fk_produto equals produto.id_produto
-                            join cliente in context.tb_cadastro_cliente
+
+
+ listaPedidos = (from pedido in context.tb_pedido
+                                join cliente in context.tb_cadastro_cliente
                                 on pedido.fk_cadastro_cliente equals cliente.id_cadastro_cliente
-                            orderby pedido.pd_data
-                            select new PedidosViewModel
-                            {
-                                produto = produto,
-                                pedido = pedido,
-                                cliente = cliente
-                            }).ToList();
+                                 where cliente.cc_email == usuario && pedido.pd_confirmado == true
+                                group pedido by pedido.pd_numero_pedido into pedidosGroup
+                                orderby pedidosGroup.Key descending
+                                select new PedidosViewModel
+                                {
+                                    pedido = pedidosGroup.First(),
+                                    //    cliente = pedidosGroup.First().context.tb_cadastro_cliente,
+                                    //    cliente = pedidosGroup.First().tb_cadastro_cliente,
+                                    valorTotal = pedidosGroup.Sum(p => p.pd_valor)
+                                }).ToList();
 
 
+
+
+
+                // listaPedidos =
+                //    (from pedido in context.tb_pedido
+
+                //     join cliente in context.tb_cadastro_cliente
+                //         on pedido.fk_cadastro_cliente equals cliente.id_cadastro_cliente
+                //     where cliente.cc_email == usuario && pedido.pd_confirmado == true
+                //     orderby pedido.pd_data
+                //     select new PedidosViewModel
+                //     {
+                //         pedido = pedido,
+                //         // cliente = cliente
+                //     }).ToList();
+
+
+
+
+                //       listaPedidos =
+                //    (from pedido in context.tb_pedido
+                //     join produto in context.tb_produto
+                //         on pedido.fk_produto equals produto.id_produto
+                //     join cliente in context.tb_cadastro_cliente
+                //         on pedido.fk_cadastro_cliente equals cliente.id_cadastro_cliente
+                //     where cliente.cc_email == usuario && pedido.pd_confirmado == true
+                //     orderby pedido.pd_data
+                //     select new PedidosViewModel
+                //     {
+                //         produto = produto,
+                //         pedido = pedido,
+                //         cliente = cliente
+                //     }).ToList();
+            }
 
             return View(listaPedidos);
         }
@@ -246,9 +294,9 @@ namespace SiteVendas.Controllers
             ViewData["chavePix"] = chavePix;
         }
 
+
         public IActionResult FinalizarPedido(int _numeroPedido, string _tipoPagamento, string _troco)
         {
-
             // if (!ModelState.IsValid)
             // {
             //     foreach (var stat in ModelState.Values)
@@ -262,8 +310,6 @@ namespace SiteVendas.Controllers
             //     return RedirectToAction("CarrinhoCompra");
             // }
 
-
-
             var finalizarPedido = context.tb_pedido.Where(x => x.pd_numero_pedido.Equals(_numeroPedido)).ToList();
 
             decimal valorTroco = 0;
@@ -271,7 +317,6 @@ namespace SiteVendas.Controllers
             if (_troco != null)
             {
                 valorTroco = Convert.ToDecimal(_troco.Replace("R$ ", ""));
-
             }
 
             foreach (var item in finalizarPedido)
@@ -288,16 +333,22 @@ namespace SiteVendas.Controllers
 
                 context.tb_nota_fiscal.Add(inserirNF);
                 context.SaveChanges();
-
             }
 
             //context.SaveChanges();
             return RedirectToAction("CarrinhoCompra");
         }
 
+
+
+        [HttpGet]
+        [Authorize(Roles = "Admin@hotmail.com")]
+        [Route("Pedidos/DetalhePedido/{_numeroPedido}")]
         public IActionResult DetalhePedido(int _numeroPedido)
         {
             List<DetalhesPedidoViewModel> listaDetalhePedido = new List<DetalhesPedidoViewModel>();
+
+            listaDetalhePedido.Clear();
 
             listaDetalhePedido =
                            (from pedido in context.tb_pedido
@@ -306,9 +357,9 @@ namespace SiteVendas.Controllers
                             join cliente in context.tb_cadastro_cliente
                                 on pedido.fk_cadastro_cliente equals cliente.id_cadastro_cliente
                             join notaFiscal in context.tb_nota_fiscal
-                                  on pedido.id_pedido equals notaFiscal.fk_pedido
-                                  join endereco in context.tb_endereco
-on cliente.
+                                on pedido.id_pedido equals notaFiscal.fk_pedido
+                            join endereco in context.tb_endereco
+                                on cliente.fk_endereco equals endereco.id_endereco
                             where pedido.pd_numero_pedido == _numeroPedido
                             orderby pedido.pd_data
                             select new DetalhesPedidoViewModel
@@ -316,11 +367,36 @@ on cliente.
                                 produto = produto,
                                 pedido = pedido,
                                 cliente = cliente,
-                                notaFiscal = notaFiscal
-
+                                notaFiscal = notaFiscal,
+                                endereco = endereco
                             }).ToList();
 
             return View(listaDetalhePedido);
+        }
+
+
+
+        public void BuscarDetalhesPedido(){
+
+
+            
+
+ listaPedidos = (from pedido in context.tb_pedido
+                                join cliente in context.tb_cadastro_cliente
+                                on pedido.fk_cadastro_cliente equals cliente.id_cadastro_cliente
+                                 where cliente.cc_email == usuario && pedido.pd_confirmado == true
+                                group pedido by pedido.pd_numero_pedido into pedidosGroup
+                                orderby pedidosGroup.Key descending
+                                select new PedidosViewModel
+                                {
+                                    pedido = pedidosGroup.First(),
+                                    //    cliente = pedidosGroup.First().context.tb_cadastro_cliente,
+                                    //    cliente = pedidosGroup.First().tb_cadastro_cliente,
+                                    valorTotal = pedidosGroup.Sum(p => p.pd_valor)
+                                }).ToList();
+
+
+
         }
     }
 }

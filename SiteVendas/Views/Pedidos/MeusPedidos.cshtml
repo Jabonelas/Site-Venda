@@ -4,6 +4,44 @@
     ViewData["Title"] = "Meus Pedidos";
 }
 
+@*Exibicao carregamento do Triangulo*@
+<div class="preloader">
+    <div class="wrapper-triangle">
+        <div class="pen">
+            <div class="line-triangle">
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+            </div>
+            <div class="line-triangle">
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+            </div>
+            <div class="line-triangle">
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
 <h1>Meus Pedidos</h1>
 
 <div class="col-2 justify-content-center d-flex ">
@@ -29,18 +67,6 @@
                 Data do Pedido
             </th>
             <th>
-                Produto
-            </th>
-            <th>
-                Tamanho/Dimenção
-            </th>
-            <th>
-                Qtd.
-            </th>
-            <th>
-                Preço Und.
-            </th>
-            <th>
                 Valor Total
             </th>
 
@@ -49,49 +75,159 @@
     </thead>
     <tbody>
         @foreach (var item in Model)
-
         {
             <tr>
                 <td>
-                    @item.pedido.id_pedido
+                    @item.pedido.pd_numero_pedido
                 </td>
                 <td>
                     @item.pedido.pd_data.ToShortDateString()
                 </td>
                 <td>
-                    @item.produto.pd_nome
-                </td>
-                <td>
-                    @item.produto.pd_tamanho
-                </td>
-                <td>
-                    @item.pedido.pd_quantidade
-                </td>
-                <td>
-                    @item.produto.pd_preco.ToString("C2")
-                </td>
-                <td>
-                    @item.pedido.pd_valor.ToString("C2")
-
+                    @item.valorTotal.ToString("C2")
                 </td>
 
                 <td>
-                    @*<a asp-action="Edit" asp-route-id="@item.pedido.id_pedido">Edit</a> |*@
-                    @* <a asp-action="Details" asp-route-id="@item.pedido.id_pedido">Details</a> | *@
-                    @*<a asp-action="Delete" asp-route-id="@item.pedido.id_pedido">Delete</a>*@
 
-                    <a class="btn btn-info form-group" asp-route="Pedidos" asp-action="DetalhePedido" asp-route-id=@item.pedido.pd_numero_pedido>Detalhes</a>
+@if (User.IsInRole("Admin@hotmail.com"))
+{
+    
+
+                    <a class="btn btn-info form-group"
+                        href="@Url.Action("DetalhePedido", "Pedidos" , new {_numeroPedido= item.pedido.pd_numero_pedido})">Detalhes</a>
+}
+else
+{
+
+  <div class="button-wrap">
+                                <a type="button" data-toggle="modal" data-target="#ModalDetalhe-@item.pedido.pd_numero_pedido"
+                                    class="button button-xs button-secondary button-winona" href="#">Detalhes</a>
+                            </div>
+
+
+
+
+
+ <!-- Modal Detalher Pedido -->
+                            <div class="modal" id="ModalDetalhe-@item.pedido.pd_numero_pedido" tabindex="-1" role="dialog"
+                                aria-labelledby="myModalLabel">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+
+                                            @* <h4 class="modal-title text-center" id="myModalLabel">@item.pd_nome</h4> *@
+
+                                            <button type="button" class="btn btn-close" data-dismiss="modal"
+                                                aria-label="Close">
+                                                <span aria-hidden="true"></span>
+                                            </button>
+
+                                        </div>
+                                        <div class="modal-body text-center">
+
+
+
+
+
+
+
+
+
+
+
+<table>
+  <tr>
+    <td>Nome</td>
+    <td>Idade</td>
+  </tr>
+  <tr>
+    <td>@item.pedido.pd_numero_pedido</td>
+    <td>@item.pedido.pd_quantidade</td>
+  </tr>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                        </div>
+                                        <div class="modal-footer">
+
+                                            <button type="button" class="btn btn-default" data-dismiss="modal"
+                                                style="border: 2px solid rgb(96, 70, 182);">
+                                                Voltar
+                                            </button>
+
+                                            <button class=" btn btn-primary form-group"
+                                                @* onclick="passarParametro(@item.id_produto)" type="submit" *@
+                                                id="passarParametros">Adicionar no Carrinho</button>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+
+
+
+
+
+
+   @* <a class="btn btn-info form-group"
+                        href="@Url.Action("DetalhePedido", "Pedidos" , new {_numeroPedido= item.pedido.pd_numero_pedido})">Detalhes</a> *@
+}
 
                 </td>
-
             </tr>
         }
     </tbody>
 </table>
 
 
-@section Scripts {
 
+
+
+
+
+
+
+
+
+
+@section Scripts {
 
     <script>
         $(document).ready(function () {

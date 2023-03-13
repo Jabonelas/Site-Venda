@@ -150,8 +150,6 @@
                         class="button button-xs button-secondary button-winona" href="#">Adicionar ao Carrinho</a>
                         </div>*@
 
-
-
                             <div class="button-wrap">
                                 <button onclick="botaoModal(@item.id_produto)"
                                     class="button button-xs button-secondary button-winona" href="#">Adicionar ao
@@ -162,8 +160,6 @@
                                 <a type="button" data-toggle="modal" data-target="#ModalDetalhe-@item.id_produto"
                                     class="button button-xs button-secondary button-winona" href="#">Ver Detalhes</a>
                             </div>
-
-
 
                             <!-- Modal Detalher Produto -->
                             <div class="modal" id="ModalDetalhe-@item.id_produto" tabindex="-1" role="dialog"
@@ -232,16 +228,9 @@
 
 
 
-
-
-
                             <!-- Modal Adicionar Carrinho -->
                             <div class="modal" id="ModalCarrinho-@item.id_produto" tabindex="-1" role="dialog"
                                 aria-labelledby="myModalLabel">
-
-
-
-
 
                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                     <div class="modal-content">
@@ -381,13 +370,13 @@
         }
     </script>
 
-
     <script>
         function ChamarModal() {
             var modal = `#ModalCarrinho-${_idProduto1}`;
             (modal).modal('hide');
         }
     </script>
+
     @*Passando parametros para inserir na minha tabela de pedidos*@
     <script>
         function passarParametro(_idProduto1) {

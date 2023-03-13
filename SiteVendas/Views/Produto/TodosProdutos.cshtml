@@ -1,6 +1,5 @@
 ﻿@model IEnumerable<SiteVendas.Models.tb_produto>
 
-
 @{
     var listaProdutos = ViewData["ListaProdutos"] as List<tb_produto>;
 }
@@ -103,12 +102,7 @@
         </tr>
     </thead>
 
-
-
     <tbody>
-
-
-
 
         @foreach (var item in @listaProdutos)
         {
@@ -175,15 +169,12 @@
 
                                     @*<a class=" btn btn-primary form-group" asp-controller="Produto" asp-action="Cadastrar">Novo Produto</a>*@
 
-                                    <a class=" btn btn-primary form-group" asp-controller="Produto" asp-action="DeletarProduto" asp-route-_idProduto="@item.id_produto">Excluir</a>
+                                    @* <a class=" btn btn-primary form-group" asp-controller="Produto" asp-action="DeletarProduto" asp-route-_idProduto="@item.id_produto">Excluir</a> *@
 
                                 </div>
                             </div>
                         </div>
                     </div>
-
-
-
 
                 </td>
 
@@ -199,8 +190,6 @@
     <script>
         $(document).cache(function () {
             $('#buscarProduto').DataTable({
-
-                
                 "language": { "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json" }
             });
         });
