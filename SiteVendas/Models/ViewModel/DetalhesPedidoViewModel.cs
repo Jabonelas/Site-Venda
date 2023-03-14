@@ -15,18 +15,16 @@ namespace SiteVendas.Models.ViewModel
 
         public tb_produto produto { get; set; }
 
-        public tb_endereco endereco {get;set;}
+        public tb_endereco endereco { get; set; }
 
     }
 
 
-    public class DetalhesPedidoCliente{
-
-
-
+    public class DetalhesPedidoClienteViewModel
+    {
         public tb_pedido pedido { get; set; }
 
-public tb_produto  {get; set; }
+        public tb_produto produto { get; set; }
 
     }
 }

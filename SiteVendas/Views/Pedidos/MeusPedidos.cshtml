@@ -1,8 +1,16 @@
-﻿@model IEnumerable<SiteVendas.Models.ViewModel.PedidosViewModel>
+﻿@using SiteVendas.Models.ViewModel
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model IEnumerable<SiteVendas.Models.ViewModel.PedidosViewModel>
 
 @{
     ViewData["Title"] = "Meus Pedidos";
 }
+
+@* @{
+    var detalhesPedidoCliente = ViewData["DetalhePedidoCliente"] as List<DetalhesPedidoClienteViewModel>;
+
+} *@
+
 
 @*Exibicao carregamento do Triangulo*@
 <div class="preloader">
@@ -99,13 +107,31 @@
 else
 {
 
+
+<label>Usuario normal</label>
+
   <div class="button-wrap">
-                                <a type="button" data-toggle="modal" data-target="#ModalDetalhe-@item.pedido.pd_numero_pedido"
-                                    class="button button-xs button-secondary button-winona" href="#">Detalhes</a>
+
+@* <button asp-controller="Pedidos" asp-action="BuscarDetalhesPedido">Botao Buscar Detalhe</button> *@
+
+
+   @* <a asp-controller="Pedidos" asp-action="BuscarDetalhesPedido" type="button"
+                                 data-toggle="modal" data-target="#ModalDetalhe-@item.pedido.pd_numero_pedido"
+                                    class="button button-xs button-secondary button-winona"
+                                     >Detalhes</a> *@
+
+<button onclick="passarParametro(@item.pedido.pd_numero_pedido)">Testando</button>
+
+@* <button asp-controller="Pedidos" asp-action="BuscarDetalhesPedido" >Detalhes</button>
+
+<a asp-controller="Pedidos" asp-action="BuscarDetalhesPedido" >Detalhe 1</a> *@
+
+
+
                             </div>
 
 
-
+    @* var detalhesPedidoCliente = ViewData["DetalhePedidoCliente"] as List<DetalhesPedidoClienteViewModel>; *@
 
 
  <!-- Modal Detalher Pedido -->
@@ -129,54 +155,90 @@ else
 
 
 
+<table class="table text-center" >
+
+    <thead>
+        <tr>
+            <th>
+                Nº Pedido
+            </th>
+            <th>
+                Produto
+            </th>
+            <th>
+                Qtd.
+            </th>
+            <th>
+                Valor Unt.
+            </th>
+            <th>
+                Valor Total
+            </th>
+            <th>
+                Data Pedido
+            </th>
+          
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
 
 
 
+@{
+    var detalhesPedidoCliente = ViewData["DetalhePedidoCliente"] as List<DetalhesPedidoClienteViewModel>;
+
+            decimal somarValoresCarrinho = 0;
+}
 
 
+@if (detalhesPedidoCliente != null)
+{
+    
 
-<table>
-  <tr>
-    <td>Nome</td>
-    <td>Idade</td>
-  </tr>
-  <tr>
-    <td>@item.pedido.pd_numero_pedido</td>
-    <td>@item.pedido.pd_quantidade</td>
-  </tr>
+        @foreach (var itemDetalhe in detalhesPedidoCliente)
+        {
+            @* somarValoresCarrinho += @item.valorTotal;
+            numeroPedido = @item.numeroPedido; *@
+
+            <tr>
+                <td>
+                    @itemDetalhe.pedido.pd_numero_pedido
+              
+                </td>
+                <td>
+                    @itemDetalhe.produto.pd_nome
+                </td>
+                <td>
+                    @itemDetalhe.pedido.pd_quantidade
+                </td>
+                <td>
+                    @itemDetalhe.produto.pd_preco.ToString("C2")
+                </td>
+                <td>
+                     @itemDetalhe.pedido.pd_valor.ToString("C2")
+                </td>
+                <td>
+                    @itemDetalhe.pedido.pd_data
+                </td>
+            </tr>
+        }
+
+}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="4">
+                <h6><b>Total:</b></h6>
+            </td>
+            <td>
+                <h6><b>@somarValoresCarrinho.ToString("C2")</b></h6>
+            </td>
+        </tr>
+    </tfoot>
+
 </table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -199,13 +261,6 @@ else
 
 
 
-
-
-
-
-
-
-
    @* <a class="btn btn-info form-group"
                         href="@Url.Action("DetalhePedido", "Pedidos" , new {_numeroPedido= item.pedido.pd_numero_pedido})">Detalhes</a> *@
 }
@@ -219,14 +274,6 @@ else
 
 
 
-
-
-
-
-
-
-
-
 @section Scripts {
 
     <script>
@@ -235,5 +282,35 @@ else
                 "language": { "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json" }
             });
         });
+    </script>
+
+
+
+ @*Passando parametros para inserir na minha tabela de pedidos*@
+    <script>
+        function passarParametro(_idProduto1) {
+
+            var modal = `#ModalDetalhe-${_idProduto1}`;
+
+            $.ajax({
+                type: "GET",
+                url: "/Pedidos/BuscarDetalhesPedido/",
+                data: { _numeroPedido: _idProduto1 },
+                success: function (data) {
+             
+                    // Aqui você pode manipular a resposta da requisição AJAX
+                    console.log(data);
+
+                    $(modal).modal('show');
+                    @* $(modal).modal('hide'); *@
+
+                    @* location.reload(); *@
+                },
+                error: function (xhr, status, error) {
+                    // Aqui você pode tratar os erros que ocorrem durante a requisição AJAX
+                    console.log("Ocorreu um erro durante a requisição AJAX: " + error);
+                }
+            });
+        }
     </script>
 }
