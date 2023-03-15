@@ -22,6 +22,12 @@ namespace SiteVendas.Models
         public string de_cnpj { get; set; }
         [StringLength(50)]
         [Unicode(false)]
+        public string de_telefone { get; set; }
+        [StringLength(100)]
+        [Unicode(false)]
+        public string de_email { get; set; }
+        [StringLength(50)]
+        [Unicode(false)]
         public string de_horario_inicio { get; set; }
         [StringLength(50)]
         [Unicode(false)]

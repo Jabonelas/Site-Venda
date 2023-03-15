@@ -8,10 +8,16 @@
 {
     @if (quantiadeProduto.Count() > 0)
     {
-        <a type="button" data-toggle="modal" data-target="#ModalCarrinho" class="button button-xs button-secondary button-winona" href="#">
+        @* <a type="button" data-toggle="modal" data-target="#ModalCarrinho" class="button button-xs button-secondary button-winona" href="#">
             <span style="color: black"> @quantiadeProduto.Count() </span>
             <span><img src="~/images/shopping_cart_30px.png" /></span>
-        </a>
+        </a> *@
+
+
+<button data-toggle="modal" data-target="#ModalCarrinho" class="button button-xs button-secondary button-winona" href="#">
+            <span style="color: black"> @quantiadeProduto.Count() </span>
+            <span><img src="~/images/shopping_cart_30px.png" /></span> </button>
+
 
         <!-- Modal Adicionar Carrinho -->
         <div class="modal" id="ModalCarrinho" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

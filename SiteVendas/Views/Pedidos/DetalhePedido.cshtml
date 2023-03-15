@@ -3,6 +3,10 @@
 @model IEnumerable<SiteVendas.Models.ViewModel.DetalhesPedidoViewModel>
 
 
+@{
+    decimal somarValoresCarrinho = 0;
+}
+
 @*Exibicao carregamento do Triangulo*@
 <div class="preloader">
     <div class="wrapper-triangle">
@@ -38,253 +42,238 @@
     </div>
 </div>
 
-<h1>Detalhe Pedido</h1>
+<h1>Detalhe do Pedido</h1>
 
-<div class="col-2 justify-content-center d-flex ">
-    <div class="row">
-        <a style="border: 2px solid  rgb(96, 70, 182);" asp-controller="Pedidos" asp-action="MeusPedidos">Voltar</a>
-    </div>
-</div>
+<a class="btn " style="border: 2px solid rgb(96, 70, 182);font-family: Arial, sans-serif;" asp-controller="Pedidos"
+    asp-action="MeusPedidos">Voltar</a>
 
 <br />
+<br />
 
-<h4>CLIENTE:</h4>
+<form asp-controller="Pedidos" asp-action="DetalhePedido">
 
-<form asp-controller="Pedidos" asp-action="DetalhePedido" >
+    @if (User.IsInRole("Admin@hotmail.com"))
+    {
 
-    @* <div asp-validation-summary="ModelOnly" class="text-danger"></div> *@
-    
-    <div class="card">
+        <h4>CLIENTE:</h4>
 
-        <div class="card-body">
+        @* <div asp-validation-summary="ModelOnly" class="text-danger"></div> *@
 
-            @foreach (var item in Model)
-            {
-                
-                <div class="row">
-
-                    <div class="col-md-8">
-
-
-                        <div class="form-group">
-
-                            <label class="control-label">Nome</label>
-                            @* <input asp-for="cliente.cc_nome" class="form-control" value= "@item.cliente.cc_nome" /> *@
-                            <input class="form-control" value="@item.cliente.cc_nome" readonly/>
-                            
-                        </div>
-
-                    </div>
-
-
- 
-
-
-                </div>
-
-                <div class="row">
-
-                    <div class="col-md-3">
-
-                        <div class="form-group">
-                            <label class="control-label">CPF</label>
-                            @* <input asp-for="cliente.cc_cpf" class="form-control"  /> *@
-                            <input value="@item.cliente.cc_cpf" class="form-control" readonly />
-
-                        </div>
-
-                    </div>
-
-                    <div class="col-md-3">
-
-                        <div class="form-group">
-                            <label class="control-label">RG</label>
-                            @* <input asp-for="cliente.cc_rg" class="form-control"  /> *@
-                            <input class="form-control" value="@item.cliente.cc_rg" readonly/>
-                        </div>
-
-                    </div>
-
-                    <div class="col-3">
-
-                        <div class="form-group">
-                            <label class="control-label">Data Nascimento</label>
-                            @* <input asp-for="cliente.cc_data_nascimento" class="form-control" type="text"/> *@
-                            <input class="form-control" value="@item.cliente.cc_data_nascimento" readonly/>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="row">
-
-
- <div class="col-6">
-
-                        <div class="form-group">
-                            <label class="control-label">E-mail</label>
-                            @* <input asp-for="cliente.cc_celular" class="form-control"  /> *@
-                            <input class="form-control" value="@item.cliente.cc_email" readonly/>
-                        </div>
-
-                    </div>
-
-
-                    <div class="col-3">
-
-                        <div class="form-group">
-                            <label class="control-label">Telefone</label>
-                            @* <input asp-for="cliente.cc_telefone" class="form-control"  /> *@
-                            <input class="form-control" value="@item.cliente.cc_telefone" readonly/>
-
-                        </div>
-
-                    </div>
-
-                    <div class="col-3">
-
-                        <div class="form-group">
-                            <label class="control-label">Celular</label>
-                            @* <input asp-for="cliente.cc_celular" class="form-control"  /> *@
-                            <input class="form-control" value="@item.cliente.cc_celular" readonly/>
-                        </div>
-
-                    </div>
-
-
-
-
-
-
-                </div>
-
-                break;
-
-
-            }
-
-        </div>
-    </div>
-
-    <br />
-
-    <h4>ENDEREÇO:</h4>
-
-    <div class="card">
-
-
-        @foreach (var item in Model)
-        {
-
+        <div class="card">
 
             <div class="card-body">
 
-                <div class="row">
+                @foreach (var item in Model)
+                {
 
-                    <div class="col-md-3">
+                    <div class="row">
 
-                        <div class="form-group">
-                            <label class="control-label">Tipo</label>
+                        <div class="col-md-8">
 
-                            <input asp-for="@item.endereco.ed_tipo" class="form-control" readonly/>
+
+                            <div class="form-group">
+
+                                <label class="control-label">Nome</label>
+                                <input class="form-control" asp-for="@item.cliente.cc_nome" readonly />
+
+                            </div>
+
+                        </div>
+
+
+
+
+
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-3">
+
+                            <div class="form-group">
+                                <label class="control-label">CPF</label>
+                                <input asp-for="@item.cliente.cc_cpf" class="form-control" readonly />
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-3">
+
+                            <div class="form-group">
+                                <label class="control-label">RG</label>
+                                <input class="form-control" asp-for="@item.cliente.cc_rg" readonly />
+                            </div>
+
+                        </div>
+
+                        <div class="col-3">
+
+                            <div class="form-group">
+                                <label class="control-label">Data Nascimento</label>
+                                <input class="form-control" asp-for="@item.cliente.cc_data_nascimento" readonly />
+
+                            </div>
 
                         </div>
 
                     </div>
 
-                    <div class="col-2">
+                    <div class="row">
 
-                        <div class="form-group">
 
-                            <label class="control-label">CEP</label>
-                            <input asp-for="@item.endereco.ed_cep" class="form-control" readonly/>
-                            <label class="text-danger d-none" id="cleave-cep2">CEP Inválido</label>
+                        <div class="col-6">
+
+                            <div class="form-group">
+                                <label class="control-label">E-mail</label>
+                                <input class="form-control" asp-for="@item.cliente.cc_email" readonly />
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-3">
+
+                            <div class="form-group">
+                                <label class="control-label">Telefone</label>
+                                <input class="form-control" asp-for="@item.cliente.cc_telefone" readonly />
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-3">
+
+                            <div class="form-group">
+                                <label class="control-label">Celular</label>
+                                <input class="form-control" asp-for="@item.cliente.cc_celular" readonly />
+                            </div>
 
                         </div>
 
                     </div>
 
-                    <div class="col-md-1">
+                    break;
+                }
 
-                        <div class="form-group">
-                            <label class="control-label">Estado</label>
-                            <input asp-for="@item.endereco.ed_estado" class="form-control" readonly/>
+            </div>
+        </div>
 
+        <br />
+
+        <h4>ENDEREÇO:</h4>
+
+        <div class="card">
+
+            <div class="card-body">
+
+                @foreach (var item in Model)
+                {
+                    <div class="row">
+
+                        <div class="col-md-3">
+
+                            <div class="form-group">
+                                <label class="control-label">Tipo</label>
+
+                                <input asp-for="@item.endereco.ed_tipo" class="form-control" readonly />
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-2">
+
+                            <div class="form-group">
+
+                                <label class="control-label">CEP</label>
+                                <input asp-for="@item.endereco.ed_cep" class="form-control" readonly />
+                                <label class="text-danger d-none" id="cleave-cep2">CEP Inválido</label>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-1">
+
+                            <div class="form-group">
+                                <label class="control-label">Estado</label>
+                                <input asp-for="@item.endereco.ed_estado" class="form-control" readonly />
+
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-3">
+
+                            <div class="form-group">
+                                <label class="control-label">Cidade</label>
+                                <input asp-for="@item.endereco.ed_cidade" class="form-control" readonly />
+
+                            </div>
 
                         </div>
 
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="row">
 
-                        <div class="form-group">
-                            <label class="control-label">Cidade</label>
-                            <input asp-for="@item.endereco.ed_cidade" class="form-control" readonly/>
+                        <div class="col-md-3">
+
+                            <div class="form-group">
+                                <label class="control-label">Número</label>
+                                <input asp-for="@item.endereco.ed_numero" class="form-control" readonly />
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-3">
+
+                            <div class="form-group">
+                                <label class="control-label">Bairro</label>
+                                <input asp-for="@item.endereco.ed_bairro" class="form-control" readonly />
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <div class="form-group">
+                                <label class="control-label">Logradouro</label>
+                                <input asp-for="@item.endereco.ed_logradouro" class="form-control" readonly />
+
+                            </div>
 
                         </div>
 
                     </div>
 
-                </div>
+                    <div class="row">
 
-                <div class="row">
+                        <div class="col-md-6">
 
-                    <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="control-label">Complemento</label>
+                                <input asp-for="@item.endereco.ed_complemento" class="form-control" readonly />
 
-                        <div class="form-group">
-                            <label class="control-label">Número</label>
-                            <input asp-for="@item.endereco.ed_numero" class="form-control" readonly/>
-
-                        </div>
-
-                    </div>
-
-                    <div class="col-md-3">
-
-                        <div class="form-group">
-                            <label class="control-label">Bairro</label>
-                            <input asp-for="@item.endereco.ed_bairro" class="form-control" readonly/>
+                            </div>
 
                         </div>
 
                     </div>
 
-                    <div class="col-md-6">
-
-                        <div class="form-group">
-                            <label class="control-label">Logradouro</label>
-                            <input asp-for="@item.endereco.ed_logradouro" class="form-control" readonly/>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="row">
-
-                    <div class="col-md-6">
-
-                        <div class="form-group">
-                            <label class="control-label">Complemento</label>
-                            <input asp-for="@item.endereco.ed_complemento" class="form-control" readonly/>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
+                    break;
+                }
             </div>
 
 
-            break;
-        }
-    </div>
+        </div>
 
-    <br />
+        <br />
+    }
 
     <h4>PEDIDO:</h4>
 
@@ -292,85 +281,96 @@
 
         <div class="card-body row">
 
-            <table class="table text-center" >
-    <thead>
-        <tr>
+            <table class="table text-center">
+                <thead>
+                    <tr>
 
-            <th>
-                Produto
-            </th>
-            <th>
-                Qtd.
-            </th>
-            <th>
-                Data Pedido
-            </th>
-            <th>
-                Preço Und.
-            </th>
-              <th>
-                Votal Total
-            </th>
-            <th>
-                Tipo Pagamento
-            </th>
-           
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
+                        <th>
+                            Produto
+                        </th>
+                        <th>
+                            Qtd.
+                        </th>
+                        <th>
+                            Data Pedido
+                        </th>
+                        <th>
+                            Preço Und.
+                        </th>
+                        <th>
+                            Valor
+                        </th>
+                        <th>
+                            Tipo Pagamento
+                        </th>
 
-        @foreach (var item in Model)
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
 
-        {
-           <tr>
-                <td>
-                    @item.produto.pd_nome
-                </td>
-                  <td>
-                    @item.pedido.pd_quantidade
-                </td>
-                <td>
-                    @item.pedido.pd_data.ToShortDateString()
-                </td>
-                <td>
-            @item.produto.pd_preco.ToString("C2")
-            </td>
-            <td>
-            @item.pedido.pd_valor.ToString("C2")
-            </td>
-            <td>
-            @item.pedido.pd_tipo_pagamento
-            </td>
-                    
-                <td>
-            
-             
-             
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @item.produto.pd_nome
+                            </td>
+                            <td>
+                                @item.pedido.pd_quantidade
+                            </td>
+                            <td>
+                                @item.pedido.pd_data.ToShortDateString()
+                            </td>
+                            <td>
+                                @item.produto.pd_preco.ToString("C2")
+                            </td>
+                            <td>
+                                @{
+                                    somarValoresCarrinho += item.pedido.pd_valor;
+                                }
 
+                                @item.pedido.pd_valor.ToString("C2")
+
+                            </td>
+                            <td>
+                                @item.pedido.pd_tipo_pagamento
+                            </td>
+
+                            <td>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="4">
+                            <h6><b>Total:</b></h6>
+                        </td>
+                        <td>
+                            <h6><b>@somarValoresCarrinho.ToString("C2")</b></h6>
+                        </td>
+                    </tr>
+                </tfoot>
+
+
+
+
+
+            </table>
         </div>
-
     </div>
 
     <br />
 
+</form>
 
 <div class="col-2 justify-content-center d-flex ">
     <div class="row">
-        <a class="btn btn-primary" style="border: 2px solid  rgb(96, 70, 182);" asp-controller="Pedidos" asp-action="MeusPedidos">Voltar</a>
+
+        <button class="btn btn-primary" asp-controller="Pedidos" asp-action="MeusPedidos">Voltar</button>
+     
     </div>
 </div>
-
-  
-
-
-</form>
-
 
 
 @section Scripts {
@@ -378,6 +378,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js"></script>
     <script src="~/js/InputMasked.js"></script>
     @*await Html.RenderPartialAsync("_ValidationScriptsPartial");*@
-   
+
 
 }

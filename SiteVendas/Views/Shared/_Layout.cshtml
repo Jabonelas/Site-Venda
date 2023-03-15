@@ -3,13 +3,18 @@
 @using Microsoft.VisualBasic
 @inject IHttpContextAccessor _httpContextAccessor;
 
-@*@inject SignInManager<ApplicationUser> signInManager;*@
-@*@inject SignInManager<IdentityUser> SignInManager;*@
+@using Microsoft.AspNetCore.Mvc;
+@using SiteVendas.Models;
+@using Microsoft.AspNetCore.Authorization;
+@using SiteVendas.Models.ViewModel;
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <title>Home</title>
+    <title>Pizza House</title>
     <meta name="format-detection" content="telephone=no">
     <meta name="viewport"
         content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -23,13 +28,11 @@
 
     <link href="//cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css" rel="~/css/site.css" />
 
-
-
-    @*<link rel="stylesheet" href="~/css/bootstrap.css">*@
     <link rel="stylesheet" href="~/css/fonts.css">
     <link rel="stylesheet" href="~/css/style.css">
 
     <div class="row d-flex justify-content-end">
+
         @if (User.Identity.IsAuthenticated)
 
         {
@@ -51,10 +54,6 @@
                 <a class="btn " style=" border: 2px solid  rgb(96, 70, 182);" asp-controller="Cliente"
                 asp-action="Inserir">Novo Cadastro</a>
 
-                @* <a class="btn btn-secondary d-flex justify-content-end"
-            style="text-transform: uppercase; font-weight: bold;" asp-area="" asp-controller="Cliente"
-            asp-action="Inserir">Novo Cadastro</a>*@
-
                 <a style="margin: 0 15px;" class="btn btn-primary d-flex justify-content-end" asp-area=""
                 asp-controller="Login" asp-action="Login">Entrar</a>
 
@@ -74,8 +73,7 @@
     @await RenderSectionAsync("Styles", required: false)
     <header class="section page-header">
         <!-- RD Navbar-->
-
-        <div class="rd-navbar-wrap">
+        a <div class="rd-navbar-wrap">
             <nav class="rd-navbar rd-navbar-modern" data-layout="rd-navbar-fixed" data-sm-layout="rd-navbar-fixed"
                 data-md-layout="rd-navbar-fixed" data-md-device-layout="rd-navbar-fixed"
                 data-lg-layout="rd-navbar-static" data-lg-device-layout="rd-navbar-fixed"
@@ -97,18 +95,28 @@
                         <div class="rd-navbar-right rd-navbar-nav-wrap">
                             <div class="rd-navbar-aside">
                                 <ul class="rd-navbar-contacts-2">
+
+
+                                 
+
                                     <li>
                                         <div class="unit unit-spacing-xs">
                                             <div class="unit-left"><span class="icon mdi mdi-phone"></span></div>
-                                            <div class="unit-body"><a class="phone" href="tel:#">+1 718-999-3939</a>
+                                         
+                                         <div class="unit-body"><a class="phone"
+                                                    href="tel:#">(71) 98140-3524</a>
+                                                  
+
                                             </div>
                                         </div>
                                     </li>
                                     <li>
                                         <div class="unit unit-spacing-xs">
+                                          
                                             <div class="unit-left"><span class="icon mdi mdi-map-marker"></span></div>
-                                            <div class="unit-body"><a class="address" href="#">514 S. Magnolia St.
-                                                    Orlando, FL 32806</a></div>
+
+                                            <div class="unit-body"><a class="address" href="#">Rua 2ª ligação, Gleba B, Camaçari - Ba - CEP: 42803-317 </a></div>
+
                                         </div>
                                     </li>
                                 </ul>
@@ -130,20 +138,11 @@
                                         <a class="rd-nav-link" asp-area="" asp-controller="Cardapio"
                                             asp-action="ListaProdutos">Cardápio</a>
                                     </li>
-                                    <li class="rd-nav-item">
-                                        <a class="rd-nav-link" asp-area="" asp-controller="Produto"
-                                            asp-action="Exibir">Exibir Produtos</a>
-                                    </li>
-
 
                                     @*@await Component.InvokeAsync("CarrinhoCompra")*@
 
                                     @if (User.IsInRole("Admin@hotmail.com"))
-
-
-
                                     {
-
                                         <li class="rd-nav-item">
                                             <a class="rd-nav-link" asp-area="" asp-controller="Produto"
                                             asp-action="TodosProdutos">Produtos</a>
@@ -151,21 +150,22 @@
 
                                         <li class="rd-nav-item">
                                             <a class="rd-nav-link" asp-area="" asp-controller="Pedidos"
-                                            asp-action="MeusPedidos">Todos Pedidos</a>
+                                            asp-action="MeusPedidos">Pedidos</a>
                                         </li>
 
                                         <li class="rd-nav-item">
-                                            <a class="rd-nav-link" asp-area="" asp-controller="Pedidos"
-                                            asp-action="MeusPedidos">Todos Clientes</a>
+                                            <a class="rd-nav-link" asp-area="" asp-controller="Cliente"
+                                            asp-action="ExibirClientes">Clientes</a>
                                         </li>
-
-                                        @await Component.InvokeAsync("CarrinhoCompra")
 
                                         <li class="rd-nav-item">
                                             <a class="rd-nav-link" asp-area="" asp-controller="DadosEmpresa"
-                                            asp-action="Cadastrar">Dados Empresa</a>
+                                            asp-action="Cadastrar">Empresa</a>
                                         </li>
 
+                                        <li class="rd-nav-item">
+                                            @await Component.InvokeAsync("CarrinhoCompra")
+                                        </li>
                                     }
 
                                     else if (User.Identity.IsAuthenticated)
@@ -177,36 +177,15 @@
                                         </li>
                                         <li class="rd-nav-item">
                                             <a class="rd-nav-link" asp-area="" asp-controller="Cliente"
-                                            asp-action="BuscarCadastro">Alterar Cadastro</a>
+                                            asp-action="AlterarCadastro">Alterar Cadastro</a>
+                                        </li>
+                                        <li class="rd-nav-item">
+                                            @await Component.InvokeAsync("CarrinhoCompra")
                                         </li>
 
-                                        @await Component.InvokeAsync("CarrinhoCompra")
                                     }
-
-                                    @*
-                                    @if (User.IsInRole("Admin@hotmail.com"))
-                                    {
-                                    <li class="rd-nav-item">
-                                    <a class="rd-nav-link" asp-area="" asp-controller="Login" asp-action="LogOut">Log
-                                    Out</a>
-                                    </li>
-                                    }
-                                    *@
-
-
-                                    @*
-                                    @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
-                                    {
-                                    <li class="rd-nav-item">
-                                    <a class="rd-nav-link" asp-area="" asp-controller="Login" asp-action="LogOut">Log
-                                    Out</a>
-                                    </li>
-                                    }*@
-
 
                                 </ul>
-
-
 
                             </div>
                         </div>
@@ -329,6 +308,7 @@
             </nav>
         </div>
     </header>
+    
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
@@ -408,7 +388,7 @@
                             <div class="footer-modern-contacts wow slideInUp">
                                 <div class="unit unit-spacing-sm align-items-center">
                                     <div class="unit-left"><span class="icon icon-24 mdi mdi-phone"></span></div>
-                                    <div class="unit-body"><a class="phone" href="tel:#">+1 718-999-3939</a></div>
+                                    <div class="unit-body"><a class="phone" href="tel:#">(71) 98140-3524</a></div>
                                 </div>
                             </div>
                             <div class="footer-modern-contacts wow slideInDown">
@@ -433,7 +413,7 @@
         <div class="footer-modern-line-3">
             <div class="container">
                 <div class="row row-10 justify-content-between">
-                    <div class="col-md-6"><span>514 S. Magnolia St. Orlando, FL 32806</span></div>
+                    <div class="col-md-6"><span>Rua 2ª ligação, Gleba B, Camaçari - Ba - CEP: 42803-317 </span></div>
                     <div class="col-md-auto">
                         <!-- Rights-->
                         <p class="rights"><span>&copy;&nbsp;</span><span
@@ -447,15 +427,30 @@
     </footer>
 
 
-    @*<script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>*@
+
     <!-- Javascript-->
     <script src="~/js/core.min.js"></script>
     <script src="~/js/script.js"></script>
     <script src="//cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
 
+    <script>
 
+        $(document).ready(function () {
+
+            $.ajax({
+                url: "/DadosEmpresa/BuscarDadosEmpresa/",
+                method: "GET",
+                success: function () {
+                    console.log("Entrou na inicialização")
+                },
+                error: (error) => {
+                    console.error(error);
+                }
+            });
+
+        });
+
+    </script>
 
     <script>
 
@@ -471,7 +466,6 @@
 
     </script>
 
-
     <script>
 
         $(document).ready(function () {
@@ -485,11 +479,6 @@
         });
 
     </script>
-
-
-
-
-
 
     @*Coonfirmar Exclusao*@
     <script>
@@ -517,6 +506,7 @@
 
     @Html.Partial("~/Views/Shared/_ValidationScriptsPartial.cshtml")
     @await RenderSectionAsync("Scripts", required: false)
+
 </body>
 
 </html>

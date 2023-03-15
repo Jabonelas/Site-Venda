@@ -83,7 +83,7 @@ namespace SiteVendas.Controllers
 
         [Authorize]
         [HttpGet]
-        public IActionResult BuscarCadastro()
+        public IActionResult AlterarCadastro()
         {
             BuscarDadosClienteCadastrado();
 
@@ -168,5 +168,29 @@ namespace SiteVendas.Controllers
 
             return View("~/Views/Home/Index.cshtml");
         }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin@hotmail.com")]
+        public IActionResult ExibirClientes()
+        {
+            var clientes = context.tb_cadastro_cliente.Select(x => x).ToList();
+
+            return View(clientes);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin@hotmail.com")]
+        [Route("Cliente/DetalheCliente/{_idCliente}")]
+        public IActionResult DetalheCliente(int _idCliente)
+        {
+
+            var detalheCliente = context.tb_cadastro_cliente.Join(context.tb_endereco, cliente => cliente.fk_endereco,
+            endereco => endereco.id_endereco, (cliente, endereco) =>
+            new DetalhesClienteViewModel { cliente = cliente, endereco = endereco })
+            .Where(x => x.cliente.id_cadastro_cliente == _idCliente).ToList();
+
+            return View(detalheCliente);
+        }
+
     }
 }

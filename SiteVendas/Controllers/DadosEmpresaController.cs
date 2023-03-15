@@ -20,7 +20,7 @@ namespace SiteVendas.Controllers
         }
 
 
-        private void BuscarDadosEmpresa()
+        public void BuscarDadosEmpresa()
         {
             var dadosEmpresa = context.tb_endereco.Join(context.tb_dados_empresa, endereco => endereco.id_endereco, empresa => empresa.fk_endereco,
                        (endereco, empresa) => new DadosEmpresaViewModel
@@ -28,7 +28,7 @@ namespace SiteVendas.Controllers
                            endereco = endereco,
                            dadosEmpresa = empresa,
 
-                       }).Where(x => x.dadosEmpresa.id_dados_empresa.Equals(1)).ToList();
+                       }).Where(x => x.dadosEmpresa.id_dados_empresa.Equals(1));
 
             ViewData["DadosEmpresa"] = null;
             ViewData["DadosEmpresa"] = dadosEmpresa;
@@ -86,6 +86,12 @@ namespace SiteVendas.Controllers
 
             return View("Cadastrar");
         }
+   
+   
+   
+   
+   
+   
     }
 }
 

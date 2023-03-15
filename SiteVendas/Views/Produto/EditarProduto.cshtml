@@ -40,9 +40,7 @@
     </div>
 </div>
 
-
-<h1>Cadastrar Produto</h1>
-
+<h1>Produto</h1>
 
 <div class=" row col-2 justify-content-center d-flex">
 
@@ -59,8 +57,6 @@
         @foreach (var item in editaProduto)
         {
             <form method="post" enctype="multipart/form-data" onsubmit="removerSimboloR$()">
-
-
 
                 @*Passando Id de produto remotamente*@
                 <input value="@item.id_produto" asp-for="@Model.id_produto" class="d-none">
@@ -181,11 +177,8 @@
                     <input type="submit" value="Editar Produto" class="btn btn-primary" />
 
                 </div>
-                
-                
+                                
             </form>
-
-
         }
 </div>
 

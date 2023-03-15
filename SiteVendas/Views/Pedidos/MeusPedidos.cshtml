@@ -6,10 +6,6 @@
     ViewData["Title"] = "Meus Pedidos";
 }
 
-@* @{
-    var detalhesPedidoCliente = ViewData["DetalhePedidoCliente"] as List<DetalhesPedidoClienteViewModel>;
-
-} *@
 
 
 @*Exibicao carregamento do Triangulo*@
@@ -50,19 +46,24 @@
 
 
 
-<h1>Meus Pedidos</h1>
+<h1>Pedidos</h1>
 
-<div class="col-2 justify-content-center d-flex ">
-    <div class="row">
-        <a style="border: 2px solid  rgb(96, 70, 182);" asp-controller="Home" asp-action="Index">Voltar ao Inicio</a>
-    </div>
-</div>
+        <a class="btn " style="border: 2px solid rgb(96, 70, 182);font-family: Arial, sans-serif;" asp-controller="Home" asp-action="Index">Voltar ao Inicio</a>
 
+<br />
 <br />
 
 <h4>Meus Pedidos:</h4>
 
 <br />
+
+
+  <div class="card">
+    
+
+
+            <div class="card-body">
+
 
 <table class="table text-center" id="myTable">
     <thead>
@@ -83,6 +84,7 @@
     </thead>
     <tbody>
         @foreach (var item in Model)
+
         {
             <tr>
                 <td>
@@ -97,180 +99,27 @@
 
                 <td>
 
-@if (User.IsInRole("Admin@hotmail.com"))
-{
-    
+
 
                     <a class="btn btn-info form-group"
                         href="@Url.Action("DetalhePedido", "Pedidos" , new {_numeroPedido= item.pedido.pd_numero_pedido})">Detalhes</a>
-}
-else
-{
 
 
-<label>Usuario normal</label>
-
-  <div class="button-wrap">
-
-@* <button asp-controller="Pedidos" asp-action="BuscarDetalhesPedido">Botao Buscar Detalhe</button> *@
-
-
-   @* <a asp-controller="Pedidos" asp-action="BuscarDetalhesPedido" type="button"
-                                 data-toggle="modal" data-target="#ModalDetalhe-@item.pedido.pd_numero_pedido"
-                                    class="button button-xs button-secondary button-winona"
-                                     >Detalhes</a> *@
-
-<button onclick="passarParametro(@item.pedido.pd_numero_pedido)">Testando</button>
-
-@* <button asp-controller="Pedidos" asp-action="BuscarDetalhesPedido" >Detalhes</button>
-
-<a asp-controller="Pedidos" asp-action="BuscarDetalhesPedido" >Detalhe 1</a> *@
-
-
-
-                            </div>
-
-
-    @* var detalhesPedidoCliente = ViewData["DetalhePedidoCliente"] as List<DetalhesPedidoClienteViewModel>; *@
-
-
- <!-- Modal Detalher Pedido -->
-                            <div class="modal" id="ModalDetalhe-@item.pedido.pd_numero_pedido" tabindex="-1" role="dialog"
-                                aria-labelledby="myModalLabel">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-
-                                            @* <h4 class="modal-title text-center" id="myModalLabel">@item.pd_nome</h4> *@
-
-                                            <button type="button" class="btn btn-close" data-dismiss="modal"
-                                                aria-label="Close">
-                                                <span aria-hidden="true"></span>
-                                            </button>
-
-                                        </div>
-                                        <div class="modal-body text-center">
-
-
-
-
-
-<table class="table text-center" >
-
-    <thead>
-        <tr>
-            <th>
-                Nº Pedido
-            </th>
-            <th>
-                Produto
-            </th>
-            <th>
-                Qtd.
-            </th>
-            <th>
-                Valor Unt.
-            </th>
-            <th>
-                Valor Total
-            </th>
-            <th>
-                Data Pedido
-            </th>
-          
-
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-
-
-
-@{
-    var detalhesPedidoCliente = ViewData["DetalhePedidoCliente"] as List<DetalhesPedidoClienteViewModel>;
-
-            decimal somarValoresCarrinho = 0;
-}
-
-
-@if (detalhesPedidoCliente != null)
-{
-    
-
-        @foreach (var itemDetalhe in detalhesPedidoCliente)
-        {
-            @* somarValoresCarrinho += @item.valorTotal;
-            numeroPedido = @item.numeroPedido; *@
-
-            <tr>
-                <td>
-                    @itemDetalhe.pedido.pd_numero_pedido
-              
-                </td>
-                <td>
-                    @itemDetalhe.produto.pd_nome
-                </td>
-                <td>
-                    @itemDetalhe.pedido.pd_quantidade
-                </td>
-                <td>
-                    @itemDetalhe.produto.pd_preco.ToString("C2")
-                </td>
-                <td>
-                     @itemDetalhe.pedido.pd_valor.ToString("C2")
-                </td>
-                <td>
-                    @itemDetalhe.pedido.pd_data
-                </td>
-            </tr>
-        }
-
-}
-    </tbody>
-    <tfoot>
-        <tr>
-            <td colspan="4">
-                <h6><b>Total:</b></h6>
-            </td>
-            <td>
-                <h6><b>@somarValoresCarrinho.ToString("C2")</b></h6>
-            </td>
-        </tr>
-    </tfoot>
-
-</table>
-
-
-
-                                        </div>
-                                        <div class="modal-footer">
-
-                                            <button type="button" class="btn btn-default" data-dismiss="modal"
-                                                style="border: 2px solid rgb(96, 70, 182);">
-                                                Voltar
-                                            </button>
-
-                                            <button class=" btn btn-primary form-group"
-                                                @* onclick="passarParametro(@item.id_produto)" type="submit" *@
-                                                id="passarParametros">Adicionar no Carrinho</button>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-   @* <a class="btn btn-info form-group"
-                        href="@Url.Action("DetalhePedido", "Pedidos" , new {_numeroPedido= item.pedido.pd_numero_pedido})">Detalhes</a> *@
-}
 
                 </td>
             </tr>
         }
     </tbody>
 </table>
+  </div>
+  </div>
+<br/>
 
+<div class="col-2 justify-content-center d-flex ">
+    <div class="row">
+       <button class="btn btn-primary" asp-controller="Pedidos" asp-action="MeusPedidos">Voltar ao Inicio</button>
+    </div>
+</div>
 
 
 
@@ -286,7 +135,7 @@ else
 
 
 
- @*Passando parametros para inserir na minha tabela de pedidos*@
+    @*Passando parametros para inserir na minha tabela de pedidos*@
     <script>
         function passarParametro(_idProduto1) {
 
@@ -297,15 +146,15 @@ else
                 url: "/Pedidos/BuscarDetalhesPedido/",
                 data: { _numeroPedido: _idProduto1 },
                 success: function (data) {
-             
+
                     // Aqui você pode manipular a resposta da requisição AJAX
                     console.log(data);
 
                     $(modal).modal('show');
-                    @* $(modal).modal('hide'); *@
+        @* $(modal).modal('hide'); *@
 
-                    @* location.reload(); *@
-                },
+        @* location.reload(); *@
+                    },
                 error: function (xhr, status, error) {
                     // Aqui você pode tratar os erros que ocorrem durante a requisição AJAX
                     console.log("Ocorreu um erro durante a requisição AJAX: " + error);

@@ -1,0 +1,284 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using SiteVendas.Models.ViewModel
+@model IEnumerable<SiteVendas.Models.ViewModel.DetalhesClienteViewModel>
+
+@*Exibicao carregamento do Triangulo*@
+<div class="preloader">
+    <div class="wrapper-triangle">
+        <div class="pen">
+            <div class="line-triangle">
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+            </div>
+            <div class="line-triangle">
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+            </div>
+            <div class="line-triangle">
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h1>Detalhe do Cliente</h1>
+
+<a class="btn " style="border: 2px solid rgb(96, 70, 182);font-family: Arial, sans-serif;" asp-controller="Cliente"
+    asp-action="ExibirClientes">Voltar</a>
+
+<br />
+<br />
+
+<form asp-controller="Cliente" asp-action="DetalheCliente">
+
+            <h4>CLIENTE:</h4>
+
+        @* <div asp-validation-summary="ModelOnly" class="text-danger"></div> *@
+
+        <div class="card">
+
+            <div class="card-body">
+
+                @foreach (var item in Model)
+                {
+
+                    <div class="row">
+
+                        <div class="col-md-8">
+
+
+                            <div class="form-group">
+
+                                <label class="control-label">Nome</label>
+                                <input class="form-control" asp-for="@item.cliente.cc_nome" readonly />
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-3">
+
+                            <div class="form-group">
+                                <label class="control-label">CPF</label>
+                                <input asp-for="@item.cliente.cc_cpf" class="form-control" readonly />
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-3">
+
+                            <div class="form-group">
+                                <label class="control-label">RG</label>
+                                <input class="form-control" asp-for="@item.cliente.cc_rg" readonly />
+                            </div>
+
+                        </div>
+
+                        <div class="col-3">
+
+                            <div class="form-group">
+                                <label class="control-label">Data Nascimento</label>
+                                <input class="form-control" asp-for="@item.cliente.cc_data_nascimento" readonly />
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+
+
+                        <div class="col-6">
+
+                            <div class="form-group">
+                                <label class="control-label">E-mail</label>
+                                <input class="form-control" asp-for="@item.cliente.cc_email" readonly />
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-3">
+
+                            <div class="form-group">
+                                <label class="control-label">Telefone</label>
+                                <input class="form-control" asp-for="@item.cliente.cc_telefone" readonly />
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-3">
+
+                            <div class="form-group">
+                                <label class="control-label">Celular</label>
+                                <input class="form-control" asp-for="@item.cliente.cc_celular" readonly />
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    break;
+                }
+
+            </div>
+        </div>
+
+        <br />
+
+        <h4>ENDEREÇO:</h4>
+
+        <div class="card">
+
+            <div class="card-body">
+
+                @foreach (var item in Model)
+                {
+                    <div class="row">
+
+                        <div class="col-md-3">
+
+                            <div class="form-group">
+                                <label class="control-label">Tipo</label>
+
+                                <input asp-for="@item.endereco.ed_tipo" class="form-control" readonly />
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-2">
+
+                            <div class="form-group">
+
+                                <label class="control-label">CEP</label>
+                                <input asp-for="@item.endereco.ed_cep" class="form-control" readonly />
+                                <label class="text-danger d-none" id="cleave-cep2">CEP Inválido</label>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-1">
+
+                            <div class="form-group">
+                                <label class="control-label">Estado</label>
+                                <input asp-for="@item.endereco.ed_estado" class="form-control" readonly />
+
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-3">
+
+                            <div class="form-group">
+                                <label class="control-label">Cidade</label>
+                                <input asp-for="@item.endereco.ed_cidade" class="form-control" readonly />
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-3">
+
+                            <div class="form-group">
+                                <label class="control-label">Número</label>
+                                <input asp-for="@item.endereco.ed_numero" class="form-control" readonly />
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-3">
+
+                            <div class="form-group">
+                                <label class="control-label">Bairro</label>
+                                <input asp-for="@item.endereco.ed_bairro" class="form-control" readonly />
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <div class="form-group">
+                                <label class="control-label">Logradouro</label>
+                                <input asp-for="@item.endereco.ed_logradouro" class="form-control" readonly />
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-6">
+
+                            <div class="form-group">
+                                <label class="control-label">Complemento</label>
+                                <input asp-for="@item.endereco.ed_complemento" class="form-control" readonly />
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                }
+            </div>
+
+
+        </div>
+
+        <br />
+    
+ 
+
+</form>
+
+<div class="col-2 justify-content-center d-flex ">
+    <div class="row">
+
+        <button class="btn btn-primary" asp-controller="Cliente" asp-action="ExibirClientes">Voltar</button>
+     
+    </div>
+</div>
+
+
+@section Scripts {
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js"></script>
+    <script src="~/js/InputMasked.js"></script>
+    @*await Html.RenderPartialAsync("_ValidationScriptsPartial");*@
+
+
+}
