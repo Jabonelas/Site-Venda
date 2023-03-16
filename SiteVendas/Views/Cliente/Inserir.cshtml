@@ -37,6 +37,7 @@
     </div>
 </div>
 
+
 <h1>Cadastrar Cliente</h1>
 
 
@@ -47,6 +48,16 @@
 </div>
 
 <br />
+
+@if(TempData["mensagem"] != null){
+
+<div class="alert alert-success" role="alert">
+
+@TempData["mensagem"]
+</div>
+
+}
+
 
 <h4>DADOS:</h4>
 
@@ -101,10 +112,10 @@
 
                     <div class="form-group">
                         <label class="control-label">Data Nascimento</label>
-                        <input asp-for="cliente.cc_data_nascimento" class="form-control" minlength="10" type="text"
-                            id="cleave-date" />
+                        <input asp-for="cliente.cc_data_nascimento" class="form-control" id="cleave-date" minlength="10" type="text" />
                         <span asp-validation-for="cliente.cc_data_nascimento" class="text-danger"></span>
                     </div>
+
 
                 </div>
 
@@ -305,7 +316,7 @@
 
     <div class="form-group">
 
-        <input type="submit" value="Cadastrar" class="btn btn-primary" />
+        <input   type="submit" value="Cadastrar" class="btn btn-primary" />
 
     </div>
 
@@ -319,6 +330,50 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js"></script>
     <script src="~/js/InputMasked.js"></script>
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
+
+
+
+
+
+
+
+
+    <script>
+        $(document).cache(function () {
+            $('#buscarProduto').DataTable({
+                "language": { "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json" }
+            });
+        });
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js"></script>
+    <script src="~/js/InputMasked.js"></script>
+                                                                await Html.RenderPartialAsync("_ValidationScriptsPartial");
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     @*Verificação se as senhas informadas são iguais*@

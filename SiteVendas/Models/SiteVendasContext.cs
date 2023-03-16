@@ -21,6 +21,7 @@ namespace SiteVendas.Models
         public virtual DbSet<tb_cadastro_cliente> tb_cadastro_cliente { get; set; }
         public virtual DbSet<tb_dados_empresa> tb_dados_empresa { get; set; }
         public virtual DbSet<tb_endereco> tb_endereco { get; set; }
+        public virtual DbSet<tb_mensagens> tb_mensagens { get; set; }
         public virtual DbSet<tb_nota_fiscal> tb_nota_fiscal { get; set; }
         public virtual DbSet<tb_pedido> tb_pedido { get; set; }
         public virtual DbSet<tb_produto> tb_produto { get; set; }
@@ -52,6 +53,11 @@ namespace SiteVendas.Models
                     .HasForeignKey(d => d.fk_endereco)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_tb_dados_empresa_tb_endereco");
+            });
+
+            modelBuilder.Entity<tb_mensagens>(entity =>
+            {
+                entity.Property(e => e.id_mensagem).IsFixedLength();
             });
 
             modelBuilder.Entity<tb_nota_fiscal>(entity =>

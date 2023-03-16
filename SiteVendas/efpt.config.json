@@ -27,6 +27,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[tb_mensagens]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[tb_nota_fiscal]",
          "ObjectType": 0
       },

@@ -15,8 +15,6 @@ namespace SiteVendas.Controllers
         [HttpGet]
         public IActionResult Inserir()
         {
-
-
             string usuario = HttpContext.Session.GetString("usuario");
 
             if (usuario != null)
@@ -52,7 +50,6 @@ namespace SiteVendas.Controllers
 
             try
             {
-
                 context.tb_endereco.Add(_cliente.endereco);
                 context.SaveChanges();
 
@@ -65,6 +62,11 @@ namespace SiteVendas.Controllers
             {
                 return BadRequest("Erro ao Inserir Dados Cliente!");
             }
+
+
+            string mensagem = "Operação realizada com sucesso"!;
+            TempData["mensagem"] = mensagem;
+
 
             return View();
         }
