@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Views\Shared\Components\Mensagem\Mensagem.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
 	 <PackageReference Include="Correios-Api" Version="1.1.1" />
 	 <PackageReference Include="ErikEJ.EntityFrameworkCore.SqlServer.DateOnlyTimeOnly" Version="6.0.1" />
 	 <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />

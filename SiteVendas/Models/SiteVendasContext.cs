@@ -55,11 +55,6 @@ namespace SiteVendas.Models
                     .HasConstraintName("FK_tb_dados_empresa_tb_endereco");
             });
 
-            modelBuilder.Entity<tb_mensagens>(entity =>
-            {
-                entity.Property(e => e.id_mensagem).IsFixedLength();
-            });
-
             modelBuilder.Entity<tb_nota_fiscal>(entity =>
             {
                 entity.HasOne(d => d.fk_pedidoNavigation)

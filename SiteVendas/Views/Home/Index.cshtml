@@ -465,19 +465,6 @@
     </section>
 
 
-
-@if(TempData["mensagemSucesso"] != null)
-
-{
-
-<div class="alert alert-success" role="alert">
-
-@TempData["mensagemSucesso"]
-</div>
-
-}
-
-
     <!-- Tell-->
     <section class="section section-sm section-first bg-default">
         <div class="container">
@@ -584,19 +571,24 @@
                             <div class="modal-content">
                                 <div class="modal-header">
 
-                                    <h4 class="modal-title text-center" id="myModalLabel">Atenção!</h4>
+                                    <h4 class="modal-title text-center" id="myModalLabel">Mensagem enviada!</h4>
 
                                     <button type="button" class="btn btn-close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"></span></button>
 
                                 </div>
                                 <div class="modal-body">
 
-                                    Deseja Excluir Este Produto?
+                                    Aguarde o retorno com a confirmação.
+                                    <br/>
+                                    Agradecemos a preferência!
 
                                 </div>
-                                <div class="modal-footer">
+                                <div class="modal-footer d-flex justify-content-center">
 
-                                    <button type="button" class="btn btn-default" data-dismiss="modal" style=" border: 2px solid  rgb(96, 70, 182);">Cancelar</button>
+                                    @* <button type="button" class="btn btn-default" data-dismiss="modal" style=" border: 2px solid  rgb(96, 70, 182);">Voltar</button> *@
+
+
+   <a class="btn " type="button" style=" border: 2px solid  rgb(96, 70, 182);" data-dismiss="modal">Obrigado</a>
 
                                   
                                 </div>
@@ -624,20 +616,14 @@
                  var email = document.getElementById("contact-email-6");
                 var mensagem = document.getElementById("contact-message-6");
 
-        console.log("Entrou 1 etapa")
-
            function passarMensagem() {
 
-if(nome.value != "" && email.value != "" && mensagem.value != ""){
+            if(nome.value != "" && email.value != "" && mensagem.value != ""){
 
-console.log(nome.value)
-
-        console.log("Entrou 2 etapa")
+                console.log(nome.value)
 
                     $.ajax({
-                                   success: function(data) {
-
-        console.log("Entrou 3 etapa")
+                    success: function(data) {
 
              $('#myModal').modal('show');
 

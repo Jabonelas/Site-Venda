@@ -1,4 +1,5 @@
 ﻿using AngleSharp.Dom;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SiteVendas.Models;
 using SiteVendas.Models.ViewModel;
@@ -9,9 +10,11 @@ public class CarrinhoCompraViewComponent : ViewComponent
 {
     private SiteVendasContext context = new SiteVendasContext();
 
+
+[HttpGet]
+[Authorize]
     public IViewComponentResult Invoke()
     {
-        //string usuario = "Admin@hotmail.com";
         string usuario = HttpContext.Session.GetString("usuario");
 
         var quantidadePedidos = context.tb_cadastro_cliente.Join(context.tb_pedido, cliente => cliente.id_cadastro_cliente,

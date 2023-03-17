@@ -163,13 +163,17 @@
                                             asp-action="Cadastrar">Empresa</a>
                                         </li>
 
-                                        <li class="rd-nav-item">
+                                         @* <li class="rd-nav-item">
                                             @await Component.InvokeAsync("CarrinhoCompra")
+                                        </li> *@
+
+                                          <li class="rd-nav-item">
+                                            @await Component.InvokeAsync("Mensagem")
                                         </li>
+
+
                                     }
-
                                     else if (User.Identity.IsAuthenticated)
-
                                     {
                                         <li class="rd-nav-item">
                                             <a class="rd-nav-link" asp-area="" asp-controller="Pedidos"
@@ -182,7 +186,8 @@
                                         <li class="rd-nav-item">
                                             @await Component.InvokeAsync("CarrinhoCompra")
                                         </li>
-
+                                        
+                                       
                                     }
 
                                 </ul>
@@ -432,53 +437,6 @@
     <script src="~/js/script.js"></script>
     <script src="//cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
 
-    <script>
-
-        $(document).ready(function () {
-
-            $.ajax({
-                url: "/DadosEmpresa/BuscarDadosEmpresa/",
-                method: "GET",
-                success: function () {
-                    console.log("Entrou na inicialização")
-                },
-                error: (error) => {
-                    console.error(error);
-                }
-            });
-
-        });
-
-    </script>
-
-    <script>
-
-        $(document).ready(function () {
-            $("#exibirView").click(function () {
-                console.log("teste2");
-
-                $("#viewContainer").load("Views/Cliente/Inserir");
-                console.log("teste3");
-
-            });
-        });
-
-    </script>
-
-    <script>
-
-        $(document).ready(function () {
-            $("#exibirView1").click(function () {
-                console.log("teste4");
-
-                $("#viewContainer1").load("Views/Login/Login");
-                console.log("teste5");
-
-            });
-        });
-
-    </script>
-
     @*Coonfirmar Exclusao*@
     <script>
         function confirmarExclusao(idPedido) {
@@ -502,6 +460,28 @@
         }
 
     </script>
+
+    <script>
+
+        function passarIdMensagem(idMensagem){
+
+            $.ajax({
+                 type : "GET",
+                 url: "/Mensagem/ExibirDetalhesMensagem",
+                 data: { _idMensagem: idMensagem },
+                success: function (){
+
+                    location.reload();
+
+                },
+                error: function (xhr, status, error){
+                    console.log("Ocorreu um erro durante a requisição AJAX:" + error);
+                }
+            });
+        }
+    
+    </script>
+
 
     @Html.Partial("~/Views/Shared/_ValidationScriptsPartial.cshtml")
     @await RenderSectionAsync("Scripts", required: false)

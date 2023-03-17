@@ -55,6 +55,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cTG9naW4uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/israe/source/repos/SiteVendas/SiteVendas/Views/Mensagem/ExibirDetalhesMensagem.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVuc2FnZW1cRXhpYmlyRGV0YWxoZXNNZW5zYWdlbS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/israe/source/repos/SiteVendas/SiteVendas/Views/Pedidos/CarrinhoCompra.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVkaWRvc1xDYXJyaW5ob0NvbXByYS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -81,6 +85,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/israe/source/repos/SiteVendas/SiteVendas/Views/Shared/Components/CarrinhoCompra/Default.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcQ2FycmluaG9Db21wcmFcRGVmYXVsdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/israe/source/repos/SiteVendas/SiteVendas/Views/Shared/Components/Mensagem/Default.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENvbXBvbmVudHNcTWVuc2FnZW1cRGVmYXVsdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/israe/source/repos/SiteVendas/SiteVendas/Views/Shared/Error.cshtml]

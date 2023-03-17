@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "e90kY7kc8Z5wx8/u9JrUp9FENjO+SVa1FTNeWU0ztFc=",
+  "Hash": "B2EVIDqy88EK1WA8GZTC1qneiAEgwoVLmoBLCgAzPzE=",
   "Source": "SiteVendas",
   "BasePath": "_content/SiteVendas",
   "Mode": "Default",
@@ -1511,6 +1511,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\menu-6-370x278.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\israe\\source\\repos\\SiteVendas\\SiteVendas\\wwwroot\\images\\new_message_30px.png",
+      "SourceId": "SiteVendas",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\israe\\source\\repos\\SiteVendas\\SiteVendas\\wwwroot\\",
+      "BasePath": "_content/SiteVendas",
+      "RelativePath": "images/new_message_30px.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\new_message_30px.png"
     },
     {
       "Identity": "C:\\Users\\israe\\source\\repos\\SiteVendas\\SiteVendas\\wwwroot\\images\\our_history-1110x710.jpg",

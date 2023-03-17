@@ -11,8 +11,7 @@ namespace SiteVendas.Models
     public partial class tb_mensagens
     {
         [Key]
-        [StringLength(10)]
-        public string id_mensagem { get; set; }
+        public int id_mensagem { get; set; }
         [Required]
         [StringLength(100)]
         [Unicode(false)]
@@ -29,6 +28,8 @@ namespace SiteVendas.Models
         [StringLength(200)]
         [Unicode(false)]
         public string mg_mensagem { get; set; }
+        [Column(TypeName = "datetime")]
+        public DateTime mg_data { get; set; }
         public bool mg_verificado { get; set; }
         public bool mg_exibir { get; set; }
     }
