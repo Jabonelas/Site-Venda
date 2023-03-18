@@ -449,6 +449,7 @@
                     success: function () {
 
                         location.reload();
+
                     },
                     error: function (xhr, status, error) {
 
@@ -462,24 +463,27 @@
     </script>
 
     <script>
-
         function passarIdMensagem(idMensagem){
 
+            console.log("entrou nessa merda");
+
             $.ajax({
-                 type : "GET",
-                 url: "/Mensagem/ExibirDetalhesMensagem",
-                 data: { _idMensagem: idMensagem },
+                @* type : "GET", *@
+                @* url: `Mensagem/ExibirDetalhesMensagem/${idMensagem}`, *@
                 success: function (){
 
-                    location.reload();
+            console.log("Entrou Nessa Sucesso");
+
+                     window.location.href = `Mensagem/ExibirDetalhesMensagem/${idMensagem}`; 
 
                 },
                 error: function (xhr, status, error){
+                    
                     console.log("Ocorreu um erro durante a requisição AJAX:" + error);
                 }
             });
         }
-    
+
     </script>
 
 

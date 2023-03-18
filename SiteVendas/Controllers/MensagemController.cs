@@ -52,10 +52,10 @@ namespace SiteVendas.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Admin@hotmail.com")]
-
+        [Route("Mensagem/ExibirDetalhesMensagem/{_idMensagem}")]
         public IActionResult ExibirDetalhesMensagem(int _idMensagem)
         {
-            var mensagem = context.tb_mensagens.Where(x => x.id_mensagem.Equals(_idMensagem));
+            var mensagem = context.tb_mensagens.Where(x => x.id_mensagem.Equals(_idMensagem)).ToList();
 
             return View();
         }

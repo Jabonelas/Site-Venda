@@ -4,9 +4,7 @@
     *@
 
 @{
-    var quantidadeMensagens = ViewData["quantidadeMensagens"] as List
-    <tb_mensagens>
-        ;
+    var quantidadeMensagens = ViewData["quantidadeMensagens"] as List    <tb_mensagens>        ;
 }
 
 @if (quantidadeMensagens != null)
@@ -24,6 +22,7 @@
                 <img src="~/images/new_message_30px.png">
             </span>
         </button>
+        
         <!-- Modal Exibir Mensagens -->
         @*
         <form method="post" asp-controller="Mensagem" asp-action="MarcarVisualizacaoMensagem">
@@ -88,10 +87,7 @@
                                             </td>
                                             <td>
                                                 <button onclick="passarIdMensagem(@item.id_mensagem)" class="btn button-secondary">Exibir</button>
-                                                @*
-                                                <button onclick="passarIdMensagem(@item.id_mensagem)" class="btn button-secondary">Exibir</button>
-                                                *@
-                                               
+                                            
                                                 @*
                                                 <button
                                                     asp-action="Mensagem"
@@ -100,24 +96,7 @@
                                                     class="btn button-secondary"
                                                 >Exibir</button>
                                                 *@
-                                                
-                                                
-                                                
-                                                
-                                                @*
-                                                <a
-                                                    onclick="confirmarExclusao(@item.idPedido)"
-                                                    type="button"
-                                                    class="btn btn-default  "
-                                                    href="#"
-                                                >
-                                                    <span style="color: black"></span>
-                                                    <span>
-                                                        <img src="~/images/trash_30px.png">
-                                                    </span>
-                                                    Detalhe
-                                                </a>
-                                                *@
+                                             
                                             </td>
                                         </tr>
                                         }
@@ -166,6 +145,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js"></script>
         <script src="~/js/InputMasked.js"></script>
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
+
         <script>
         $(document).ready(function () {
             $('#myTable').DataTable({
@@ -175,35 +155,6 @@
         </script>
 
 
-        @*Passando parametros para inserir na minha tabela de pedidos*@
-        <script>
-        function passarParametro() {
 
-console.log("Entrou 1")
-
-                $.ajax({
-                   
-                     console.log("Entrou 1")
-                   
-                    success: function (data) {
-                        // Aqui você pode manipular a resposta da requisição AJAX
-
-                     console.log("Entrou 2")
-
-                        @* $("#cleave-opcaoPagamento").addClass("d-none"); *@
-
-                     @* window.location.href = "/Pedidos/FinalizarPedido"; *@
-
-                        $(modal).modal('hide');
-
-                        //location.reload();
-                    },
-                    error: function (xhr, status, error) {
-                        // Aqui você pode tratar os erros que ocorrem durante a requisição AJAX
-                        console.log("Ocorreu um erro durante a requisição AJAX: " + error);
-                    }
-                });
-        }
-        </script>
         }
 

@@ -1,7 +1,63 @@
-@model IEnumerable<SiteVendas.Models.tb_mensagens>
-
-@{
-    ViewData["Title"] = "ExibirDetalhesMensagem";
-}
-
-<h1>TemplateMonster</h1>
+@model SiteVendas.Models.tb_mensagens
+@* @model IEnumerable<SiteVendas.Models.tb_mensagens> *@
+@* @model List<SiteVendas.Models.tb_mensagens> *@
+  
+    @*Exibicao carregamento do Triangulo*@
+    <div class="preloader">
+        <div class="wrapper-triangle">
+            <div class="pen">
+                <div class="line-triangle">
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                </div>
+                <div class="line-triangle">
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                </div>
+                <div class="line-triangle">
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h1>Reserva</h1>
+    <div class=" row col-2 justify-content-center d-flex">
+        <a class="btn " style="border: 2px solid rgb(96, 70, 182);font-family: Arial, sans-serif;" asp-controller="Home" asp-action="Index">Voltar</a>
+    </div>
+    <br>
+    <h4>Editar Produto:</h4>
+    <hr>
+    @* <form asp-controller="Mensagem" asp-action="ExibirDetalhesMensagem">
+        <h4>CLIENTE:</h4>
+        <div class="card">
+            <div class="card-body">
+                @foreach (var item in Model)
+                {
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label class="control-label">Nome</label>
+                            <input class="form-control" asp-for="@item.mg_nome" readonly>
+                        </div>
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+    </form> *@
