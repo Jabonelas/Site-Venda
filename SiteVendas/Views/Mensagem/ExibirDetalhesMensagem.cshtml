@@ -1,63 +1,217 @@
 @model SiteVendas.Models.tb_mensagens
-@* @model IEnumerable<SiteVendas.Models.tb_mensagens> *@
-@* @model List<SiteVendas.Models.tb_mensagens> *@
+@* @model IEnumerable
+<SiteVendas.Models.tb_mensagens>
+    *@
+@* @model List
+    <SiteVendas.Models.tb_mensagens>
+        *@
   
+
+@{
+
+var mensagem =  ViewData["Mensagem"] as List
+        <tb_mensagens>
+            ;
+
+}
+
     @*Exibicao carregamento do Triangulo*@
-    <div class="preloader">
-        <div class="wrapper-triangle">
-            <div class="pen">
-                <div class="line-triangle">
-                    <div class="triangle"></div>
-                    <div class="triangle"></div>
-                    <div class="triangle"></div>
-                    <div class="triangle"></div>
-                    <div class="triangle"></div>
-                    <div class="triangle"></div>
-                    <div class="triangle"></div>
-                </div>
-                <div class="line-triangle">
-                    <div class="triangle"></div>
-                    <div class="triangle"></div>
-                    <div class="triangle"></div>
-                    <div class="triangle"></div>
-                    <div class="triangle"></div>
-                    <div class="triangle"></div>
-                    <div class="triangle"></div>
-                </div>
-                <div class="line-triangle">
-                    <div class="triangle"></div>
-                    <div class="triangle"></div>
-                    <div class="triangle"></div>
-                    <div class="triangle"></div>
-                    <div class="triangle"></div>
-                    <div class="triangle"></div>
-                    <div class="triangle"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <h1>Reserva</h1>
-    <div class=" row col-2 justify-content-center d-flex">
-        <a class="btn " style="border: 2px solid rgb(96, 70, 182);font-family: Arial, sans-serif;" asp-controller="Home" asp-action="Index">Voltar</a>
-    </div>
-    <br>
-    <h4>Editar Produto:</h4>
-    <hr>
-    @* <form asp-controller="Mensagem" asp-action="ExibirDetalhesMensagem">
-        <h4>CLIENTE:</h4>
-        <div class="card">
-            <div class="card-body">
-                @foreach (var item in Model)
-                {
-                <div class="row">
-                    <div class="col-md-8">
-                        <div class="form-group">
-                            <label class="control-label">Nome</label>
-                            <input class="form-control" asp-for="@item.mg_nome" readonly>
+            <div class="preloader">
+                <div class="wrapper-triangle">
+                    <div class="pen">
+                        <div class="line-triangle">
+                            <div class="triangle"></div>
+                            <div class="triangle"></div>
+                            <div class="triangle"></div>
+                            <div class="triangle"></div>
+                            <div class="triangle"></div>
+                            <div class="triangle"></div>
+                            <div class="triangle"></div>
+                        </div>
+                        <div class="line-triangle">
+                            <div class="triangle"></div>
+                            <div class="triangle"></div>
+                            <div class="triangle"></div>
+                            <div class="triangle"></div>
+                            <div class="triangle"></div>
+                            <div class="triangle"></div>
+                            <div class="triangle"></div>
+                        </div>
+                        <div class="line-triangle">
+                            <div class="triangle"></div>
+                            <div class="triangle"></div>
+                            <div class="triangle"></div>
+                            <div class="triangle"></div>
+                            <div class="triangle"></div>
+                            <div class="triangle"></div>
+                            <div class="triangle"></div>
                         </div>
                     </div>
                 </div>
-                }
+            </div>
+            <h1>Reserva</h1>
+            <div class=" row col-2 justify-content-center d-flex">
+                <a
+                    class="btn "
+                    style="border: 2px solid rgb(96, 70, 182);font-family: Arial, sans-serif;"
+                    asp-controller="Home"
+                    asp-action="Index"
+                >Voltar</a>
+            </div>
+            <hr>
+            @* <form asp-controller="Mensagem" asp-action="ExibirDetalhesMensagem"> *@
+                <h4>Mensagem:</h4>
+                <div class="card">
+                    <div class="card-body">
+                        @foreach (var item in mensagem)
+                {
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label class="control-label">Nome</label>
+                                    <input class="form-control" asp-for="@item.mg_nome" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label">E-mail</label>
+                                    <input class="form-control" asp-for="@item.mg_email" readonly>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="control-label">Data</label>
+                                    <input class="form-control" asp-for="@item.mg_data" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label class="control-label">Tipo</label>
+                                    <input class="form-control" asp-for="@item.mg_servico" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="control-label">Mensagem</label>
+                                    <textarea
+                                        asp-for="mg_mensagem"
+                                        class="form-input textarea-lg"
+                                        id="contact-message-6"
+                                        readonly
+                                    ></textarea>
+                                    @*
+                                    <input class="form-control" asp-for="@item.mg_email" readonly>
+                                    *@
+                                </div>
+                            </div>
+                        </div>
+                        }
+                        
+                    </div>
+                </div>
+                
+
+                <div class="col-md-2">
+
+                @* <a style="margin: 0 15px;" class="btn btn-primary d-flex justify-content-end" asp-area=""
+                asp-controller="Login" asp-action="Login">Responder</a> *@
+<button class="btn btn-primary">Responder</button>
+
+
+                </div>
+
+
+
+
+
+
+ <!-- Modal Exibir Mensagens -->
+        <div             class="modal"            id="ModalCarrinho"            tabindex="-1"            role="dialog"            aria-labelledby="myModalLabel"        >
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class=" d-flex justify-content-center">
+                        <h4>
+                            Mensagens
+                            <img src="~/images/new_message_30px.png">
+                        </h4>
+                    </div>
+                    <br>
+                    <div class="card">
+                        <div class="card-body row">
+                            <table class="table text-center" id="myTable">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Nome
+                                        </th>
+                                        <th>
+                                            E-mail
+                                        </th>
+                                        <th>
+                                            Serviço
+                                        </th>
+                                        <th>
+                                            Data
+                                        </th>
+                                        <th>
+                                            Visualizado
+                                        </th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @* @foreach (var item in quantidadeMensagens)
+                            {
+                                    <tr>
+                                        <td>
+                                            @item.mg_nome
+                                        </td>
+                                        <td>
+                                            @item.mg_email
+                                        </td>
+                                        <td>
+                                            @item.mg_servico
+                                        </td>
+                                        <td>
+                                            @item.mg_data
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" name="_idMensagem" value="@item.id_mensagem">
+                                        </td>
+                                        <td>
+                                            <button onclick="passarIdMensagem(@item.id_mensagem)" class="btn button-secondary">Exibir</button>
+                                        </td>
+                                    </tr>
+                                    } *@
+                                </tbody>
+                                <tfoot></tfoot>
+                            </table>
+                        </div>
+                    </div>
+                    <br>
+                    <div class=" d-flex justify-content-end">
+                        <button
+                            type="button"
+                            class="btn btn-default"
+                            data-dismiss="modal"
+                            style="border: 2px solid rgb(96, 70, 182);"
+                        >Voltar</button>
+                        <button data-dismiss="modal" type="submit" class="btn btn-primary d-flex justify-content-end">Confirmar</button>
+                        <a></a>
+                    </div>
+                    <br>
+                </div>
             </div>
         </div>
-    </form> *@
+
+
+
+
+
+            @* </form> *@

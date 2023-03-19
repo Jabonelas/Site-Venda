@@ -57,6 +57,9 @@ namespace SiteVendas.Controllers
         {
             var mensagem = context.tb_mensagens.Where(x => x.id_mensagem.Equals(_idMensagem)).ToList();
 
+ViewData["Mensagem"] = mensagem;
+
+
             return View();
         }
     }
