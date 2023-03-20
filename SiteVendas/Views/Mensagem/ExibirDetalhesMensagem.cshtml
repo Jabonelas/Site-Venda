@@ -1,21 +1,20 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model SiteVendas.Models.tb_mensagens
-@* @model IEnumerable
-<SiteVendas.Models.tb_mensagens>
-    *@
-@* @model List
-    <SiteVendas.Models.tb_mensagens>
-        *@
-  
+@* @model IEnumerable<tb_mensagens> *@
+@* @model SiteVendas.Models.tb_mensagens *@
+
+
 
 @{
 
-var mensagem =  ViewData["Mensagem"] as List
-        <tb_mensagens>
-            ;
+var mensagem =  ViewData["Mensagem"] as List<tb_mensagens>;
+ string destinatario = string.Empty;
+ string clienteNome = string.Empty;
 
 }
 
     @*Exibicao carregamento do Triangulo*@
+
             <div class="preloader">
                 <div class="wrapper-triangle">
                     <div class="pen">
@@ -49,7 +48,9 @@ var mensagem =  ViewData["Mensagem"] as List
                     </div>
                 </div>
             </div>
+
             <h1>Reserva</h1>
+
             <div class=" row col-2 justify-content-center d-flex">
                 <a
                     class="btn "
@@ -58,18 +59,23 @@ var mensagem =  ViewData["Mensagem"] as List
                     asp-action="Index"
                 >Voltar</a>
             </div>
+
             <hr>
+
             @* <form asp-controller="Mensagem" asp-action="ExibirDetalhesMensagem"> *@
+               
                 <h4>Mensagem:</h4>
+
                 <div class="card">
                     <div class="card-body">
-                        @foreach (var item in mensagem)
+                       @foreach (var item in mensagem)
                 {
                         <div class="row">
                             <div class="col-md-8">
                                 <div class="form-group">
                                     <label class="control-label">Nome</label>
                                     <input class="form-control" asp-for="@item.mg_nome" readonly>
+                                    @{ clienteNome = item.mg_nome; }
                                 </div>
                             </div>
                         </div>
@@ -78,6 +84,7 @@ var mensagem =  ViewData["Mensagem"] as List
                                 <div class="form-group">
                                     <label class="control-label">E-mail</label>
                                     <input class="form-control" asp-for="@item.mg_email" readonly>
+                                    @{ destinatario = item.mg_email; }
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -100,28 +107,29 @@ var mensagem =  ViewData["Mensagem"] as List
                                 <div class="form-group">
                                     <label class="control-label">Mensagem</label>
                                     <textarea
-                                        asp-for="mg_mensagem"
-                                        class="form-input textarea-lg"
-                                        id="contact-message-6"
-                                        readonly
+                                        asp-for="@item.mg_mensagem" class="form-input textarea-lg" id="contact-message-6" readonldy
                                     ></textarea>
-                                    @*
-                                    <input class="form-control" asp-for="@item.mg_email" readonly>
-                                    *@
+                                    @*<input class="form-control" asp-for="@item.mg_email" readonly>*@
                                 </div>
                             </div>
                         </div>
-                        }
                         
+                        }
+                         
                     </div>
                 </div>
                 
-
                 <div class="col-md-2">
 
-                @* <a style="margin: 0 15px;" class="btn btn-primary d-flex justify-content-end" asp-area=""
-                asp-controller="Login" asp-action="Login">Responder</a> *@
-<button class="btn btn-primary">Responder</button>
+
+@* Passando e-meil e nomecliente como parametro para minha controler *@
+<form  action="/Mensagem/EnviarEmail">
+   <input type="text" name="destinatario" value="@destinatario" class="d-none"/>
+   <input type="text" name="nomeCliente" value="@clienteNome" class="d-none" />
+   <button type="submit">Enviar</button>
+</form>
+
+
 
 
                 </div>
@@ -215,3 +223,28 @@ var mensagem =  ViewData["Mensagem"] as List
 
 
             @* </form> *@
+
+
+
+@section Scripts {
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js"></script>
+    <script src="~/js/InputMasked.js"></script>
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+
+
+
+        <script>
+        function passarIdMensagem(idMensagem){
+            $.ajax({
+                success: function (){
+                     window.location.href = `Mensagem/ExibirDetalhesMensagem/${idMensagem}`; 
+                },
+                error: function (xhr, status, error){
+                    console.log("Ocorreu um erro durante a requisição AJAX:" + error);
+                }
+            });
+        }
+
+    </script>
+}

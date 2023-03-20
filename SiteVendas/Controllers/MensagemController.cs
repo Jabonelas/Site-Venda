@@ -57,10 +57,27 @@ namespace SiteVendas.Controllers
         {
             var mensagem = context.tb_mensagens.Where(x => x.id_mensagem.Equals(_idMensagem)).ToList();
 
-ViewData["Mensagem"] = mensagem;
-
+            ViewData["Mensagem"] = mensagem;
 
             return View();
+            // return PartialView(mensagem);
         }
+
+
+
+
+        // [HttpPost]
+        public IActionResult EnviarEmail(string destinatario,string nomeCliente )
+        {
+            // string destinatario = destinatario;
+            string assunto = "Reserva Pizza House";
+            string corpo = $"{nomeCliente}      Agredecemos a preferencia, estamos de aguardando!";
+
+            string mailtoLink = string.Format("mailto:{0}?subject={1}&body={2}", destinatario, assunto, corpo);
+            return Redirect(mailtoLink);
+        }
+
+
+
     }
 }

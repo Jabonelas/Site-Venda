@@ -10,6 +10,7 @@
 
 
 
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -464,21 +465,11 @@
 
     <script>
         function passarIdMensagem(idMensagem){
-
-            console.log("entrou nessa merda");
-
             $.ajax({
-                @* type : "GET", *@
-                @* url: `Mensagem/ExibirDetalhesMensagem/${idMensagem}`, *@
                 success: function (){
-
-            console.log("Entrou Nessa Sucesso");
-
                      window.location.href = `Mensagem/ExibirDetalhesMensagem/${idMensagem}`; 
-
                 },
                 error: function (xhr, status, error){
-                    
                     console.log("Ocorreu um erro durante a requisição AJAX:" + error);
                 }
             });
