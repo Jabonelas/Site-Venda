@@ -33,22 +33,37 @@ namespace SiteVendas.Controllers
             return View("~/Home/Index.cshtml");
         }
 
-        [HttpPost]
+        // [HttpPost]
         [Authorize(Roles = "Admin@hotmail.com")]
         // [Route("Mensagem/MarcarVisualizacaoMensagem/{_idCliente}")]
-        public void MarcarVisualizacaoMensagem(List<int> _idMensagem)
+
+        // public void MarcarVisualizacaoMensagem(List<int> _idMensagem)
+        public void MarcarVisualizacaoMensagem(List<tb_mensagens> quantidadeMensagens)
         {
-            foreach (var item in _idMensagem)
-            {
 
-                var mensagem = context.tb_mensagens.Where(x => x.id_mensagem.Equals(item)).First();
+            // if (_idMensagem != null)
+            // {
+            //     foreach (var item in _idMensagem)
+            //     {
+            //         var mensagem = context.tb_mensagens.Where(x => x.id_mensagem.Equals(item)).First();
 
-                mensagem.mg_verificado = true;
+            //         mensagem.mg_verificado = true;
 
-                context.SaveChanges();
-            }
+            //         context.SaveChanges();
+            //     }
+            // }
+
+foreach(var item in quantidadeMensagens){
+
+
+
+
+
+}
+
 
         }
+
 
         [HttpGet]
         [Authorize(Roles = "Admin@hotmail.com")]
@@ -65,9 +80,9 @@ namespace SiteVendas.Controllers
 
 
 
-
+        //Pegar dados do cliente para gerar e-mail
         // [HttpPost]
-        public IActionResult EnviarEmail(string destinatario,string nomeCliente )
+        public IActionResult EnviarEmail(string destinatario, string nomeCliente)
         {
             // string destinatario = destinatario;
             string assunto = "Reserva Pizza House";

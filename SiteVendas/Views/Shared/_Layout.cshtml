@@ -8,8 +8,7 @@
 @using Microsoft.AspNetCore.Authorization;
 @using SiteVendas.Models.ViewModel;
 
-
-
+   
 
 <!DOCTYPE html>
 <html lang="en">
@@ -474,6 +473,36 @@
                 }
             });
         }
+
+    </script>
+
+
+
+    <script>
+
+            function confirmarLeitura (quantidadeMensagens){
+
+                console.error("Entrou na função");
+
+                $.ajax({
+
+                         // [Route("Mensagem/MarcarVisualizacaoMensagem/{_idCliente}")]
+                @* url: `Mensagem/MarcarVisualizacaoMensagem/${_idCliente}`, *@
+                url: "Mensagem/MarcarVisualizacaoMensagem",
+                @* url: "/Mensagem/MarcarVisualizacaoMensagem", *@
+                method: "GET",
+                data: (quantidadeMensagens),
+                success: function (){
+
+                console.error("Entrou na função");
+
+                },
+                error: (error) => {
+
+                  console.error(error);
+                }
+                });
+                };
 
     </script>
 
