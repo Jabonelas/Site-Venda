@@ -11,7 +11,6 @@ namespace SiteVendas.Controllers
         [HttpPost]
         public IActionResult InserirMensagem(tb_mensagens _mensagem)
         {
-
             DateTime dataAtual = DateTime.Now;
 
             var mensagem = new tb_mensagens()
@@ -25,45 +24,30 @@ namespace SiteVendas.Controllers
                 mg_data = dataAtual,
             };
 
-
             context.tb_mensagens.Add(mensagem);
             context.SaveChanges();
-
 
             return View("~/Home/Index.cshtml");
         }
 
-        // [HttpPost]
-        [Authorize(Roles = "Admin@hotmail.com")]
-        // [Route("Mensagem/MarcarVisualizacaoMensagem/{_idCliente}")]
-
-        // public void MarcarVisualizacaoMensagem(List<int> _idMensagem)
-        public void MarcarVisualizacaoMensagem(List<tb_mensagens> quantidadeMensagens)
+        [HttpPost]
+        // [Authorize(Roles = "Admin@hotmail.com")]
+        // [Route("Mensagem/MarcarVisualizacaoMensagem/{idMensagem}")]
+        [Route("Mensagem/MarcarVisualizacaoMensagem/{idMensagem}")]
+        public IActionResult MarcarVisualizacaoMensagem(int idMensagem)
         {
-
-            // if (_idMensagem != null)
+            // if (idMensagem != null)
             // {
-            //     foreach (var item in _idMensagem)
-            //     {
-            //         var mensagem = context.tb_mensagens.Where(x => x.id_mensagem.Equals(item)).First();
+            //         var mensagem = context.tb_mensagens.Where(x => x.id_mensagem.Equals(idMensagem)).First();
 
             //         mensagem.mg_verificado = true;
 
             //         context.SaveChanges();
-            //     }
             // }
 
-foreach(var item in quantidadeMensagens){
 
-
-
-
-
-}
-
-
+            return View("~/Home/Index");
         }
-
 
         [HttpGet]
         [Authorize(Roles = "Admin@hotmail.com")]
@@ -78,8 +62,6 @@ foreach(var item in quantidadeMensagens){
             // return PartialView(mensagem);
         }
 
-
-
         //Pegar dados do cliente para gerar e-mail
         // [HttpPost]
         public IActionResult EnviarEmail(string destinatario, string nomeCliente)
@@ -91,8 +73,5 @@ foreach(var item in quantidadeMensagens){
             string mailtoLink = string.Format("mailto:{0}?subject={1}&body={2}", destinatario, assunto, corpo);
             return Redirect(mailtoLink);
         }
-
-
-
     }
 }

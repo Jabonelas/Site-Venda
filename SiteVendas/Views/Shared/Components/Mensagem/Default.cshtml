@@ -1,38 +1,27 @@
 ﻿@model SiteVendas.Models.tb_mensagens
-@* @model IEnumerable
-<SiteVendas.Models.tb_mensagens>
-    *@
+
 
 @{
     var quantidadeMensagens = ViewData["quantidadeMensagens"] as List<tb_mensagens>;
 }
-        @*
-        <form asp-controller="Mensagem" asp-action="MarcarVisualizacaoMensagem">
-            *@
+  
 
 @if (quantidadeMensagens != null)
 {
     @if (quantidadeMensagens.Count() > 0)
     {
-            <button
-                data-toggle="modal"
-                data-target="#ModalCarrinho"
-                class="button button-xs button-secondary button-winona"
-                href="#"
-            >
+            <button data-toggle="modal" data-target="#ModalCarrinho" class="button button-xs button-secondary button-winona" href="#">
+               
                 <span style="color: black"> @quantidadeMensagens.Count()</span>
+
                 <span>
                     <img src="~/images/new_message_30px.png">
                 </span>
+
             </button>
+          
             <!-- Modal Exibir Mensagens -->
-            <div
-                class="modal"
-                id="ModalCarrinho"
-                tabindex="-1"
-                role="dialog"
-                aria-labelledby="myModalLabel"
-            >
+            <div class="modal" id="ModalCarrinho" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                 <div class="modal-dialog modal-lg" role="document">
                     <div class="modal-content">
                         <div class=" d-flex justify-content-center">
@@ -59,15 +48,12 @@
                                             <th>
                                                 Data
                                             </th>
-                                            <th>
-                                                Visualizado
-                                            </th>
                                             <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach (var item in quantidadeMensagens)
-                            {
+                                      {
                                         <tr>
                                             <td>
                                                 @item.mg_nome
@@ -82,64 +68,41 @@
                                                 @item.mg_data
                                             </td>
                                             <td>
-                                                <input type="checkbox">
-                                                @* <input type="checkbox" name="_idMensagem" value="@item.id_mensagem"> *@
-
-                                                @if(@item.mg_verificado == false){
-
-                                                    item.mg_verificado = true;
-
-                                                }else{
-                                                    item.mg_verificado =false;
-                                                }
-
-                                            </td>
-                                            <td>
                                                 <button  name="_idMensagem" onclick="passarIdMensagem(@item.id_mensagem)" class="btn button-secondary">Exibir</button>
                                             </td>
                                         </tr>
-                                        }
+                                      }
                                     </tbody>
                                     <tfoot></tfoot>
                                 </table>
                             </div>
                         </div>
+
                         <br>
 
-                        @* <div class=" d-flex justify-content-end">
-                            <button
-                                type="button"
-                                class="btn btn-default"
-                                data-dismiss="modal"
-                                style="border: 2px solid rgb(96, 70, 182);"
-                            >Voltar</button>
-                            <a style="margin: 0 15px;" class="btn btn-primary d-flex justify-content-end" type="submit">Confirmar</a>
-                        </div> *@
+                        <div class="d-flex justify-content-end">
 
-                        <div class=" d-flex justify-content-end">
-                            <button type="button" class="btn btn-default" data-dismiss="modal" style="border: 2px solid rgb(96, 70, 182);">Voltar</button>
-                          
-                            <button onclick="confirmarLeitura(quantidadeMensagens)" type="submit" class="btn btn-primary d-flex justify-content-end">Confirmar</button>
-                            @* <button onclick="confirmarLeitura()" data-dismiss="modal" type="submit" class="btn btn-primary d-flex justify-content-end">Confirmar</button> *@
-                          
-                            <a></a>
+                            <button type="button" class="btn btn-default" data-dismiss="modal" style="border: 2px solid rgb(96, 70, 182);margin: 0 15px;">Voltar</button>
+
                         </div>
 
                         <br>
                     </div>
                 </div>
             </div>
-            }
+         
+        }
 }
 
 
 
-        @section Scripts {
+    @section Scripts {
 
     @*Layout da GridView*@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js"></script>
         <script src="~/js/InputMasked.js"></script>
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
+
         <script>
 
         $(document).ready(function () {
@@ -147,6 +110,7 @@
                 "language": { "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json" }
             });
         });
+
         </script>
 
 
