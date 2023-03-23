@@ -73,5 +73,15 @@ namespace SiteVendas.Controllers
             string mailtoLink = string.Format("mailto:{0}?subject={1}&body={2}", destinatario, assunto, corpo);
             return Redirect(mailtoLink);
         }
+
+
+        [HttpGet]
+        private IActionResult ExibirTodasReservas()
+        {
+            var todasReservas = context.tb_mensagens.OrderBy(x => x.mg_data).ToList();
+
+            return View();
+            // return View(todasReservas);
+        }
     }
 }

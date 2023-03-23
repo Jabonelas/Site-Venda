@@ -139,6 +139,13 @@
                                             asp-action="ListaProdutos">Cardápio</a>
                                     </li>
 
+                                     <li class="rd-nav-item">
+                                            <a class="rd-nav-link" asp-area="" asp-controller="Mensagem"
+                                            asp-action="ExibirTodasReservas">Mensagens</a>
+
+                                        
+                                        </li>
+
                                     @*@await Component.InvokeAsync("CarrinhoCompra")*@
 
                                     @if (User.IsInRole("Admin@hotmail.com"))
@@ -166,6 +173,12 @@
                                          @* <li class="rd-nav-item">
                                             @await Component.InvokeAsync("CarrinhoCompra")
                                         </li> *@
+
+                                        <li class="rd-nav-item">
+                                            <a class="rd-nav-link" asp-area="" asp-controller="Mensagem"
+                                            asp-action="ExibirTodasReservas">Mensagens</a>
+                                        </li>
+
 
                                           <li class="rd-nav-item">
                                             @await Component.InvokeAsync("Mensagem")
