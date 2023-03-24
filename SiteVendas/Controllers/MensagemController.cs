@@ -11,7 +11,8 @@ namespace SiteVendas.Controllers
         [HttpPost]
         public IActionResult InserirMensagem(tb_mensagens _mensagem)
         {
-            DateTime dataAtual = DateTime.Now;
+            DateTime dataAtual = DateTime.Today;
+            // DateTime dataAtual = DateTime.Now;
 
             var mensagem = new tb_mensagens()
             {
@@ -21,7 +22,7 @@ namespace SiteVendas.Controllers
                 mg_mensagem = _mensagem.mg_mensagem,
                 mg_verificado = false,
                 mg_exibir = false,
-                mg_data = dataAtual,
+                mg_data_recebimento = dataAtual,
             };
 
             context.tb_mensagens.Add(mensagem);
@@ -32,24 +33,22 @@ namespace SiteVendas.Controllers
 
         [HttpPost]
         // [Authorize(Roles = "Admin@hotmail.com")]
-        // [Route("Mensagem/MarcarVisualizacaoMensagem/{idMensagem}")]
         [Route("Mensagem/MarcarVisualizacaoMensagem/{idMensagem}")]
         public IActionResult MarcarVisualizacaoMensagem(int idMensagem)
         {
-            // if (idMensagem != null)
-            // {
-            //         var mensagem = context.tb_mensagens.Where(x => x.id_mensagem.Equals(idMensagem)).First();
+            if (idMensagem != null)
+            {
+                    var mensagem = context.tb_mensagens.Where(x => x.id_mensagem.Equals(idMensagem)).First();
 
-            //         mensagem.mg_verificado = true;
+                    mensagem.mg_verificado = true;
 
-            //         context.SaveChanges();
-            // }
-
+                    context.SaveChanges();
+            }
 
             return View("~/Home/Index");
         }
 
-        [HttpGet]
+        // [HttpGet]
         [Authorize(Roles = "Admin@hotmail.com")]
         [Route("Mensagem/ExibirDetalhesMensagem/{_idMensagem}")]
         public IActionResult ExibirDetalhesMensagem(int _idMensagem)
@@ -61,6 +60,7 @@ namespace SiteVendas.Controllers
             return View();
             // return PartialView(mensagem);
         }
+
 
         //Pegar dados do cliente para gerar e-mail
         // [HttpPost]
@@ -74,14 +74,15 @@ namespace SiteVendas.Controllers
             return Redirect(mailtoLink);
         }
 
-
-        [HttpGet]
-        private IActionResult ExibirTodasReservas()
+        // [HttpGet]
+      [Route("Mensagem/ExibirTodasReservas")]
+        public IActionResult ExibirTodasReservas()
         {
-            var todasReservas = context.tb_mensagens.OrderBy(x => x.mg_data).ToList();
+            var todasReservas = context.tb_mensagens.OrderBy(x => x.mg_data_recebimento).ToList();
 
-            return View();
+            return View(todasReservas);
             // return View(todasReservas);
         }
+
     }
 }

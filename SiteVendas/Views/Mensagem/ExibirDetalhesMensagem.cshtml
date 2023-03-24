@@ -50,7 +50,7 @@ var mensagem =  ViewData["Mensagem"] as List<tb_mensagens>;
         <h1>Reserva</h1>
         
         <div class=" row col-2 justify-content-center d-flex">
-            <a class="btn " style="border: 2px solid rgb(96, 70, 182);font-family: Arial, sans-serif;" asp-controller="Home" asp-action="Index">Voltar</a>
+            <a class="btn " style="border: 2px solid rgb(96, 70, 182);font-family: Arial, sans-serif;" asp-controller="Mensagem" asp-action="ExibirTodasReservas">Voltar</a>
         </div>
         <hr>
       
@@ -83,10 +83,18 @@ var mensagem =  ViewData["Mensagem"] as List<tb_mensagens>;
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label class="control-label">Data</label>
-                                <input class="form-control" asp-for="@item.mg_data" readonly>
+                                <label class="control-label">Data Recebimento</label>
+                                <input class="form-control" asp-for="@item.mg_data_recebimento" readonly>
                             </div>
                         </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="control-label">Data Retorno</label>
+                                <input class="form-control" asp-for="@item.mg_data_retorno" readonly>
+                            </div>
+                        </div>
+
                     </div>
                     <div class="row">
                         <div class="col-md-4">

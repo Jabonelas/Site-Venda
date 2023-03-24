@@ -16,11 +16,7 @@ public class MensagemViewComponent : ViewComponent
     public IViewComponentResult Invoke()
     {
         var mensagens = context.tb_mensagens.Where(x => x.mg_verificado == false).ToList();
- 
-        ViewData["quantidadeMensagens"] = null;
 
-        ViewData["quantidadeMensagens"] = mensagens;
-
-        return View();
+        return View(mensagens);
     }
 }

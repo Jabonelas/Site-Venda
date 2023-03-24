@@ -88,8 +88,9 @@ namespace SiteVendas.Controllers
 
 
             HttpContext.Session.Clear();
-HttpContext.Session.Remove("usuario");
+            HttpContext.Session.Remove("usuario");
             return RedirectToAction("Login", "Login");
         }
+
     }
 }

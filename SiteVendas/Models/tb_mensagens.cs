@@ -29,7 +29,9 @@ namespace SiteVendas.Models
         [Unicode(false)]
         public string mg_mensagem { get; set; }
         [Column(TypeName = "datetime")]
-        public DateTime mg_data { get; set; }
+        public DateTime mg_data_recebimento { get; set; }
+        [Column(TypeName = "datetime")]
+        public DateTime? mg_data_retorno { get; set; }
         public bool mg_verificado { get; set; }
         public bool mg_exibir { get; set; }
     }
