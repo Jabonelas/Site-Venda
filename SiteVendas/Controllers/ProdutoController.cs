@@ -244,51 +244,43 @@ namespace SiteVendas.Controllers
             return View("~/Views/Produto/TodosProdutos.cshtml");
         }
 
-        public IActionResult Exibir()
+
+
+        public void ProdutosFavoritos()
         {
-            var image = context.tb_produto.Where(x => x.id_produto == 4).ToList();
-            //.Select(x => x.pd_imagem);
+            var produtosFavoritos = context.tb_pedido
+                .GroupBy(p => p.fk_produto)
+                .OrderByDescending(g => g.Sum(p => p.pd_quantidade))
+                .Take(4)
+                .Join(context.tb_produto,
+                    p => p.Key,
+                    pr => pr.id_produto,
+                    (p, pr) => new {
+                        Produto = pr.pd_nome,
+                        TotalVendido = p.Sum(x => x.pd_quantidade),
+                        Preco = pr.pd_preco,
+                        Imagem = pr.pd_imagem,
+                        IdProduto = pr.id_produto
+                    })
+                .ToList();
 
-            //List<tb_produto> teste = new List<tb_produto>();
+            ViewData["ProdutosFavoritos"] = null;
+            ViewData["ProdutosFavoritos"] = produtosFavoritos;
 
-            //foreach (var item in image)
-            //{
-            //    teste.Add(new tb_produto
-            //    {
-            //        pd_tipo = item.pd_tipo,
-            //        pd_nome = item.pd_nome,
-            //        pd_descricao = item.pd_descricao,
-            //        pd_tamanho = item.pd_tamanho,
-            //        pd_preco = item.pd_preco,
-            //        pd_disponivel = item.pd_disponivel,
-            //        pd_imagem = item.pd_imagem
-            //    });
-            //}
 
-            ////return View(teste);
+            //var produtosFavoridos = context.tb_pedido
+            //    .GroupBy(p => p.fk_produto)
+            //    .OrderByDescending(g => g.Sum(p => p.pd_quantidade))
+            //    .Take(4)
+            //    .Select(g => new {
+            //        Produto = g.Key,
+            //        TotalVendido = g.Sum(p => p.pd_quantidade)
+            //    })
+            //    .ToList();
 
-            //foreach (var VARIABLE in teste)
-            //{
-            //    return File(VARIABLE.pd_imagem, "teste");
-            //}
 
-            return View(image);
 
-            //var image1 = new Image
-            //{
-            //    Nome = imagem.FileName,
-            //    Tipo = imagem.ContentType,
-            //    Dados = image
-            //};
-
-            ////Converter imgaem em byte
-            //using var stream = new MemoryStream();
-            //await imagem.CopyToAsync(stream);
-            //image.Dados = stream.ToArray();
-
-            //ViewData["ListaProduto"] = image;
-
-            //return File(image.Dados, image.Tipo);
         }
+
     }
 }

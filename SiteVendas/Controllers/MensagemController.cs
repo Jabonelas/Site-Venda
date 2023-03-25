@@ -11,8 +11,12 @@ namespace SiteVendas.Controllers
         [HttpPost]
         public IActionResult InserirMensagem(tb_mensagens _mensagem)
         {
-            DateTime dataAtual = DateTime.Today;
-            // DateTime dataAtual = DateTime.Now;
+
+            DateTime dataHoraAtual = DateTime.Now;
+            string formato = "dd/MM/yyyy HH:mm:ss"; // Formato desejado
+            string dataHoraAtualFormatada = dataHoraAtual.ToString(formato);
+
+            DateTime dataAtual = DateTime.Now;
 
             var mensagem = new tb_mensagens()
             {
@@ -22,7 +26,7 @@ namespace SiteVendas.Controllers
                 mg_mensagem = _mensagem.mg_mensagem,
                 mg_verificado = false,
                 mg_exibir = false,
-                mg_data_recebimento = dataAtual,
+                mg_data_recebimento = Convert.ToDateTime(dataHoraAtualFormatada),
             };
 
             context.tb_mensagens.Add(mensagem);
@@ -32,23 +36,23 @@ namespace SiteVendas.Controllers
         }
 
         [HttpPost]
-        // [Authorize(Roles = "Admin@hotmail.com")]
+        [Authorize(Roles = "Admin@hotmail.com")]
         [Route("Mensagem/MarcarVisualizacaoMensagem/{idMensagem}")]
         public IActionResult MarcarVisualizacaoMensagem(int idMensagem)
         {
             if (idMensagem != null)
             {
-                    var mensagem = context.tb_mensagens.Where(x => x.id_mensagem.Equals(idMensagem)).First();
+                var mensagem = context.tb_mensagens.Where(x => x.id_mensagem.Equals(idMensagem)).First();
 
-                    mensagem.mg_verificado = true;
+                mensagem.mg_verificado = true;
 
-                    context.SaveChanges();
+                context.SaveChanges();
             }
 
             return View("~/Home/Index");
         }
 
-        // [HttpGet]
+        [HttpGet]
         [Authorize(Roles = "Admin@hotmail.com")]
         [Route("Mensagem/ExibirDetalhesMensagem/{_idMensagem}")]
         public IActionResult ExibirDetalhesMensagem(int _idMensagem)
@@ -58,15 +62,15 @@ namespace SiteVendas.Controllers
             ViewData["Mensagem"] = mensagem;
 
             return View();
-            // return PartialView(mensagem);
+       
         }
 
 
         //Pegar dados do cliente para gerar e-mail
-        // [HttpPost]
+        [HttpPost]
+        [Authorize(Roles = "Admin@hotmail.com")]
         public IActionResult EnviarEmail(string destinatario, string nomeCliente)
         {
-            // string destinatario = destinatario;
             string assunto = "Reserva Pizza House";
             string corpo = $"{nomeCliente}      Agredecemos a preferencia, estamos de aguardando!";
 
@@ -74,14 +78,26 @@ namespace SiteVendas.Controllers
             return Redirect(mailtoLink);
         }
 
-        // [HttpGet]
-      [Route("Mensagem/ExibirTodasReservas")]
+        [HttpGet]
+        [Authorize(Roles = "Admin@hotmail.com")]
+        [Route("Mensagem/ExibirTodasReservas")]
         public IActionResult ExibirTodasReservas()
         {
             var todasReservas = context.tb_mensagens.OrderBy(x => x.mg_data_recebimento).ToList();
 
             return View(todasReservas);
-            // return View(todasReservas);
+        }
+
+
+        [HttpGet]
+
+        public void ElogiosClientes()
+        {
+
+// var elogios = context.tb_mensagens.
+
+
+
         }
 
     }

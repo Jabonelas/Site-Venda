@@ -20,18 +20,19 @@ namespace SiteVendas.Controllers
         }
 
 
+
         public void BuscarDadosEmpresa()
         {
-            var dadosEmpresa = context.tb_endereco.Join(context.tb_dados_empresa, endereco => endereco.id_endereco, empresa => empresa.fk_endereco,
+           var listaDadosEmpresa = context.tb_endereco.Join(context.tb_dados_empresa, endereco => endereco.id_endereco, empresa => empresa.fk_endereco,
                        (endereco, empresa) => new DadosEmpresaViewModel
                        {
                            endereco = endereco,
                            dadosEmpresa = empresa,
 
-                       }).Where(x => x.dadosEmpresa.id_dados_empresa.Equals(1));
+                       }).Where(x => x.dadosEmpresa.id_dados_empresa.Equals(1)).ToList();
 
             ViewData["DadosEmpresa"] = null;
-            ViewData["DadosEmpresa"] = dadosEmpresa;
+            ViewData["DadosEmpresa"] = listaDadosEmpresa;
         }
 
         [HttpPost]
@@ -86,12 +87,12 @@ namespace SiteVendas.Controllers
 
             return View("Cadastrar");
         }
-   
-   
-   
-   
-   
-   
+
+
+
+
+
+
     }
 }
 

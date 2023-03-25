@@ -192,7 +192,7 @@
     </section>
 
     <!-- Section CTA-->
-    <section class="primary-overlay section parallax-container" data-parallax-img="images/bg-3.jpg">
+@*    <section class="primary-overlay section parallax-container" data-parallax-img="images/bg-3.jpg">
         <div class="parallax-content section-xl context-dark text-md-left">
             <div class="container">
                 <div class="row justify-content-end">
@@ -206,12 +206,260 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section>*@
 
-    <!-- Our Shop-->
+
+
+
+
+
+
+    @{
+        var listaProdutosSelecionado = ViewData["ProdutosFavoritos"] as List<tb_produto>;
+
+
+    }
+
+
+
+
+
+          @foreach (var item in @listaProdutosSelecionado)
+            {
+                <div class="col-sm-6 col-lg-4 col-xl-3" id="cleave-bebidaExibicao">
+
+                    <!-- Product-->
+                    <article class="product wow fadeInLeft" data-wow-delay=".15s">
+                        <div class="product-figure">
+
+                            <img alt="" width="161" height="162"
+                                src="data:image/png;base64,@Convert.ToBase64String(@item.pd_imagem)" />
+
+                        </div>
+                        <div class="product-rating">
+
+                            <span class="mdi mdi-star"></span><span class="mdi mdi-star"></span><span
+                                class="mdi mdi-star"></span><span class="mdi mdi-star"></span><span
+                                class="mdi mdi-star text-gray-13"></span>
+
+                        </div>
+
+                        <h6 class="product-title">@item.pd_nome</h6>
+
+                        <div class="product-price-wrap">
+
+                            <div class="product-price">@item.pd_preco.ToString("C2")</div>
+
+                        </div>
+
+                        <div class="product-button">
+                            @*
+                        <div class="button-wrap">
+                        <a type="button" data-toggle="modal"
+                        data-target="#ModalCarrinho-@item.id_produto"
+                        class="button button-xs button-secondary button-winona" href="#">Adicionar ao Carrinho</a>
+                        </div>*@
+
+                            <div class="button-wrap">
+                                <button onclick="botaoModal(@item.id_produto)"
+                                    class="button button-xs button-secondary button-winona" href="#">Adicionar ao
+                                    Carrinho</button>
+                            </div>
+
+                            <div class="button-wrap">
+                                <a type="button" data-toggle="modal" data-target="#ModalDetalhe-@item.id_produto"
+                                    class="button button-xs button-secondary button-winona" href="#">Ver Detalhes</a>
+                            </div>
+
+                            <!-- Modal Detalher Produto -->
+                            <div class="modal" id="ModalDetalhe-@item.id_produto" tabindex="-1" role="dialog"
+                                aria-labelledby="myModalLabel">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+
+                                            <h4 class="modal-title text-center" id="myModalLabel">@item.pd_nome</h4>
+
+                                            <button type="button" class="btn btn-close" data-dismiss="modal"
+                                                aria-label="Close">
+                                                <span aria-hidden="true"></span>
+                                            </button>
+
+                                        </div>
+                                        <div class="modal-body text-center">
+
+                                            <img alt="" width="161" height="162"
+                                                src="data:image/png;base64,@Convert.ToBase64String(@item.pd_imagem)" />
+
+                                            <br />
+                                            <br />
+
+                                            <div class="card">
+
+                                                <h6>
+                                                    <b>Descrição:</b>
+                                                </h6>
+
+                                                @item.pd_descricao
+
+                                            </div>
+
+                                            <br />
+
+                                            <div class="card justify-content-center d-flex ">
+
+                                                <h6>Valor:</h6>
+
+                                                <h6>
+                                                    <b>
+                                                        @item.pd_preco.ToString("C2")
+                                                    </b>
+                                                </h6>
+
+                                            </div>
+
+
+                                        </div>
+                                        <div class="modal-footer">
+
+                                            <button type="button" class="btn btn-default" data-dismiss="modal"
+                                                style="border: 2px solid rgb(96, 70, 182);">
+                                                Voltar
+                                            </button>
+
+                                            <button class=" btn btn-primary form-group"
+                                                onclick="passarParametro(@item.id_produto)" type="submit"
+                                                id="passarParametros">Adicionar no Carrinho</button>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <!-- Modal Adicionar Carrinho -->
+                            <div class="modal" id="ModalCarrinho-@item.id_produto" tabindex="-1" role="dialog"
+                                aria-labelledby="myModalLabel">
+
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+
+                                            <h4 class="modal-title text-center" id="myModalLabel">@item.pd_nome</h4>
+
+                                            <button type="button" class="btn btn-close" data-dismiss="modal"
+                                                aria-label="Close">
+                                                <span aria-hidden="true"></span>
+                                            </button>
+
+                                        </div>
+                                        <div class="modal-body text-center">
+
+                                            <img alt="" width="161" height="162"
+                                                src="data:image/png;base64,@Convert.ToBase64String(@item.pd_imagem)" />
+
+                                            <br />
+                                            <br />
+
+                                            <div class="card">
+
+                                                <br />
+
+                                                <div style="text-align: center;">
+                                                    <h6>
+
+                                                        <b>Quantidade:</b>
+
+                                                        <input name="quantidade" type="number" id="num1-@item.id_produto"
+                                                            value="1" min="1" max="99"
+                                                            onchange="multiplicar(@item.id_produto)">
+                                                    </h6>
+
+                                                </div>
+
+                                                <br />
+
+                                            </div>
+
+                                            <br />
+
+                                            <div class="card justify-content-center d-flex ">
+
+                                                <h6>Valor:</h6>
+
+                                                <h6>
+                                                    <b>
+                                                        <input class="d-none" id="num2-@item.id_produto"
+                                                            value="@item.pd_preco" readonly>
+
+                                                        <h4>
+
+                                                            <label name="valor"
+                                                                id="resultadoMultiplicacao-@item.id_produto">@item.pd_preco.ToString("C2")</label>
+
+                                                        </h4>
+                                                    </b>
+                                                </h6>
+
+                                            </div>
+
+                                        </div>
+                                        <div class="modal-footer">
+
+                                            <button type="button" class="btn btn-default" data-dismiss="modal"
+                                                style="border: 2px solid rgb(96, 70, 182);">
+                                                Voltar
+                                            </button>
+
+                                            <button class=" btn btn-primary form-group"
+                                                onclick="passarParametro(@item.id_produto)" type="submit"
+                                                id="passarParametros">Adicionar no Carrinho</button>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </article>
+                </div>
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Our Shop-->
     <section class="section section-lg bg-default">
         <div class="container">
-            <h3 class="oh-desktop"><span class="d-inline-block wow slideInUp">Selected Pizzas</span></h3>
+            <h3 class="oh-desktop"><span class="d-inline-block wow slideInUp">Pizzas Selecionadas</span></h3>
             <div class="row row-lg row-30">
                 <div class="col-sm-6 col-lg-4 col-xl-3">
                     <!-- Product-->
@@ -229,6 +477,7 @@
                         <div class="product-button">
                             <div class="button-wrap"><a class="button button-xs button-primary button-winona" href="#">Add to cart</a></div>
                             <div class="button-wrap"><a class="button button-xs button-secondary button-winona" href="#">View Product</a></div>
+                            
                         </div>
                     </article>
                 </div>
@@ -295,7 +544,7 @@
     </section>
 
     <!-- Section CTA-->
-    <section class="primary-overlay section parallax-container" data-parallax-img="images/bg-4.jpg">
+@*    <section class="primary-overlay section parallax-container" data-parallax-img="images/bg-4.jpg">
         <div class="parallax-content section-xxl context-dark text-md-left">
             <div class="container">
                 <div class="row justify-content-end">
@@ -308,7 +557,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section>*@
 
     <!-- What We Offer-->
     <section class="section section-xl bg-default">
@@ -317,57 +566,59 @@
         </div>
         <div class="container container-style-1">
             <div class="owl-carousel owl-style-12" data-items="1" data-sm-items="2" data-lg-items="3" data-margin="30" data-xl-margin="45" data-autoplay="true" data-nav="true" data-center="true" data-smart-speed="400">
+               
+               
                 <!-- Quote Tara-->
                 <article class="quote-tara">
                     <div class="quote-tara-caption">
                         <div class="quote-tara-text">
-                            <p class="q">PizzaHouse is the longest lasting pizza place in the city and is well run and staffed. Prices are great and allow me to keep coming back.</p>
+                            <p class="q">A PizzaHouse é a pizzaria mais antiga da cidade e é bem administrada e com equipe. Os preços são ótimos e me permitem continuar voltando.</p>
                         </div>
                         <div class="quote-tara-figure">
-                            <img src="images/user-6-115x115.jpg" alt="" width="115" height="115" />
+                            <img src="images/Ashley Fitzgerald.jpg" alt="" width="115" height="115" />
                         </div>
                     </div>
                     <h6 class="quote-tara-author">Ashley Fitzgerald</h6>
-                    <div class="quote-tara-status">Client</div>
+                    <div class="quote-tara-status">Cliente</div>
                 </article>
                 <!-- Quote Tara-->
                 <article class="quote-tara">
                     <div class="quote-tara-caption">
                         <div class="quote-tara-text">
-                            <p class="q">I am a real pizza addict, and even when I’m home I prefer your pizzas to all others. They taste awesome and are very affordable.</p>
+                            <p class="q">Sou uma verdadeira viciada em pizza, e mesmo quando estou em casa prefiro as tuas pizzas a todas as outras. Eles têm um sabor incrível e são muito acessíveis.</p>
                         </div>
                         <div class="quote-tara-figure">
-                            <img src="images/user-8-115x115.jpg" alt="" width="115" height="115" />
+                            <img src="images/Stephanie Williams.jpg" alt="" width="115" height="115" />
                         </div>
                     </div>
                     <h6 class="quote-tara-author">Stephanie Williams</h6>
-                    <div class="quote-tara-status">Client</div>
+                    <div class="quote-tara-status">Cliente</div>
                 </article>
                 <!-- Quote Tara-->
                 <article class="quote-tara">
                     <div class="quote-tara-caption">
                         <div class="quote-tara-text">
-                            <p class="q">PizzaHouse has amazing pizza. Not only do you get served with a great attitude, you also get delicious pizza at a great price!</p>
+                            <p class="q">PizzaHouse tem pizza incrível. Você não apenas é servido com uma ótima atitude, mas também obtém uma deliciosa pizza por um ótimo preço!</p>
                         </div>
                         <div class="quote-tara-figure">
-                            <img src="images/user-7-115x115.jpg" alt="" width="115" height="115" />
+                            <img src="images/Bill Johnson.jpg" alt="" width="115" height="115" />
                         </div>
                     </div>
                     <h6 class="quote-tara-author">Bill Johnson</h6>
-                    <div class="quote-tara-status">Client</div>
+                    <div class="quote-tara-status">Cliente</div>
                 </article>
                 <!-- Quote Tara-->
                 <article class="quote-tara">
                     <div class="quote-tara-caption">
                         <div class="quote-tara-text">
-                            <p class="q">PizzaHouse has great pizza. Not only do you get served with a great attitude and delivered delicious pizza, you get a great price.</p>
+                            <p class="q">PizzaHouse tem uma ótima pizza. Você não apenas é servido com uma ótima atitude e entrega uma deliciosa pizza, como também obtém um ótimo preço.</p>
                         </div>
                         <div class="quote-tara-figure">
-                            <img src="images/user-9-115x115.jpg" alt="" width="115" height="115" />
+                            <img src="images/aaron-wilson.jpg" alt="" width="115" height="115" />
                         </div>
                     </div>
                     <h6 class="quote-tara-author">Aaron Wilson</h6>
-                    <div class="quote-tara-status">Client</div>
+                    <div class="quote-tara-status">Cliente</div>
                 </article>
             </div>
         </div>
@@ -376,55 +627,65 @@
     <section class="section section-last bg-default">
         <div class="container-fluid container-inset-0 isotope-wrap">
             <div class="row row-10 gutters-10 isotope" data-isotope-layout="masonry" data-isotope-group="gallery" data-lightgallery="group">
-                <div class="col-xs-6 col-sm-4 col-xl-2 isotope-item oh-desktop">
+             
+                <div class="col-xs-6 col-sm-4 col-xl-3 isotope-item oh-desktop">
+                    @*<div class="col-xs-6 col-sm-4 col-xl-2 isotope-item oh-desktop">*@
                     <!-- Thumbnail Mary-->
                     <article class="thumbnail thumbnail-mary thumbnail-mary-2 wow slideInLeft">
-                        <a class="thumbnail-mary-figure" href="images/gallery-1-1200x800-original.jpg" data-lightgallery="item"><img src="images/gallery-1-310x585.jpg" alt="" width="310" height="585" /></a>
+                        <a class="thumbnail-mary-figure" href="images/gallery-1-1200x800-original.jpg" data-lightgallery="item"><img src="~/images/2032472-pizza-ingredientes-e-massa-pizza-gratis-foto (1) (1).jpg" alt="" width="200px" height="200px"/></a>
+                        @*<a class="thumbnail-mary-figure" href="images/gallery-1-1200x800-original.jpg" data-lightgallery="item"><img src="~/images/2032472-pizza-ingredientes-e-massa-pizza-gratis-foto.jpg" alt="" width="310" height="585"/></a>*@
                         <div class="thumbnail-mary-caption">
                             <div>
-                                <h6 class="thumbnail-mary-title"><a href="#">Best Ingredients</a></h6>
-                                <div class="thumbnail-mary-location">Tasty Pizza</div>
+                                <h6 class="thumbnail-mary-title"><a href="#">Os Melhores Ingredientes</a></h6>
+                                <div class="thumbnail-mary-location">Pizza Saborosa</div>
                             </div>
                         </div>
                     </article>
                 </div>
-                <div class="col-xs-6 col-sm-8 col-xl-4 isotope-item oh-desktop">
+
+
+                    @*<div class="col-xs-6 col-sm-8 col-xl-4 isotope-item oh-desktop">*@
+                @*<div class="col-xs-6 col-sm-4 col-xl-2 isotope-item oh-desktop">
+                    <!-- Thumbnail Mary-->
+                    <article class="thumbnail thumbnail-mary wow slideInUp">
+                        <a class="thumbnail-mary-figure" href="images/gallery-4-1200x800-original.jpg" data-lightgallery="item"><img src="images/drinks.jpg" alt="" width="631" height="289"/></a>
+                        <div class="thumbnail-mary-caption">
+                            <div>
+                                <h6 class="thumbnail-mary-title"><a href="#">Coquetéis Refrescantes</a></h6>
+                                <div class="thumbnail-mary-location">Seleção Exclusiva</div>
+                            </div>
+                        </div>
+                    </article>
+                </div>*@
+
+
+                <div class="col-xs-6 col-sm-6 col-xl-6 isotope-item oh-desktop">
+                    @*<div class="col-xs-6 col-sm-8 col-xl-4 isotope-item oh-desktop">*@
                     <!-- Thumbnail Mary-->
                     <article class="thumbnail thumbnail-mary thumbnail-mary-big wow slideInRight">
-                        <a class="thumbnail-mary-figure" href="images/gallery-2-1200x800-original.jpg" data-lightgallery="item"><img src="images/gallery-2-631x587.jpg" alt="" width="631" height="587" /></a>
+                        <a class="thumbnail-mary-figure" href="images/gallery-2-1200x800-original.jpg" data-lightgallery="item"><img src="images/melhores-restaurantes-mundo-2021-capa.jpg" alt="" width="631" height="587"/></a>
                         <div class="thumbnail-mary-caption">
                             <div>
-                                <h6 class="thumbnail-mary-title"><a href="#">Comfortable interior</a></h6>
-                                <div class="thumbnail-mary-location">Modern Design</div>
+                                <h6 class="thumbnail-mary-title"><a href="#">Interior Confortável</a></h6>
+                                <div class="thumbnail-mary-location">Design Moderno</div>
                             </div>
                         </div>
                     </article>
                 </div>
-                <div class="col-xs-6 col-sm-4 col-xl-2 isotope-item oh-desktop">
+                @*        <div class="col-xs-6 col-sm-4 col-xl-2 isotope-item oh-desktop">
                     <!-- Thumbnail Mary-->
                     <article class="thumbnail thumbnail-mary thumbnail-mary-2 wow slideInDown">
                         <a class="thumbnail-mary-figure" href="images/gallery-3-1200x800-original.jpg" data-lightgallery="item"><img src="images/gallery-3-311x289.jpg" alt="" width="311" height="289" /></a>
                         <div class="thumbnail-mary-caption">
                             <div>
-                                <h6 class="thumbnail-mary-title"><a href="#">quality Dishware</a></h6>
-                                <div class="thumbnail-mary-location">Top-notch utensils</div>
+                                <h6 class="thumbnail-mary-title"><a href="#">Pratos de Qualidade</a></h6>
+                                <div class="thumbnail-mary-location">Utensílios de Primeira Linha</div>
                             </div>
                         </div>
                     </article>
-                </div>
-                <div class="col-xs-6 col-sm-8 col-xl-4 isotope-item oh-desktop">
-                    <!-- Thumbnail Mary-->
-                    <article class="thumbnail thumbnail-mary wow slideInUp">
-                        <a class="thumbnail-mary-figure" href="images/gallery-4-1200x800-original.jpg" data-lightgallery="item"><img src="images/gallery-4-631x289.jpg" alt="" width="631" height="289" /></a>
-                        <div class="thumbnail-mary-caption">
-                            <div>
-                                <h6 class="thumbnail-mary-title"><a href="#">Refreshing cocktails</a></h6>
-                                <div class="thumbnail-mary-location">Exclusive selection</div>
-                            </div>
-                        </div>
-                    </article>
-                </div>
-                <div class="col-xs-6 col-sm-4 col-xl-2 isotope-item oh-desktop">
+                </div>*@
+
+                @*    <div class="col-xs-6 col-sm-4 col-xl-2 isotope-item oh-desktop">
                     <!-- Thumbnail Mary-->
                     <article class="thumbnail thumbnail-mary thumbnail-mary-2 wow slideInUp">
                         <a class="thumbnail-mary-figure" href="images/gallery-5-1200x800-original.jpg" data-lightgallery="item"><img src="images/gallery-5-311x289.jpg" alt="" width="311" height="289" /></a>
@@ -435,27 +696,32 @@
                             </div>
                         </div>
                     </article>
-                </div>
-                <div class="col-xs-6 col-sm-4 col-xl-2 isotope-item oh-desktop">
+                </div>*@
+                <div class="col-xs-6 col-sm-6 col-xl-2 isotope-item oh-desktop">
+                    @*<div class="col-xs-6 col-sm-4 col-xl-2 isotope-item oh-desktop">*@
                     <!-- Thumbnail Mary-->
                     <article class="thumbnail thumbnail-mary thumbnail-mary-2 wow slideInRight">
-                        <a class="thumbnail-mary-figure" href="images/gallery-6-1200x800-original.jpg" data-lightgallery="item"><img src="images/gallery-6-311x289.jpg" alt="" width="311" height="289" /></a>
+                        <a class="thumbnail-mary-figure" href="images/gallery-6-1200x800-original.jpg" data-lightgallery="item"><img src="images/xsabores-de-pizza.jpeg.pagespeed.ic.Aok6EiErup.jpg" alt="" width="311" height="289"/></a>
                         <div class="thumbnail-mary-caption">
                             <div>
-                                <h6 class="thumbnail-mary-title"><a href="#">All Types of pizza</a></h6>
-                                <div class="thumbnail-mary-location">Special Recipes</div>
+                                <h6 class="thumbnail-mary-title"><a href="#">Todos os Tipos de Pizza</a></h6>
+                                <div class="thumbnail-mary-location">Receitas Especiais</div>
                             </div>
                         </div>
                     </article>
                 </div>
-                <div class="col-xs-6 col-sm-4 col-xl-2 isotope-item oh-desktop">
+                
+
+                <div class="col-xs-6 col-sm-6 col-xl-2 isotope-item oh-desktop">
+                    @*<div class="col-xs-6 col-sm-4 col-xl-2 isotope-item oh-desktop">*@
                     <!-- Thumbnail Mary-->
                     <article class="thumbnail thumbnail-mary thumbnail-mary-2 wow slideInLeft">
-                        <a class="thumbnail-mary-figure" href="images/gallery-7-1200x800-original.jpg" data-lightgallery="item"><img src="images/gallery-7-311x289.jpg" alt="" width="311" height="289" /></a>
+                        <a class="thumbnail-mary-figure" href="images/gallery-7-1200x800-original.jpg" data-lightgallery="item"><img src="images/pizza_R_l5_3 (1).jpg" alt="" width="311" height="289"/></a>
+                        @*<a class="thumbnail-mary-figure" href="images/gallery-7-1200x800-original.jpg" data-lightgallery="item"><img src="images/pizza_R_l5_3.jpg" alt="" width="311" height="289"/></a>*@
                         <div class="thumbnail-mary-caption">
                             <div>
-                                <h6 class="thumbnail-mary-title"><a href="#">Diverse menu</a></h6>
-                                <div class="thumbnail-mary-location">Pick Your Favorite dish</div>
+                                <h6 class="thumbnail-mary-title"><a href="#">Cardápio Variado</a></h6>
+                                <div class="thumbnail-mary-location">Escolha Seu Prato Favorito</div>
                             </div>
                         </div>
                     </article>
@@ -612,28 +878,52 @@
     @*Setando Endereço com base no CEP*@
     <script>
 
-                var nome = document.getElementById("contact-your-name-6");
-                 var email = document.getElementById("contact-email-6");
-                var mensagem = document.getElementById("contact-message-6");
+        var nome = document.getElementById("contact-your-name-6");
+        var email = document.getElementById("contact-email-6");
+        var mensagem = document.getElementById("contact-message-6");
 
-           function passarMensagem() {
+        function passarMensagem() {
 
             if(nome.value != "" && email.value != "" && mensagem.value != ""){
 
                 console.log(nome.value)
 
-                    $.ajax({
+                $.ajax({
                     success: function(data) {
 
-             $('#myModal').modal('show');
+                        $('#myModal').modal('show');
 
-                        },
-                        error: function(error) {
-                            console.error(error);
-                        }
-                    });
-}
-           }
+                    },
+                    error: function(error) {
+                        console.error(error);
+                    }
+                });
+            }
+        }
 
     </script>
+    
+    
+    
+    
+    <script>
+        $(document).ready(function() {
+            $.ajax({
+                    url: '/Produto/ProdutosFavoritos',
+                type: 'GET',
+                //dataType: 'json',
+                success: function(data) {
+                    // Faça algo com os dados recebidos
+                }
+            });
+        });
+    </script>
+    
+    
+    
+    
+    
+
+    
+
 }
