@@ -245,42 +245,5 @@ namespace SiteVendas.Controllers
         }
 
 
-
-        public void ProdutosFavoritos()
-        {
-            var produtosFavoritos = context.tb_pedido
-                .GroupBy(p => p.fk_produto)
-                .OrderByDescending(g => g.Sum(p => p.pd_quantidade))
-                .Take(4)
-                .Join(context.tb_produto,
-                    p => p.Key,
-                    pr => pr.id_produto,
-                    (p, pr) => new {
-                        Produto = pr.pd_nome,
-                        TotalVendido = p.Sum(x => x.pd_quantidade),
-                        Preco = pr.pd_preco,
-                        Imagem = pr.pd_imagem,
-                        IdProduto = pr.id_produto
-                    })
-                .ToList();
-
-            ViewData["ProdutosFavoritos"] = null;
-            ViewData["ProdutosFavoritos"] = produtosFavoritos;
-
-
-            //var produtosFavoridos = context.tb_pedido
-            //    .GroupBy(p => p.fk_produto)
-            //    .OrderByDescending(g => g.Sum(p => p.pd_quantidade))
-            //    .Take(4)
-            //    .Select(g => new {
-            //        Produto = g.Key,
-            //        TotalVendido = g.Sum(p => p.pd_quantidade)
-            //    })
-            //    .ToList();
-
-
-
-        }
-
     }
 }

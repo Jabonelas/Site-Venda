@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "vovA/QUvVmKdPZDt/RfB+H5L8V+/QGYCgyVshRgFd3A=",
+  "Hash": "RPoIdvYCNxkaFnnvQdtkDnYn5Bgh1LMwpuPb2u9D0KM=",
   "Source": "SiteVendas",
   "BasePath": "_content/SiteVendas",
   "Mode": "Default",
@@ -1018,6 +1018,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\Bill Johnson.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\israe\\source\\repos\\SiteVendas\\SiteVendas\\wwwroot\\images\\depositphotos_73395193-stock-photo-food-ingredients-for-pizza.jpg",
+      "SourceId": "SiteVendas",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\israe\\source\\repos\\SiteVendas\\SiteVendas\\wwwroot\\",
+      "BasePath": "_content/SiteVendas",
+      "RelativePath": "images/depositphotos_73395193-stock-photo-food-ingredients-for-pizza.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\depositphotos_73395193-stock-photo-food-ingredients-for-pizza.jpg"
     },
     {
       "Identity": "C:\\Users\\israe\\source\\repos\\SiteVendas\\SiteVendas\\wwwroot\\images\\drinks.jpg",

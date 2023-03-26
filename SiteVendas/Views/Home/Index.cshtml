@@ -1,5 +1,6 @@
 ﻿@model SiteVendas.Models.tb_mensagens
 
+
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -44,34 +45,43 @@
     <!-- Swiper-->
     <section class="section swiper-container swiper-slider swiper-slider-2 swiper-slider-3" data-loop="true" data-autoplay="5000" data-simulate-touch="false" data-slide-effect="fade">
         <div class="swiper-wrapper text-sm-left">
-            <div class="swiper-slide context-dark" data-slide-bg="images/slide-1-1920x753.jpg">
+            <div class="swiper-slide context-dark" data-slide-bg="/images/pizza1">
+            @* <div class="swiper-slide context-dark" data-slide-bg="images/slide-1-1920x753.jpg"> *@
                 <div class="swiper-slide-caption section-md">
                     <div class="container">
                         <div class="row">
                             <div class="col-sm-9 col-md-8 col-lg-7 col-xl-7 offset-lg-1 offset-xxl-0">
-                                <h1 class="oh swiper-title"><span class="d-inline-block" data-caption-animate="slideInUp" data-caption-delay="0">Perfect pizza</span></h1>
+                                <h1 class="oh swiper-title"><span class="d-inline-block" data-caption-animate="slideInUp" data-caption-delay="0">Pizzas Perfeitas</span></h1>
                                 <p class="big swiper-text" data-caption-animate="fadeInLeft" data-caption-delay="300">Experimente o sabor de uma pizza perfeita na PizzaHouse, um dos melhores restaurantes!</p>
-                                
-                                <a class="button button-lg button-primary button-winona button-shadow-2" href="#" data-caption-animate="fadeInUp" data-caption-delay="300">Veja nosso Cardápio</a>
+                                <a asp-controller="Cardapio" asp-action="ListaProdutos" class="button button-lg button-primary button-winona button-shadow-2"  data-caption-animate="fadeInUp" data-caption-delay="300">Veja nosso Cardápio</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="swiper-slide context-dark" data-slide-bg="images/slide-2-1920x753.jpg">
+            
+
+    @* <img src="~/images/pizza2.jpg" alt=""/> *@
+    @* <img src="~/images/pizza2.jpg" alt="" width="370" height="278"/> *@
+
+
+            <div class="swiper-slide context-dark" data-slide-bg="/images/pizza2">
+             @*<div class="swiper-slide context-dark" data-slide-bg="images/slide-2-1920x753.jpg"> *@
                 <div class="swiper-slide-caption section-md">
                     <div class="container">
                         <div class="row">
                             <div class="col-sm-8 col-lg-7 offset-lg-1 offset-xxl-0">
-                                <h1 class="oh swiper-title"><span class="d-inline-block" data-caption-animate="slideInDown" data-caption-delay="0">Quality ingredients</span></h1>
+                                <h1 class="oh swiper-title"><span class="d-inline-block" data-caption-animate="slideInDown" data-caption-delay="0">Ingredientes de Qualidade</span></h1>
                                 <p class="big swiper-text" data-caption-animate="fadeInRight" data-caption-delay="300">Usamos apenas os melhores ingredientes para fazer pizzas únicas para nossos clientes.</p>
-                                <div class="button-wrap oh"><a class="button button-lg button-primary button-winona button-shadow-2" href="#" data-caption-animate="slideInUp" data-caption-delay="0">Veja nosso Cardápio</a></div>
+                                <div class="button-wrap oh">
+                                    <a  asp-controller="Cardapio" asp-action="ListaProdutos" class="button button-lg button-primary button-winona button-shadow-2"  data-caption-animate="slideInUp" data-caption-delay="0">Veja nosso Cardápio</a></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
         <!-- Swiper Pagination-->
         <div class="swiper-pagination" data-bullet-custom="true"></div>
         <!-- Swiper Navigation-->
@@ -88,6 +98,8 @@
             </div>
         </div>
     </section>
+
+
     <!-- What We Offer-->
     <section class="section section-md bg-default">
         <div class="container">
@@ -209,255 +221,8 @@
     </section>*@
 
 
-
-
-
-
-
-    @{
-        var listaProdutosSelecionado = ViewData["ProdutosFavoritos"] as List<tb_produto>;
-
-
-    }
-
-
-
-
-
-          @foreach (var item in @listaProdutosSelecionado)
-            {
-                <div class="col-sm-6 col-lg-4 col-xl-3" id="cleave-bebidaExibicao">
-
-                    <!-- Product-->
-                    <article class="product wow fadeInLeft" data-wow-delay=".15s">
-                        <div class="product-figure">
-
-                            <img alt="" width="161" height="162"
-                                src="data:image/png;base64,@Convert.ToBase64String(@item.pd_imagem)" />
-
-                        </div>
-                        <div class="product-rating">
-
-                            <span class="mdi mdi-star"></span><span class="mdi mdi-star"></span><span
-                                class="mdi mdi-star"></span><span class="mdi mdi-star"></span><span
-                                class="mdi mdi-star text-gray-13"></span>
-
-                        </div>
-
-                        <h6 class="product-title">@item.pd_nome</h6>
-
-                        <div class="product-price-wrap">
-
-                            <div class="product-price">@item.pd_preco.ToString("C2")</div>
-
-                        </div>
-
-                        <div class="product-button">
-                            @*
-                        <div class="button-wrap">
-                        <a type="button" data-toggle="modal"
-                        data-target="#ModalCarrinho-@item.id_produto"
-                        class="button button-xs button-secondary button-winona" href="#">Adicionar ao Carrinho</a>
-                        </div>*@
-
-                            <div class="button-wrap">
-                                <button onclick="botaoModal(@item.id_produto)"
-                                    class="button button-xs button-secondary button-winona" href="#">Adicionar ao
-                                    Carrinho</button>
-                            </div>
-
-                            <div class="button-wrap">
-                                <a type="button" data-toggle="modal" data-target="#ModalDetalhe-@item.id_produto"
-                                    class="button button-xs button-secondary button-winona" href="#">Ver Detalhes</a>
-                            </div>
-
-                            <!-- Modal Detalher Produto -->
-                            <div class="modal" id="ModalDetalhe-@item.id_produto" tabindex="-1" role="dialog"
-                                aria-labelledby="myModalLabel">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-
-                                            <h4 class="modal-title text-center" id="myModalLabel">@item.pd_nome</h4>
-
-                                            <button type="button" class="btn btn-close" data-dismiss="modal"
-                                                aria-label="Close">
-                                                <span aria-hidden="true"></span>
-                                            </button>
-
-                                        </div>
-                                        <div class="modal-body text-center">
-
-                                            <img alt="" width="161" height="162"
-                                                src="data:image/png;base64,@Convert.ToBase64String(@item.pd_imagem)" />
-
-                                            <br />
-                                            <br />
-
-                                            <div class="card">
-
-                                                <h6>
-                                                    <b>Descrição:</b>
-                                                </h6>
-
-                                                @item.pd_descricao
-
-                                            </div>
-
-                                            <br />
-
-                                            <div class="card justify-content-center d-flex ">
-
-                                                <h6>Valor:</h6>
-
-                                                <h6>
-                                                    <b>
-                                                        @item.pd_preco.ToString("C2")
-                                                    </b>
-                                                </h6>
-
-                                            </div>
-
-
-                                        </div>
-                                        <div class="modal-footer">
-
-                                            <button type="button" class="btn btn-default" data-dismiss="modal"
-                                                style="border: 2px solid rgb(96, 70, 182);">
-                                                Voltar
-                                            </button>
-
-                                            <button class=" btn btn-primary form-group"
-                                                onclick="passarParametro(@item.id_produto)" type="submit"
-                                                id="passarParametros">Adicionar no Carrinho</button>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-                            <!-- Modal Adicionar Carrinho -->
-                            <div class="modal" id="ModalCarrinho-@item.id_produto" tabindex="-1" role="dialog"
-                                aria-labelledby="myModalLabel">
-
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-
-                                            <h4 class="modal-title text-center" id="myModalLabel">@item.pd_nome</h4>
-
-                                            <button type="button" class="btn btn-close" data-dismiss="modal"
-                                                aria-label="Close">
-                                                <span aria-hidden="true"></span>
-                                            </button>
-
-                                        </div>
-                                        <div class="modal-body text-center">
-
-                                            <img alt="" width="161" height="162"
-                                                src="data:image/png;base64,@Convert.ToBase64String(@item.pd_imagem)" />
-
-                                            <br />
-                                            <br />
-
-                                            <div class="card">
-
-                                                <br />
-
-                                                <div style="text-align: center;">
-                                                    <h6>
-
-                                                        <b>Quantidade:</b>
-
-                                                        <input name="quantidade" type="number" id="num1-@item.id_produto"
-                                                            value="1" min="1" max="99"
-                                                            onchange="multiplicar(@item.id_produto)">
-                                                    </h6>
-
-                                                </div>
-
-                                                <br />
-
-                                            </div>
-
-                                            <br />
-
-                                            <div class="card justify-content-center d-flex ">
-
-                                                <h6>Valor:</h6>
-
-                                                <h6>
-                                                    <b>
-                                                        <input class="d-none" id="num2-@item.id_produto"
-                                                            value="@item.pd_preco" readonly>
-
-                                                        <h4>
-
-                                                            <label name="valor"
-                                                                id="resultadoMultiplicacao-@item.id_produto">@item.pd_preco.ToString("C2")</label>
-
-                                                        </h4>
-                                                    </b>
-                                                </h6>
-
-                                            </div>
-
-                                        </div>
-                                        <div class="modal-footer">
-
-                                            <button type="button" class="btn btn-default" data-dismiss="modal"
-                                                style="border: 2px solid rgb(96, 70, 182);">
-                                                Voltar
-                                            </button>
-
-                                            <button class=" btn btn-primary form-group"
-                                                onclick="passarParametro(@item.id_produto)" type="submit"
-                                                id="passarParametros">Adicionar no Carrinho</button>
-
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
-                    </article>
-                </div>
-            }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <!-- Our Shop-->
-    <section class="section section-lg bg-default">
+    @* <section class="section section-lg bg-default">
         <div class="container">
             <h3 class="oh-desktop"><span class="d-inline-block wow slideInUp">Pizzas Selecionadas</span></h3>
             <div class="row row-lg row-30">
@@ -541,7 +306,10 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> *@
+
+
+
 
     <!-- Section CTA-->
 @*    <section class="primary-overlay section parallax-container" data-parallax-img="images/bg-4.jpg">
@@ -902,28 +670,5 @@
         }
 
     </script>
-    
-    
-    
-    
-    <script>
-        $(document).ready(function() {
-            $.ajax({
-                    url: '/Produto/ProdutosFavoritos',
-                type: 'GET',
-                //dataType: 'json',
-                success: function(data) {
-                    // Faça algo com os dados recebidos
-                }
-            });
-        });
-    </script>
-    
-    
-    
-    
-    
-
-    
 
 }
