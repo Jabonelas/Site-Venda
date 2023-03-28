@@ -11,8 +11,8 @@ public class MensagemViewComponent : ViewComponent
     private SiteVendasContext context = new SiteVendasContext();
 
     [HttpGet]
-    // [Authorize(Roles = "Admin@hotmail.com")]
-    [Authorize]
+    [Authorize(Roles = "Admin@hotmail.com")]
+    // [Authorize]
     public IViewComponentResult Invoke()
     {
         var mensagens = context.tb_mensagens.Where(x => x.mg_verificado == false).ToList();

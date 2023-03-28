@@ -70,7 +70,6 @@
 
                         <div class="col-md-8">
 
-
                             <div class="form-group">
 
                                 <label class="control-label">Nome</label>
@@ -79,10 +78,6 @@
                             </div>
 
                         </div>
-
-
-
-
 
                     </div>
 
@@ -121,7 +116,6 @@
 
                     <div class="row">
 
-
                         <div class="col-6">
 
                             <div class="form-group">
@@ -130,7 +124,6 @@
                             </div>
 
                         </div>
-
 
                         <div class="col-3">
 
@@ -199,7 +192,6 @@
                             <div class="form-group">
                                 <label class="control-label">Estado</label>
                                 <input asp-for="@item.endereco.ed_estado" class="form-control" readonly />
-
 
                             </div>
 
@@ -365,13 +357,34 @@
 
 </form>
 
-<div class="col-2 justify-content-center d-flex ">
-    <div class="row">
+@foreach (var item in Model)
+{
+    if (item.pedido.pd_entregue.Equals(null))
+    {
+        <div class="col-2 justify-content-center d-flex ">
+            <div class="row">
 
-        <button class="btn btn-primary" asp-controller="Pedidos" asp-action="MeusPedidos">Voltar</button>
+            <button class="btn btn-primary" asp-controller="Pedidos" asp-action="MeusPedidos">Voltar</button>
      
-    </div>
-</div>
+            </div>
+        </div>
+
+        break;
+
+    } else
+    {
+        <div class="col-2 justify-content-center d-flex ">
+            <div class="row">
+
+            <button class="btn btn-primary" asp-controller="Pedidos" asp-action="MeusPedidos">Finalizar Pedido</button>
+     
+            </div>  
+        </div>
+        
+        break;
+
+    }   
+}
 
 
 @section Scripts {

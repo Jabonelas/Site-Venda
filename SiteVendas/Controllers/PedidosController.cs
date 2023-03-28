@@ -251,10 +251,17 @@ namespace SiteVendas.Controllers
                 valorTroco = Convert.ToDecimal(_troco.Replace("R$ ", ""));
             }
 
+            DateTime dataHoraAtual = DateTime.Now;
+            string formato = "dd/MM/yyyy HH:mm:ss"; // Formato desejado
+            string dataHoraAtualFormatada = dataHoraAtual.ToString(formato);
+
+            DateTime dataAtual = DateTime.Now;
+
+
             foreach (var item in finalizarPedido)
             {
                 item.pd_confirmado = true;
-                item.pd_data = DateTime.Today;
+                item.pd_data = dataAtual;
                 item.pd_tipo_pagamento = _tipoPagamento;
                 item.pd_troco_para = valorTroco;
 

@@ -29,6 +29,8 @@ namespace SiteVendas.Models
         [Column(TypeName = "decimal(10, 2)")]
         public decimal? pd_troco_para { get; set; }
         public bool pd_confirmado { get; set; }
+        [Column(TypeName = "datetime")]
+        public DateTime? pd_entregue { get; set; }
         public int fk_cadastro_cliente { get; set; }
         public int fk_produto { get; set; }
 
