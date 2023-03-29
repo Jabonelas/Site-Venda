@@ -1,9 +1,21 @@
-﻿@model SiteVendas.Models.tb_mensagens
+﻿@using Azure
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@inject IHttpContextAccessor _httpContextAccessor;
+@model SiteVendas.Models.tb_mensagens
 
 
 @{
     ViewData["Title"] = "Home Page";
+
+    var listaProdutosMaisVendidos = ViewData["ListaProdutosMaisVendidos"] as List<tb_produto>;
+
+    @* var Usuario = _httpContextAccessor.HttpContext.Session.GetString("usuario"); *@
+
 }
+
+<h1>esse deu certo</h1>
+
+<a asp-controller="Produto" asp-action="ProdutosMaisVendidos" >TEste se esta dando certo</a> 
 
 <div class="preloader">
     <div class="wrapper-triangle">
@@ -38,10 +50,12 @@
         </div>
     </div>
 </div>
+
+
 <div class="page">
     @*<!-- Top Banner--><a class="section section-banner text-center d-none d-xl-block" href="https://www.templatemonster.com/intense-multipurpose-html-template.html" style="background-image: url(images/banner/background-04-1920x60.jpg); background-image: -webkit-image-set( url(images/banner/background-04-1920x60.jpg) 1x, url(images/banner/background-04-3840x120.jpg) 2x )"><img src="images/banner/foreground-04-1600x60.png" srcset="images/banner/foreground-04-1600x60.png 1x, images/banner/foreground-04-3200x120.png 2x" alt="" width="1600" height="310"></a>*@
     <!-- Page Header-->
-    
+  
     <!-- Swiper-->
     <section class="section swiper-container swiper-slider swiper-slider-2 swiper-slider-3" data-loop="true" data-autoplay="5000" data-simulate-touch="false" data-slide-effect="fade">
         <div class="swiper-wrapper text-sm-left">
@@ -215,6 +229,42 @@
             </div>
         </div>
     </section>*@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 <!-- Our Shop-->
@@ -617,20 +667,12 @@
 
                                     @* <button type="button" class="btn btn-default" data-dismiss="modal" style=" border: 2px solid  rgb(96, 70, 182);">Voltar</button> *@
 
-
-   <a class="btn " type="button" style=" border: 2px solid  rgb(96, 70, 182);" data-dismiss="modal">Obrigado</a>
-
+                                <a class="btn " type="button" style=" border: 2px solid  rgb(96, 70, 182);" data-dismiss="modal">Obrigado</a>
                                   
                                 </div>
                             </div>
                         </div>
                     </div>
-
-
-
-
-
-
 
 
 @section Scripts {

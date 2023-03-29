@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SiteVendas.Models;
+using SiteVendas.Models.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 
 namespace SiteVendas.Controllers
@@ -242,6 +243,29 @@ namespace SiteVendas.Controllers
             CarregarListaProdutos();
 
             return View("~/Views/Produto/TodosProdutos.cshtml");
+        }
+
+
+        public void ProdutosMaisVendidos()
+        {
+
+            var listaProdutosMaisVendidos = context.tb_pedido
+            .Join(context.tb_produto, pedido => pedido.fk_produto, produto => produto.id_produto,
+            (pedido, produto) => new ProdutoViewModel
+            {
+                pedido = pedido,
+                produto = produto,
+
+            }).Where(x => x.produto.pd_tipo == "Pizza")
+            //   .GroupBy(venda => venda.pedido.fk_produto)
+            //   .OrderByDescending(item => item..total_vendido)
+            .Take(4)
+            .ToList();
+
+            ViewData["ListaProdutosMaisVendidos"] = null;
+            ViewData["ListaProdutosMaisVendidos"] = listaProdutosMaisVendidos;
+
+
         }
 
 

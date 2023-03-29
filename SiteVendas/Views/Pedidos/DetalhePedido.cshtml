@@ -5,6 +5,7 @@
 
 @{
     decimal somarValoresCarrinho = 0;
+    int? numeroPedido = 0;
 }
 
 @*Exibicao carregamento do Triangulo*@
@@ -65,6 +66,8 @@
 
                 @foreach (var item in Model)
                 {
+
+                    numeroPedido = item.pedido.pd_numero_pedido;
 
                     <div class="row">
 
@@ -345,28 +348,27 @@
                     </tr>
                 </tfoot>
 
-
-
-
-
             </table>
         </div>
     </div>
 
     <br />
 
-</form>
 
 @foreach (var item in Model)
 {
-    if (item.pedido.pd_entregue.Equals(null))
+    if (item.pedido.pd_entregue == null)
     {
-        <div class="col-2 justify-content-center d-flex ">
+
+         <div class="col-2 justify-content-center d-flex ">
             <div class="row">
 
-            <button class="btn btn-primary" asp-controller="Pedidos" asp-action="MeusPedidos">Voltar</button>
+            @* <button class="btn btn-primary" asp-controller="Pedidos" asp-action="MeusPedidos">Finalizar Pedido</button> *@
+            @* <button class="btn btn-primary" data-toggle="modal" data-target="#ModalPedidoEntregue" href="#">Finalizar Pedido</button> *@
+
+            <a class="btn btn-primary" data-toggle="modal" data-target="#ModalPedidoEntregue" href="#">Finalizar Pedido</a>
      
-            </div>
+            </div>  
         </div>
 
         break;
@@ -376,9 +378,9 @@
         <div class="col-2 justify-content-center d-flex ">
             <div class="row">
 
-            <button class="btn btn-primary" asp-controller="Pedidos" asp-action="MeusPedidos">Finalizar Pedido</button>
+            <button class="btn btn-primary" asp-controller="Pedidos" asp-action="MeusPedidos">Voltar</button>
      
-            </div>  
+            </div>
         </div>
         
         break;
@@ -387,11 +389,78 @@
 }
 
 
+
+     <!-- Modal Deseja Confirmar Entrega Pedido -->
+            <div class="modal" id="ModalPedidoEntregue" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                @* <div class="modal-dialog modal-lg" role="document"> *@
+                    <div class="modal-content">
+                        <div class=" d-flex justify-content-center">
+                            <h4>
+                                Confirmar Entrega do Pedido?
+                                @* <img src="~/images/create_order_30px.png"> *@
+                            </h4>
+                        </div>
+                        <br>
+                        <div class="card">
+                            <div class="card-body row  ">
+
+                                <div class="d-flex justify-content-center">
+                                
+                                Pedido Foi Entregue Com Sucesso?
+
+                                </div>
+                            </div>
+                        </div>
+
+                           <div class="modal-footer">
+
+                              <button type="button" class="btn btn-default" data-dismiss="modal" style="border: 2px solid rgb(96, 70, 182);margin: 0 15px;">NÃO</button>
+                              <button  onclick="passarParametro(@numeroPedido)" class="btn btn-primary">Sim</button>
+
+                           </div>
+                  
+                    </div>
+                </div>
+            </div>
+
+</form>
+
 @section Scripts {
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js"></script>
     <script src="~/js/InputMasked.js"></script>
     @*await Html.RenderPartialAsync("_ValidationScriptsPartial");*@
+
+
+
+
+
+
+    @*Passando parametros para inserir na minha tabela de pedidos*@
+    <script>
+        function passarParametro(_idPedidoEntregue) {
+
+            $.ajax({
+                type: "GET",
+                url: "/Pedidos/BuscarDetalhesPedido/",
+                data: { _numeroPedido: _idPedidoEntregue },
+                success: function (data) {
+
+                    // Aqui você pode manipular a resposta da requisição AJAX
+                    console.log(data);
+
+                    @* $(modal).modal('show'); *@
+
+                    },
+                error: function (xhr, status, error) {
+                    // Aqui você pode tratar os erros que ocorrem durante a requisição AJAX
+                    console.log("Ocorreu um erro durante a requisição AJAX: " + error);
+                }
+            });
+        }
+    </script>
+
 
 
 }

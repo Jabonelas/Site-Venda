@@ -12,27 +12,11 @@ public class PedidoViewComponent : ViewComponent
 
 
     [HttpGet]
-    // [Authorize(Roles = "Admin@hotmail.com")]
+    [Authorize(Roles = "Admin@hotmail.com")]
     public IViewComponentResult Invoke()
     {
-
-        // List<PedidosViewModel> listaPedidos = new List<PedidosViewModel>();
-
-        //  listaPedidos = (from pedido in context.tb_pedido
-        //                             join cliente in context.tb_cadastro_cliente
-        //                             on pedido.fk_cadastro_cliente equals cliente.id_cadastro_cliente
-        //                             where pedido.pd_confirmado == true
-        //                             group pedido by pedido.pd_numero_pedido into pedidosGroup
-        //                             orderby pedidosGroup.Key descending
-        //                             select new PedidosViewModel
-        //                             {
-        //                                 pedido = pedidosGroup.First(),
-        //                                 valorTotal = pedidosGroup.Sum(p => p.pd_valor)
-        //                             }).ToList();
-
-
         var pedidos = (from pedido in context.tb_pedido
-                       where pedido.pd_entregue == null
+                       where pedido.pd_entregue == null && pedido.pd_confirmado == true
                        group pedido by pedido.pd_numero_pedido into pedidosGroup
                        orderby pedidosGroup.Key descending
                        select new PedidosViewModel

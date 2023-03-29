@@ -37,11 +37,11 @@ namespace SiteVendas.Controllers
                                     pedido = pedidosGroup.First(),
                                     valorTotal = pedidosGroup.Sum(p => p.pd_valor)
                                 }).ToList();
-                          
+
             }
             else
             {
-                                listaPedidos = (from pedido in context.tb_pedido
+                listaPedidos = (from pedido in context.tb_pedido
                                 join cliente in context.tb_cadastro_cliente
                                 on pedido.fk_cadastro_cliente equals cliente.id_cadastro_cliente
                                 where cliente.cc_email == usuario && pedido.pd_confirmado == true
@@ -257,7 +257,6 @@ namespace SiteVendas.Controllers
 
             DateTime dataAtual = DateTime.Now;
 
-
             foreach (var item in finalizarPedido)
             {
                 item.pd_confirmado = true;
@@ -274,7 +273,6 @@ namespace SiteVendas.Controllers
                 context.SaveChanges();
             }
 
-            //context.SaveChanges();
             return RedirectToAction("CarrinhoCompra");
         }
 
@@ -314,7 +312,28 @@ namespace SiteVendas.Controllers
             return View(listaDetalhePedido);
         }
 
-  
- 
+        [HttpPost]
+        [Authorize(Roles = "Admin@hotmail.com")]
+        [Route("Pedidos/DetalhePedido/{_numeroPedido}")]
+        public IActionResult EntregaRealizada(int _numeroPedido)
+        {
+            var pedidoEntregue = context.tb_pedido.Where(x => x.pd_numero_pedido.Equals(_numeroPedido)).ToList();
+
+            DateTime dataHoraAtual = DateTime.Now;
+            string formato = "dd/MM/yyyy HH:mm:ss"; // Formato desejado
+            string dataHoraAtualFormatada = dataHoraAtual.ToString(formato);
+
+            DateTime dataAtual = DateTime.Now;
+
+            foreach (var item in pedidoEntregue)
+            {
+                item.pd_entregue = dataAtual;
+            }
+
+            context.SaveChanges();
+
+            return RedirectToAction("MeusPedidos");
+        }
+
     }
 }
