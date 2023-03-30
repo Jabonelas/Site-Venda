@@ -158,7 +158,3 @@ if (document.querySelector("#cleave-horarioFechamento")) {
         timePattern: ['h', 'm']
     });
 }
-
-
-
-

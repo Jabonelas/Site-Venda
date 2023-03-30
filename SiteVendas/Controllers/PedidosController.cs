@@ -226,8 +226,8 @@ namespace SiteVendas.Controllers
             ViewData["chavePix"] = chavePix;
         }
 
-
-        public IActionResult FinalizarPedido(int _numeroPedido, string _tipoPagamento, string _troco)
+        // public IActionResult FinalizarPedido(int _numeroPedido, string _tipoPagamento, string _troco)
+        public void FinalizarPedido(int _numeroPedido, string _tipoPagamento, string _troco)
         {
             // if (!ModelState.IsValid)
             // {
@@ -269,14 +269,10 @@ namespace SiteVendas.Controllers
                     fk_pedido = item.id_pedido
                 };
 
-                context.tb_nota_fiscal.Add(inserirNF);
-                context.SaveChanges();
+                // context.tb_nota_fiscal.Add(inserirNF);
+                // context.SaveChanges();
             }
-
-            return RedirectToAction("CarrinhoCompra");
         }
-
-
 
         [HttpGet]
         [Authorize]

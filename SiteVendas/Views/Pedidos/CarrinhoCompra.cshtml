@@ -2,6 +2,8 @@
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
+    int? numeroPedido = 0;
+    decimal somarValoresCarrinho = 0;
     var quantiadeProduto = ViewData["quantidadePedidos1"] as List<CarrinhoViewModel>;
     var chavePix = ViewData["chavePix"];
 }
@@ -41,23 +43,9 @@
     </div>
 </div>
 
-
-
-
 <h1>Finalizar Pedido</h1>
 
-@*
-<div class=" d-flex justify-content-center">
-
-<h4>Meu Carrinho <img src="~/images/shopping_cart_30px.png" /> </h4>
-
-</div>*@
-
 <br />
-
-@{
-    int? numeroPedido = 0;
-}
 
 <table class="table text-center" id="myTable">
 
@@ -89,10 +77,6 @@
         </tr>
     </thead>
     <tbody>
-
-        @{
-            decimal somarValoresCarrinho = 0;
-        }
 
         @foreach (var item in quantiadeProduto)
         {
@@ -157,7 +141,6 @@
         <div class="col-5">
             <label class="control-label">Forma de Pagamento</label>
 
-
             <select id="cleave-tipoPagamento" class="form-control" asp-items="ViewBag.ed_tipo">
 
                 <option selected value="">Escolha uma Opção...</option>
@@ -184,36 +167,64 @@
 
 <br />
 
-
 <div class=" d-flex justify-content-end">
 
-    <a asp-controller="Cardapio" asp-action="ListaProdutos" type="button" class="btn btn-default"
-        style="border: 2px solid rgb(96, 70, 182);">Voltar</a>
+    <a asp-controller="Cardapio" asp-action="ListaProdutos" type="button" class="btn btn-default" style="border: 2px solid rgb(96, 70, 182);">Voltar</a>
 
-    @* <a style="margin: 0 15px;" onclick="passarParametro(@numeroPedido)"
-        class="btn btn-primary d-flex justify-content-end" asp-controller="Pedidos"
-        asp-action="FinalizarPedido">Finalizar Pedido</a> *@
-
-
- <button style="margin: 0 15px;" onclick="passarParametro(@numeroPedido)" class="btn btn-primary d-flex justify-content-end">Finalizar Pedido</button>
-
+     <button style="margin: 0 15px;" onclick="passarParametro(@numeroPedido)" class="btn btn-primary d-flex justify-content-end">Finalizar Pedido</button>
+     @* <button data-toggle="modal" data-target="#ModalRealizarPedido" href="#" style="margin: 0 15px;" onclick="passarParametro(@numeroPedido)" class="btn btn-primary d-flex justify-content-end">Finalizar Pedido</button> *@
 
 </div>
 
+ <!-- Modal Mostrar Que Pedido Foi Realizado Com Sucesso -->
+            <div class="modal" id="ModalRealizarPedido" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static">
+                <div class="modal-dialog modal-dialog-centered clickable-modal" role="document">
+                @* <div class="modal-dialog modal-dialog-centered" role="document"> *@
+                @* <div class="modal-dialog modal-lg" role="document"> *@
+                    <div class="modal-content">
+                        <div class=" d-flex justify-content-center">
+                            <h4>
+                                Confirmação De Pedido
+                                @* <img src="~/images/create_order_30px.png"> *@
+                            </h4>
+                        </div>
+                        <br>
+                        <div class="card">
+                            <div class="card-body row  ">
+                                <div class="d-flex justify-content-center">
+                                
+                                Seus Pedido Foi Realizado Com Sucesso!
+
+                                </div>
+                            </div>
+                        </div>
+
+                           <div class="modal-footer">
+
+                              @* <button type="button" class="btn btn-default" data-dismiss="modal" style="border: 2px solid rgb(96, 70, 182);margin: 0 15px;">NÃO</button> *@
+
+                              <a asp-controller="Home" asp-action="Index" type="button" class="btn btn-default" data-dismiss="modal" style="border: 2px solid rgb(96, 70, 182);margin: 0 15px;" >OK</a>
+
+                           </div>
+                  
+                    </div>
+                </div>
+            </div>
 
 
 @section Scripts
-    {
+{
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js"></script>
     <script src="~/js/InputMasked.js"></script>
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
 
-
     @*Passando parametros para inserir na minha tabela de pedidos*@
     <script>
         function passarParametro(numeroPedido) {
 
+            var modal = `#ModalRealizarPedido`;
+    
             var tipoPagamento = document.getElementById("cleave-tipoPagamento").value;
 
             var valorTroco = document.getElementById("cleave-formaPagamentoDinheiro").value;
@@ -225,18 +236,15 @@
                     url: "/Pedidos/FinalizarPedido",
                     data: { _numeroPedido: numeroPedido, _tipoPagamento: tipoPagamento, _troco: valorTroco },
                     success: function (data) {
-                        // Aqui você pode manipular a resposta da requisição AJAX
 
                         $("#cleave-opcaoPagamento").addClass("d-none");
 
-                     window.location.href = "/Pedidos/FinalizarPedido";
+                         @* window.location.href = `/Home/Index`;  *@
 
-                        //$(modal).modal('hide');
+                        $(modal).modal('show');
 
-                        //location.reload();
                     },
                     error: function (xhr, status, error) {
-                        // Aqui você pode tratar os erros que ocorrem durante a requisição AJAX
                         console.log("Ocorreu um erro durante a requisição AJAX: " + error);
                     }
                 });
@@ -244,7 +252,6 @@
             } else {
 
                 $("#cleave-opcaoPagamento").removeClass("d-none");
-
             }
         }
     </script>
@@ -262,9 +269,7 @@
 
     @*Setando tipo pagamento*@
     <script>
-
         $("#cleave-tipoPagamento").change(function () {
-
 
             var formaPagamento = $("#cleave-tipoPagamento").val();
 
@@ -315,4 +320,5 @@
             }
         })
     </script>
+    
 }
