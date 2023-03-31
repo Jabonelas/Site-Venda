@@ -3,6 +3,30 @@
 *
 * Contexts
 */
+
+
+.btn-Segundario {
+    border-radius: 3px;
+    font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    font-weight: 900;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    transition: .33s;
+
+}
+
+    .btn-Segundario, .btn-Segundario:active, .btn-Segundario:focus {
+        color: #6046b6;
+        background: #ffffff;
+        border-color: #6046b6;
+    }
+
+        .btn-Segundario:hover {
+            color: #ffffff;
+            background: #000000;
+            border-color: #000000;
+        }
+
 a:focus,
 button:focus {
     outline: none !important;

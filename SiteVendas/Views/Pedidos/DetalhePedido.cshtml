@@ -2,7 +2,6 @@
 @using SiteVendas.Models.ViewModel
 @model IEnumerable<SiteVendas.Models.ViewModel.DetalhesPedidoViewModel>
 
-
 @{
     decimal somarValoresCarrinho = 0;
     int? numeroPedido = 0;
@@ -375,8 +374,10 @@
         <div class="col-2 justify-content-center d-flex ">
             <div class="row">
 
-            <button class="btn btn-primary" asp-controller="Pedidos" asp-action="MeusPedidos">Voltar</button>
-     
+            @* <button class="btn btn-primary" asp-controller="Pedidos" asp-action="MeusPedidos">Voltar</button> *@
+     <button class="btn btn-primary" onclick="Voltar()">Voltar</button>
+
+
             </div>
         </div>
         
@@ -395,7 +396,7 @@
                         <div class=" d-flex justify-content-center">
                             <h4>
                                 Confirmar Entrega do Pedido?
-                                @* <img src="~/images/create_order_30px.png"> *@
+                                 <img src="~/images/ok_30px.png"> 
                             </h4>
                         </div>
                         <br>
@@ -412,8 +413,8 @@
 
                            <div class="modal-footer">
 
-                              <button type="button" class="btn btn-default" data-dismiss="modal" style="border: 2px solid rgb(96, 70, 182);margin: 0 15px;">NÃO</button>
-                              <button  onclick="passarParametro(@numeroPedido)" class="btn btn-primary">Sim</button>
+                              <button class="btn btn-default" data-dismiss="modal" style="border: 2px solid rgb(96, 70, 182);margin: 0 15px;">NÃO</button>
+                              <button class="btn btn-primary" onclick="passarParametro(@numeroPedido)">Sim</button>
 
                            </div>
                   
@@ -427,12 +428,6 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js"></script>
     <script src="~/js/InputMasked.js"></script>
-    @*await Html.RenderPartialAsync("_ValidationScriptsPartial");*@
-
-
-
-
-
 
     @*Passando parametros para inserir na minha tabela de pedidos*@
     <script>
@@ -445,7 +440,6 @@
                 success: function (data) {
 
                     // Aqui você pode manipular a resposta da requisição AJAX
-                    console.log(data);
 
                     @* $(modal).modal('show'); *@
 
@@ -458,6 +452,18 @@
         }
     </script>
 
-
+    <script>
+        function Voltar(){
+        $.ajax({
+             success: function () {
+                   window.location.href = `Pedidos/MeusPedidos/${idMensagem}`; 
+                    },
+                error: function (xhr, status, error) {
+                    // Aqui você pode tratar os erros que ocorrem durante a requisição AJAX
+                    console.log("Ocorreu um erro durante a requisição AJAX: " + error);
+                }
+            });
+        }
+    </script>
 
 }

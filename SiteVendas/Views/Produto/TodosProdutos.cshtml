@@ -43,26 +43,14 @@
 
 <br />
 
-@*<div class="col-2 justify-content-center d-flex">*@
 <div class="row">
-    <div class=" row col-2 justify-content-center d-flex">
-
-        <a class="btn " style="border: 2px solid rgb(96, 70, 182);font-family: Arial, sans-serif;" asp-controller="Home" asp-action="Index">Voltar ao Inicio</a>
-        @*<a class="btn " style="border: 2px solid rgb(96, 70, 182);font-family: Arial, sans-serif;" asp-controller="Home" asp-action="Index"><b>Voltar ao Inicio</b></a>*@
-
+    <div class="col-2 justify-content-center d-flex">
+        <button class="btn-Segundario" onclick="VoltarAoInicio()">Voltar ao Inicio</button>
     </div>
     <div class="col-2 justify-content-center d-flex">
-        <a class=" btn btn-primary form-group;" asp-controller="Produto" asp-action="Cadastrar">Novo Produto</a>
+        <button  class="btn btn-primary form-group;" onclick="NovoProduto()">Novo Produto</button>
     </div>
 </div>
-
-@*
-<div class="row col-2">
-
-    <a class=" btn btn-primary form-group" asp-controller="Produto" asp-action="Cadastrar">Novo Produto</a>
-
-</div>*@
-
 
 <br />
 
@@ -120,6 +108,7 @@
                     @item.pd_preco.ToString("C2")
                 </td>
                 <td class="align-middle">
+                    
                     @if (item.pd_disponivel == true)
                     {
                         <p>Disponivel</p>
@@ -138,7 +127,7 @@
                 <td class="align-middle">
                     
                     <a class="btn btn-info form-group" asp-controller="Produto" asp-action="EditarProduto" asp-route-_idProduto="@item.id_produto">Editar</a>
-                    
+
                     <br/>
                     <br/>
                     
@@ -202,6 +191,50 @@
         }
 
     </script>
+
+
+    <script>
+
+    function NovoProduto(){
+
+    console.log("Entrou no novo cadastro");
+
+    $.ajax({
+        type: "POST",
+          success: function (data) {
+
+      window.location.href = `/Produto/Cadastrar`; 
+
+          },
+          error: function (xhr, status, error) {
+                    console.log("Ocorreu um erro durante a requisição AJAX: " + error);
+          }
+    });
+    }
+    
+    </script>
+
+
+    <script>
+
+    function VoltarAoInicio(){
+
+    $.ajax({
+        type: "GET",
+          success: function (data) {
+
+           window.location.href = `/Home/Index`; 
+
+          },
+
+          error: function (xhr, status, error) {
+                  console.log("Ocorreu um erro durante a requisição AJAX: " + error);
+          }
+    });
+    }
+    
+    </script>
+
 
 }
 

@@ -2,11 +2,6 @@
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @model IEnumerable<SiteVendas.Models.ViewModel.PedidosViewModel>
 
-@* @{
-    ViewData["Title"] = "Meus Pedidos";
-} *@
-
-
 
 @*Exibicao carregamento do Triangulo*@
 <div class="preloader">
@@ -43,12 +38,13 @@
     </div>
 </div>
 
-
-
-
 <h1>Pedidos</h1>
 
-        <a class="btn " style="border: 2px solid rgb(96, 70, 182);font-family: Arial, sans-serif;" asp-controller="Home" asp-action="Index">Voltar ao Inicio</a>
+<div class="col-2 justify-content-center d-flex ">
+    <div class="row">
+    <button class="btn-Segundario" onclick="VotarAoInicio()" >Voltar ao Inicio</button>
+    </div>
+</div>
 
 <br />
 <br />
@@ -57,14 +53,8 @@
 
 <br />
 
-
   <div class="card">
-    
-
-
             <div class="card-body">
-
-
 <table class="table text-center" id="myTable2">
     <thead>
         <tr>
@@ -96,11 +86,10 @@
                 <td>
                     @item.valorTotal.ToString("C2")
                 </td>
-
                 <td>
 
                     <a class="btn btn-info form-group"
-                        href="@Url.Action("DetalhePedido", "Pedidos" , new {_numeroPedido= item.pedido.pd_numero_pedido})">Detalhes</a>
+                        href="@Url.Action("DetalhePedido", "Pedidos" , new {_numeroPedido = item.pedido.pd_numero_pedido})">Detalhes</a>
 
                 </td>
             </tr>
@@ -113,7 +102,7 @@
 
 <div class="col-2 justify-content-center d-flex ">
     <div class="row">
-       <button class="btn btn-primary" asp-controller="Pedidos" asp-action="MeusPedidos">Voltar ao Inicio</button>
+       <button class="btn btn-primary" onclick="VoltarAoInicio()">Voltar ao Inicio</button>
     </div>
 </div>
 
@@ -129,8 +118,6 @@
         });
     </script>
 
-
-
     @*Passando parametros para inserir na minha tabela de pedidos*@
     <script>
         function passarParametro(_idProduto1) {
@@ -144,12 +131,8 @@
                 success: function (data) {
 
                     // Aqui você pode manipular a resposta da requisição AJAX
-                    console.log(data);
-
                     $(modal).modal('show');
-        @* $(modal).modal('hide'); *@
 
-        @* location.reload(); *@
                     },
                 error: function (xhr, status, error) {
                     // Aqui você pode tratar os erros que ocorrem durante a requisição AJAX
@@ -158,4 +141,20 @@
             });
         }
     </script>
+
+    <script>
+       function VoltarAoInicio(){
+    $.ajax({
+          success: function (data) {
+           window.location.href = `/Home/Index`; 
+          },
+          error: function (xhr, status, error) {
+                  console.log("Ocorreu um erro durante a requisição AJAX: " + error);
+          }
+        });
+    }
+    </script>
+
+
+
 }

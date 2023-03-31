@@ -4,7 +4,6 @@
     var editaProduto = ViewData["EditarProduto"] as List<tb_produto>;
 }
 
-
 @*Exibicao carregamento do Triangulo*@
 <div class="preloader">
     <div class="wrapper-triangle">
@@ -44,7 +43,7 @@
 
 <div class=" row col-2 justify-content-center d-flex">
 
-    <a class="btn " style="border: 2px solid rgb(96, 70, 182);font-family: Arial, sans-serif;" asp-controller="Produto" asp-action="TodosProdutos">Voltar</a>
+<button class="btn-Segundario" onclick="Voltar()">Voltar</button>
 
 </div>
 
@@ -61,29 +60,23 @@
                 @*Passando Id de produto remotamente*@
                 <input value="@item.id_produto" asp-for="@Model.id_produto" class="d-none">
 
-
                 <div class="row">
                     <div class="col-md-4">
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="form-group">
                             <label class="control-label">Tipo Produto</label>
-                            <select value="@item.pd_tipo"
-                                asp-for="@Model.pd_tipo"
-                                class="form-control" asp-items="ViewBag.ed_tipo">
+                            <select value="@item.pd_tipo" asp-for="@Model.pd_tipo" class="form-control" asp-items="ViewBag.ed_tipo">
 
                                 @if (@item.pd_tipo == "Pizza")
                                 {
                                     <option selected>@item.pd_tipo</option>
                                     <option>Bebida</option>
-
                                 }
                                 else
                                 {
                                     <option selected>@item.pd_tipo</option>
                                     <option>Pizza</option>
-
                                 }
-
 
                             </select>
                         </div>
@@ -114,19 +107,14 @@
                     </div>
                 </div>
 
-
                 <div class="row">
                     <div class="col-4">
                         <div class="form-group">
                             <label class="control-label">Tamanho</label>
-                            <input value="@item.pd_tamanho"
-                               asp-for="@Model.pd_tamanho"
-                               class="form-control" />
+                            <input value="@item.pd_tamanho" asp-for="@Model.pd_tamanho" class="form-control" />
                             <span asp-validation-for="@item.pd_tamanho" class="text-danger"></span>
                         </div>
                     </div>
-
-
 
                     <div class="col-4">
                         <div class="form-group">
@@ -165,12 +153,11 @@
                 
                 <br />
                 <h6>Inserir Imagem:</h6>
-                <input value="@item.pd_imagem"
-                   asp-for="@Model.pd_imagem"
-                   type="file" name="imagem" />
-                <br />
-                <label style="color: red;" class="control-label">Atenção ao Formato de imagens compativeis: JPG e PNG.</label>
+                <input value="@item.pd_imagem" asp-for="@Model.pd_imagem" type="file" name="imagem" />
 
+                <br />
+
+                <label style="color: red;" class="control-label">Atenção ao Formato de imagens compativeis: JPG e PNG.</label>
 
                 <div class="row col-2 form-group">
 
@@ -200,6 +187,28 @@
             input.value = valorSemSimbolo;
         }
 
+    </script>
+
+
+    <script>
+
+
+    function Voltar(){
+
+    $.ajax({
+        type: "GET",
+          success: function (data) {
+
+           window.location.href = `/Produto/TodosProdutos`; 
+
+          },
+
+          error: function (xhr, status, error) {
+                  console.log("Ocorreu um erro durante a requisição AJAX: " + error);
+          }
+    });
+    }
+   
     </script>
 
 }
