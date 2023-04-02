@@ -194,45 +194,33 @@
 
 
     <script>
-
     function NovoProduto(){
-
     console.log("Entrou no novo cadastro");
-
     $.ajax({
         type: "POST",
           success: function (data) {
-
       window.location.href = `/Produto/Cadastrar`; 
-
           },
           error: function (xhr, status, error) {
                     console.log("Ocorreu um erro durante a requisição AJAX: " + error);
           }
     });
     }
-    
     </script>
 
 
     <script>
-
     function VoltarAoInicio(){
-
     $.ajax({
         type: "GET",
           success: function (data) {
-
            window.location.href = `/Home/Index`; 
-
           },
-
           error: function (xhr, status, error) {
                   console.log("Ocorreu um erro durante a requisição AJAX: " + error);
           }
     });
     }
-    
     </script>
 
 
