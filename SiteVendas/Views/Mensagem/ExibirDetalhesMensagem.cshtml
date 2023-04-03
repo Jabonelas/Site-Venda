@@ -1,7 +1,5 @@
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @model SiteVendas.Models.tb_mensagens
-@* @model IEnumerable<tb_mensagens>*@
-@* @model SiteVendas.Models.tb_mensagens *@
 
 @{
 
@@ -50,7 +48,7 @@ var mensagem =  ViewData["Mensagem"] as List<tb_mensagens>;
         <h1>Reserva</h1>
         
         <div class=" row col-2 justify-content-center d-flex">
-            <a class="btn " style="border: 2px solid rgb(96, 70, 182);font-family: Arial, sans-serif;" asp-controller="Mensagem" asp-action="ExibirTodasReservas">Voltar</a>
+            <button class="btn btn-Secundario" onclick="ExibirMensagem()">Voltar</button>
         </div>
         <hr>
       
@@ -125,7 +123,6 @@ var mensagem =  ViewData["Mensagem"] as List<tb_mensagens>;
                     <input type="text" name="nomeCliente" value="@clienteNome" class="d-none">
                     
                     <button  data-toggle="modal" data-target="#ModalEnviarMensagem" class="btn btn-primary" >Enviar E-mail</button>
-                    @* <button  data-toggle="modal" data-target="#ModalEnviarMensagem" class="btn btn-primary" type="submit">Enviar E-mail</button> *@
 
                 </form>
             </div>
@@ -151,7 +148,7 @@ var mensagem =  ViewData["Mensagem"] as List<tb_mensagens>;
                         <br>
                         <div class="d-flex justify-content-end">
                           
-                            <button type="button" class="btn btn-default" data-dismiss="modal" style="border: 2px solid rgb(96, 70, 182);">Voltar</button>
+                            <button class="btn btn-Secundario" data-dismiss="modal">Voltar</button>
 
                             <button  style="margin: 0 15px;" onclick="passarIdMensagem(@idMensagem)" class="btn btn-primary d-flex justify-content-end">Confirmar</button>
                           
@@ -170,13 +167,10 @@ var mensagem =  ViewData["Mensagem"] as List<tb_mensagens>;
 
         <script>
              function passarIdMensagem(idMensagem){
-
                  $.ajax({
-
                   url: `/Mensagem/MarcarVisualizacaoMensagem/${idMensagem}`,
                   type: "POST",
                   success: function (){
-                   
                   },
                   error: function (xhr, status, error){
                   console.log("Ocorreu um erro durante a requisição AJAX:" + error);
@@ -185,4 +179,16 @@ var mensagem =  ViewData["Mensagem"] as List<tb_mensagens>;
         }
         </script>
 
-        }
+        <script>
+            function ExibirMensagem(){
+                $.ajax({
+                    success: function(){
+                        window.location.href = "/Mensagem/ExibirTodasReservas"
+                    },
+                     error: function (xhr, status, error){
+                      console.log("Ocorreu um erro durante a requisição AJAX:" + error);
+                    }
+                });
+            }
+        </script>
+}

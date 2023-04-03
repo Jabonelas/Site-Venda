@@ -6,7 +6,6 @@
 
 @{
     var listaProdutosSelecionado = ViewData["ListaProdutosSelecionado"] as List<tb_produto>;
-
     var Usuario = _httpContextAccessor.HttpContext.Session.GetString("usuario");
 }
 
@@ -59,7 +58,6 @@
 
         @*Verificação do tipo do produto se no caso e PIZZA ou BEBIDA*@
         @if (listaProdutosSelecionado.Select(x => x.pd_tipo).First() == "Pizza")
-
         {
             <form method="post" asp-controller="Cardapio" asp-action="BuscarProduto">
 
@@ -83,11 +81,8 @@
                 </div>
             </form>
         }
-
         else
-
         {
-
             <form method="post" asp-controller="Cardapio" asp-action="BuscarProduto">
 
                 <div class="row ">
@@ -143,13 +138,7 @@
                         </div>
 
                         <div class="product-button">
-                            @*
-                        <div class="button-wrap">
-                        <a type="button" data-toggle="modal"
-                        data-target="#ModalCarrinho-@item.id_produto"
-                        class="button button-xs button-secondary button-winona" href="#">Adicionar ao Carrinho</a>
-                        </div>*@
-
+                    
                             <div class="button-wrap">
                                 <button onclick="botaoModal(@item.id_produto)"
                                     class="button button-xs button-secondary button-winona" href="#">Adicionar ao
@@ -297,14 +286,9 @@
                                         </div>
                                         <div class="modal-footer">
 
-                                            <button type="button" class="btn btn-default" data-dismiss="modal"
-                                                style="border: 2px solid rgb(96, 70, 182);">
-                                                Voltar
-                                            </button>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal" style="border: 2px solid rgb(96, 70, 182);">Voltar</button>
 
-                                            <button class=" btn btn-primary form-group"
-                                                onclick="passarParametro(@item.id_produto)" type="submit"
-                                                id="passarParametros">Adicionar no Carrinho</button>
+                                            <button class=" btn btn-primary form-group" onclick="passarParametro(@item.id_produto)" type="submit" id="passarParametros">Adicionar no Carrinho</button>
 
                                         </div>
                                     </div>
@@ -326,8 +310,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js"></script>
     <script src="~/js/InputMasked.js"></script>
 
-
-
     <script>
         function botaoModal(_idProduto) {
             console.log("Entrou na função");
@@ -346,7 +328,6 @@
         }
     </script>
 
-
     <script>
         $(document).ready(function () {
             $("#myBtn").click(function () {
@@ -354,8 +335,6 @@
             });
         });
     </script>
-
-
 
     @*Calcular Valor Total de Itens conforme a quantidade*@
     <script>

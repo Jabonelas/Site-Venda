@@ -1,11 +1,6 @@
 @using SiteVendas.Models.ViewModel
 @using Microsoft.AspNetCore.Mvc.TagHelpers
-@* @model IEnumerable<SiteVendas.Models.tb_mensagens> *@
 @model List<SiteVendas.Models.tb_mensagens>
-
-@* @{
-    ViewData["Title"] = "Meus Pedidos";
-} *@
 
 @*Exibicao carregamento do Triangulo*@
 <div class="preloader">
@@ -43,11 +38,9 @@
 </div>
 
 
-
-
 <h1>Pedidos</h1>
 
-        <a class="btn " style="border: 2px solid rgb(96, 70, 182);font-family: Arial, sans-serif;" asp-controller="Home" asp-action="Index">Voltar ao Inicio</a>
+<button class="btn btn-Secundario" onclick="VoltarAoInicio()" >Voltar ao Inicio</button>
 
 <br />
 <br />
@@ -70,10 +63,7 @@
             <th>
                 Serviço
             </th>
-             @* <th>
-                Mensagem
-            </th> *@
-             <th>
+            <th>
                 Data Recebimento
             </th>
             <th>
@@ -95,9 +85,6 @@
                 <td>
                     @item.mg_servico
                 </td>
-                @* <td>
-                    @item.mg_mensagem
-                </td> *@
                 <td>
                     @item.mg_data_recebimento
                 </td>
@@ -117,13 +104,19 @@
 
 <div class="col-2 justify-content-center d-flex ">
     <div class="row">
-       <button class="btn btn-primary" asp-controller="Pedidos" asp-action="MeusPedidos">Voltar ao Inicio</button>
+       <button class="btn btn-primary" onclick="VoltarAoInicio()">Voltar ao Inicio</button>
     </div>
 </div>
 
 
 
 @section Scripts {
+
+  @*Layout da GridView*@
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js"></script>
+        <script src="~/js/InputMasked.js"></script>
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+
 
     <script>
         $(document).ready(function () {
@@ -133,28 +126,28 @@
         });
     </script>
 
-     @*Layout da GridView*@
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js"></script>
-        <script src="~/js/InputMasked.js"></script>
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-
-
-
-
-
-        <script>
+    <script>
         function passarIdMensagem(idMensagem){
             $.ajax({
                 success: function (){
                      window.location.href = `ExibirDetalhesMensagem/${idMensagem}`; 
-                     @* window.location.href = `Mensagem/ExibirDetalhesMensagem/${idMensagem}`;  *@
                 },
                 error: function (xhr, status, error){
                     console.log("Ocorreu um erro durante a requisição AJAX:" + error);
                 }
             });
         }
+    </script>
 
+    <script>
+        function VoltarAoInicio(){
+            $.ajax({success:function(){
+                window.location.href = "/Home/Index";
+                },error: function (xhr, status, error){
+                console.log("Ocorreu um erro durante a requisição AJAX:" + error);
+                }
+            });
+        }
     </script>
 
 }

@@ -149,6 +149,7 @@
                 <option>Pix</option>
 
             </select>
+
             <label class="text-danger d-none" id="cleave-opcaoPagamento">Escolha um tipo de pagamento</label>
 
         </div>
@@ -169,18 +170,16 @@
 
 <div class=" d-flex justify-content-end">
 
-    <a asp-controller="Cardapio" asp-action="ListaProdutos" type="button" class="btn btn-default" style="border: 2px solid rgb(96, 70, 182);">Voltar</a>
+
+     <button class="btn btn-Secundario " onclick="VoltarCardapio()">Voltar</button>
 
      <button style="margin: 0 15px;" onclick="passarParametro(@numeroPedido)" class="btn btn-primary d-flex justify-content-end">Finalizar Pedido</button>
-     @* <button data-toggle="modal" data-target="#ModalRealizarPedido" href="#" style="margin: 0 15px;" onclick="passarParametro(@numeroPedido)" class="btn btn-primary d-flex justify-content-end">Finalizar Pedido</button> *@
 
 </div>
 
  <!-- Modal Mostrar Que Pedido Foi Realizado Com Sucesso -->
             <div class="modal" id="ModalRealizarPedido" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static">
                 <div class="modal-dialog modal-dialog-centered clickable-modal" role="document">
-                @* <div class="modal-dialog modal-dialog-centered" role="document"> *@
-                @* <div class="modal-dialog modal-lg" role="document"> *@
                     <div class="modal-content">
                         <div class=" d-flex justify-content-center">
                             <h4>
@@ -201,9 +200,7 @@
 
                            <div class="modal-footer">
 
-                              @* <button type="button" class="btn btn-default" data-dismiss="modal" style="border: 2px solid rgb(96, 70, 182);margin: 0 15px;">NÃO</button> *@
-
-                              <a asp-controller="Home" asp-action="Index" type="button" class="btn btn-default" data-dismiss="modal" style="border: 2px solid rgb(96, 70, 182);margin: 0 15px;" >OK</a>
+                              <button onclick="VoltarInicio()" class="btn btn-primary" data-dismiss="modal">Ok</button>
 
                            </div>
                   
@@ -219,6 +216,53 @@
     <script src="~/js/InputMasked.js"></script>
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
 
+
+    <script>
+
+    function VoltarInicio(){
+    $.ajax({
+    success: function(){
+    window.location.href = "/Home/Index";
+    },error: function (xhr, status, error) {
+    console.log("Ocorreu um erro durante a requisição AJAX: " + error);
+    }
+    });
+    }
+
+    </script>
+
+    <script>
+            function VoltarCardapio(){
+                $.ajax({
+                success: function(){
+               window.location.href = "/Cardapio/ListaProdutos";
+                },
+                error: function (xhr, status, error) {
+                    console.log("Ocorreu um erro durante a requisição AJAX: " + error);
+                }
+            });
+        }
+    </script>
+
+
+    @* <script>
+        function VoltarMeusPedidos(){
+        $.ajax({    
+             success: function () {
+                   window.location.href = `Pedidos/MeusPedidos/${idMensagem}`; 
+                    },
+                error: function (xhr, status, error) {
+                    // Aqui você pode tratar os erros que ocorrem durante a requisição AJAX
+                    console.log("Ocorreu um erro durante a requisição AJAX: " + error);
+                }
+            });
+        }
+    </script> *@
+
+
+
+
+
     @*Passando parametros para inserir na minha tabela de pedidos*@
     <script>
         function passarParametro(numeroPedido) {
@@ -230,19 +274,14 @@
             var valorTroco = document.getElementById("cleave-formaPagamentoDinheiro").value;
 
             if (tipoPagamento != "" && tipoPagamento != "Escolha uma Opção...") {
-
                 $.ajax({
                     type: "POST",
                     url: "/Pedidos/FinalizarPedido",
                     data: { _numeroPedido: numeroPedido, _tipoPagamento: tipoPagamento, _troco: valorTroco },
                     success: function (data) {
-
                         $("#cleave-opcaoPagamento").addClass("d-none");
-
                          @* window.location.href = `/Home/Index`;  *@
-
                         $(modal).modal('show');
-
                     },
                     error: function (xhr, status, error) {
                         console.log("Ocorreu um erro durante a requisição AJAX: " + error);

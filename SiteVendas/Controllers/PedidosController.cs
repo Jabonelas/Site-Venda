@@ -269,8 +269,8 @@ namespace SiteVendas.Controllers
                     fk_pedido = item.id_pedido
                 };
 
-                // context.tb_nota_fiscal.Add(inserirNF);
-                // context.SaveChanges();
+                context.tb_nota_fiscal.Add(inserirNF);
+                context.SaveChanges();
             }
         }
 

@@ -6,7 +6,6 @@
     ViewData["Title"] = "ExibirClientes";
 }
 
-
 @*Exibicao carregamento do Triangulo*@
 <div class="preloader">
     <div class="wrapper-triangle">
@@ -42,12 +41,9 @@
     </div>
 </div>
 
-
-
-
 <h1>Clientes</h1>
 
-        <a class="btn " style="border: 2px solid rgb(96, 70, 182);font-family: Arial, sans-serif;" asp-controller="Home" asp-action="Index">Voltar ao Inicio</a>
+<button class="btn btn-Secundario" onclick="VoltarAoInicio()">Voltar ao Inicio</button>
 
 <br />
 <br />
@@ -56,18 +52,12 @@
 
 <br />
 
-
   <div class="card">
-    
+       <div class="card-body">
 
-
-            <div class="card-body">
-
-
-<table class="table text-center" id="myTable">
+        <table class="table text-center" id="myTable4">
     <thead>
         <tr>
-
             <th>
                 Nome
             </th>
@@ -79,7 +69,7 @@
             </th> <th>
                E-mail
             </th>
- <th>
+            <th>
                 Telefone
             </th>
             <th></th>
@@ -87,7 +77,6 @@
     </thead>
     <tbody>
         @foreach (var item in Model)
-
         {
             <tr>
                 <td>
@@ -99,7 +88,7 @@
                 <td>
                     @item.cc_data_nascimento
                 </td>
- <td>
+                <td>
                     @item.cc_email
                 </td><td>
                     @item.cc_telefone
@@ -118,23 +107,31 @@
 
 <div class="col-2 justify-content-center d-flex ">
     <div class="row">
-       <button class="btn btn-primary" asp-controller="Pedidos" asp-action="MeusPedidos">Voltar ao Inicio</button>
+       <button class="btn btn-primary" onclick="VoltarAoInicio()">Voltar ao Inicio</button>
     </div>
 </div>
-
-
 
 @section Scripts {
 
     <script>
         $(document).ready(function () {
-            $('#myTable').DataTable({
+            $('#myTable4').DataTable({
                 "language": { "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json" }
             });
         });
     </script>
 
-
+    <script>
+        function VoltarAoInicio(){
+        $.ajax({
+            success: function(){
+                      window.location.href = "/Home/Index";
+            }, error: function (xhr, status, error) {
+                    console.log("Ocorreu um erro durante a requisição AJAX: " + error);
+            }
+        });
+    }
+   </script>
 
     @*Passando parametros para inserir na minha tabela de pedidos*@
     <script>
@@ -152,9 +149,9 @@
                     console.log(data);
 
                     $(modal).modal('show');
-        @* $(modal).modal('hide'); *@
+                    @* $(modal).modal('hide'); *@
 
-        @* location.reload(); *@
+                    @* location.reload(); *@
                     },
                 error: function (xhr, status, error) {
                     // Aqui você pode tratar os erros que ocorrem durante a requisição AJAX

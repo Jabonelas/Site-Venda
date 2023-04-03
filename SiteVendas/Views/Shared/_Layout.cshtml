@@ -51,7 +51,7 @@
         {
             <div class="col-4 d-flex justify-content-start">
 
-               <button onclick="NovoCadastro()" class="btn-Segundario">Novo Cadastro</button>
+               <button onclick="NovoCadastro()" class="btn btn-Secundario">Novo Cadastro</button>
 
                <button onclick="Login()" style="margin: 0 15px;" class="btn btn-primary d-flex justify-content-end">Entrar</button>
 
@@ -167,7 +167,7 @@
 
                                         <li class="rd-nav-item">
                                         <a class="rd-nav-link" asp-area="" asp-controller="Mensagem"
-                                            asp-action="ExibirTodasReservas">Mensagens</a>
+                                            asp-action="ExibirTodasReservas">Reservas</a>
                                         </li>
 
 
@@ -470,10 +470,9 @@
                 });
             }
         }
-
     </script>
 
-<script>
+    <script>
        function Login(){
     $.ajax({
           success: function (data) {
@@ -484,9 +483,9 @@
           }
         });
     }
-</script>
+    </script>
 
-<script>
+    <script>
        function NovoCadastro(){
     $.ajax({
           success: function (data) {
@@ -497,7 +496,7 @@
           }
         });
     }
-</script>
+    </script>
 
 
     <script>
@@ -512,21 +511,13 @@
                 }
             });
         }
-
     </script>
-
-
-
 
       <script>
         function passarIdPedido(idPedido){
-            console.log("Entrou aqui no pedido");
             $.ajax({
                 success: function (){
-            console.log("Entrou aqui no pedido2");
-
                  var novaPagina = "https://localhost:7234/Pedidos/DetalhePedido/" + idPedido;
-
                   window.location.href = novaPagina;
 
                 },
@@ -535,7 +526,20 @@
                 }
             });
         }
+    </script>
 
+
+    <script>
+        function FinalizarPedido(){
+            $.ajax({
+               success: function (){
+                    window.location.href = "Pedidos/CarrinhoCompra"; 
+                }, 
+                error: function (xhr, status, error){
+                    console.log("Ocorreu um erro durante a requisição AJAX:" + error);
+                }
+            });     
+        }
     </script>
 
     @Html.Partial("~/Views/Shared/_ValidationScriptsPartial.cshtml")

@@ -1,9 +1,7 @@
 ﻿@using SiteVendas.Models.ViewModel
 
 @{
-    var quantiadeProduto = ViewData["quantidadePedidos"] as List
-<CarrinhoViewModel>
-    ;
+    var quantiadeProduto = ViewData["quantidadePedidos"] as List<CarrinhoViewModel>;
 }
 
 @if (quantiadeProduto != null)
@@ -153,19 +151,11 @@
                     </div>
                     <br>
                     <div class=" d-flex justify-content-end">
-                        <button
-                            type="button"
-                            class="btn btn-default"
-                            data-dismiss="modal"
-                            style="border: 2px solid rgb(96, 70, 182);"
-                        >Voltar</button>
-                        <a
-                            style="margin: 0 15px;"
-                            class="btn btn-primary d-flex justify-content-end"
-                            asp-area=""
-                            asp-controller="Pedidos"
-                            asp-action="CarrinhoCompra"
-                        >Finalizar Pedido</a>
+
+                        <button class="btn btn-Secundario" data-dismiss="modal">Voltar</button>
+
+                        <button style="margin: 0 15px;" class="btn btn-primary" onclick="FinalizarPedido()">Finalizar Pedido</button>
+
                     </div>
                     <br>
                 </div>
@@ -184,4 +174,4 @@
             });
         });
         </script>
-        }
+}
