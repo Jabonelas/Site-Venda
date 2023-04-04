@@ -30,8 +30,7 @@ namespace SiteVendas.Controllers
 
         public IActionResult ListaProdutosBebida()
         {
-            var listaProdutosBebida =
-                context.tb_produto.Where(x => x.pd_disponivel == true && x.pd_tipo == "Bebida").ToList();
+            var listaProdutosBebida = context.tb_produto.Where(x => x.pd_disponivel == true && x.pd_tipo == "Bebida").ToList();
 
             ViewData["ListaProdutosSelecionado"] = null;
             ViewData["ListaProdutosSelecionado"] = listaProdutosBebida;

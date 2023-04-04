@@ -8,8 +8,6 @@
 @using Microsoft.AspNetCore.Authorization;
 @using SiteVendas.Models.ViewModel;
 
-   
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,7 +20,7 @@
     <meta charset="utf-8">
     <link rel="icon" href="~/images/favicon.ico" type="image/x-icon">
     <!-- Stylesheets-->
-    <link rel="stylesheet" type="text/css"
+     <link rel="stylesheet" type="text/css"
         href="//fonts.googleapis.com/css?family=Roboto:100,300,300i,400,500,600,700,900%7CRaleway:500">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
 
@@ -34,7 +32,6 @@
     <div class="row d-flex justify-content-end">
 
         @if (User.Identity.IsAuthenticated)
-
         {
             <div class="col-10 d-flex justify-content-end">
                 <li> Usuário: @_httpContextAccessor.HttpContext.Session.GetString("usuario")</li>
@@ -45,9 +42,7 @@
                 asp-controller="Login" asp-action="LogOut">Sair</a>
             </div>
         }
-
         else
-
         {
             <div class="col-4 d-flex justify-content-start">
 
@@ -71,7 +66,7 @@
     @await RenderSectionAsync("Styles", required: false)
     <header class="section page-header">
         <!-- RD Navbar-->
-        a <div class="rd-navbar-wrap">
+         <div class="rd-navbar-wrap">
             <nav class="rd-navbar rd-navbar-modern" data-layout="rd-navbar-fixed" data-sm-layout="rd-navbar-fixed"
                 data-md-layout="rd-navbar-fixed" data-md-device-layout="rd-navbar-fixed"
                 data-lg-layout="rd-navbar-static" data-lg-device-layout="rd-navbar-fixed"
@@ -87,23 +82,18 @@
                             <button class="rd-navbar-toggle"
                                 data-rd-navbar-toggle=".rd-navbar-nav-wrap"><span></span></button>
                             <!-- RD Navbar Brand-->
-                            <div class="rd-navbar-brand"><a class="brand" href="index.html"><img class="brand-logo-dark"
-                                        src="images/logo-198x66.png" alt="" width="198" height="66" /></a></div>
+                            <div class="rd-navbar-brand">
+                                <a asp-controller="Home" asp-action="Index" class="brand" ><img class="brand-logo-dark"
+                                        src="~/images/logo-198x66.png" alt="" width="198" height="66" /></a></div>
                         </div>
                         <div class="rd-navbar-right rd-navbar-nav-wrap">
                             <div class="rd-navbar-aside">
                                 <ul class="rd-navbar-contacts-2">
-
-
-                                 
-
                                     <li>
                                         <div class="unit unit-spacing-xs">
                                             <div class="unit-left"><span class="icon mdi mdi-phone"></span></div>
                                          
-                                         <div class="unit-body"><a class="phone"
-                                                    href="tel:#">(71) 98140-3524</a>
-                                                  
+                                         <div class="unit-body"><a class="phone" href="tel:#">(71) 98140-3524</a>
 
                                             </div>
                                         </div>
@@ -119,10 +109,10 @@
                                     </li>
                                 </ul>
                                 <ul class="list-share-2">
-                                    <li><a class="icon mdi mdi-facebook" href="#"></a></li>
-                                    <li><a class="icon mdi mdi-twitter" href="#"></a></li>
-                                    <li><a class="icon mdi mdi-instagram" href="#"></a></li>
-                                    <li><a class="icon mdi mdi-google-plus" href="#"></a></li>
+                                    <li><a class="icon mdi mdi-facebook" href="https://www.facebook.com/" target="_blank"></a></li>
+                                    <li><a class="icon mdi mdi-twitter" href="https://twitter.com/" target="_blank"></a></li>
+                                    <li><a class="icon mdi mdi-instagram" href="https://www.instagram.com/" target="_blank"></a></li>
+                                    <li><a class="icon mdi mdi-google-plus" href="https://mail.google.com/" target="_blank"></a></li>
                                 </ul>
                             </div>
                             <div class="rd-navbar-main">
@@ -214,6 +204,7 @@
                                     class="project-hamburger-arrow"></span><span class="project-hamburger-arrow"></span>
                             </div>
                         </div>
+
                         <div class="rd-navbar-project">
                             <div class="rd-navbar-project-header">
                                 <h5 class="rd-navbar-project-title">Gallery</h5>
@@ -335,7 +326,7 @@
 
     <!-- Page Footer-->
     <footer class="section footer-modern context-dark footer-modern-2">
-        <div class="footer-modern-line">
+        @* <div class="footer-modern-line">
             <div class="container">
                 <div class="row row-50">
                     <div class="col-md-6 col-lg-4">
@@ -343,10 +334,12 @@
                         <ul class="footer-modern-list d-inline-block d-sm-block wow fadeInUp">
                             <li><a asp-controller="Cardapio" asp-action="ListaProdutos" >Pizzas</a></li>
                             <li><a asp-controller="Cardapio" asp-action="ListaProdutosBebida" >Bebidas</a></li>
-                            @* <li><a href="#">Burgers</a></li>
+                              <!-- Codigo Comentado -->
+                            <li><a href="#">Burgers</a></li>
                             <li><a href="#">Salads</a></li>
                             <li><a href="#">Drinks</a></li>
-                            <li><a href="#">Seafood</a></li> *@
+                            <li><a href="#">Seafood</a></li>
+                              <!-- Codigo Comentado -->
                         </ul>
                     </div>
                     <div class="col-md-6 col-lg-4 col-xl-3">
@@ -372,8 +365,10 @@
                             <div class="form-wrap wow slideInUp">
                                 <input class="form-input" id="subscribe-form-2-email" type="email" name="email"
                                     value="teste@gmail.com" />
-                                @*<input class="form-input" id="subscribe-form-2-email" type="email" name="email"
-                                data-constraints="@Email @Required" />*@
+                                     <!-- Codigo Comentado -->
+                                <input class="form-input" id="subscribe-form-2-email" type="email" name="email"
+                                data-constraints="@Email @Required" />
+                                 <!-- Codigo Comentado -->
                                 <label class="form-label" for="subscribe-form-2-email">Enter your E-mail</label>
                             </div>
                             <div class="form-button form-button-2 wow slideInRight">
@@ -385,17 +380,18 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> *@
         <div class="footer-modern-line-2">
             <div class="container">
                 <div class="row row-30 align-items-center">
                     <div class="col-sm-6 col-md-7 col-lg-4 col-xl-4">
                         <div class="row row-30 align-items-center text-lg-center">
-                            <div class="col-md-7 col-xl-6"><a class="brand" href="index.html"><img
-                                        src="images/logo-inverse-198x66.png" alt="" width="198" height="66" /></a></div>
+                            <div class="col-md-7 col-xl-6">
+                                <a asp-controller="Home" asp-action="Index" class="brand"><img src="~/images/logo-inverse-198x66.png" alt="" width="198" height="66" /></a></div>
                             <div class="col-md-5 col-xl-6">
-                                <div class="iso-1"><span><img src="images/like-icon-58x25.png" alt="" width="58"
-                                            height="25" /></span><span class="iso-1-big">9.4k</span></div>
+                                <div class="iso-1"><span><img src="/images/icons8-love-square-35.png" alt="" width="35"
+                                @* <div class="iso-1"><span><img src="images/like-icon-58x25.png" alt="" width="58" *@
+                                            height="35" /></span><span class="iso-1-big">9.4k</span></div>
                             </div>
                         </div>
                     </div>
@@ -410,15 +406,15 @@
                             <div class="footer-modern-contacts wow slideInDown">
                                 <div class="unit unit-spacing-sm align-items-center">
                                     <div class="unit-left"><span class="icon mdi mdi-email"></span></div>
-                                    <div class="unit-body"><a class="mail" href="mailto:#">info@demolink.org</a></div>
+                                    <div class="unit-body"><a class="mail" href="mailto:#">PizzaHouse@gmail.com</a></div>
                                 </div>
                             </div>
                             <div class="wow slideInRight">
                                 <ul class="list-inline footer-social-list footer-social-list-2 footer-social-list-3">
-                                    <li><a class="icon mdi mdi-facebook" href="#"></a></li>
-                                    <li><a class="icon mdi mdi-twitter" href="#"></a></li>
-                                    <li><a class="icon mdi mdi-instagram" href="#"></a></li>
-                                    <li><a class="icon mdi mdi-google-plus" href="#"></a></li>
+                                    <li><a class="icon mdi mdi-facebook" href="https://www.facebook.com/" target="_blank"></a></li>
+                                    <li><a class="icon mdi mdi-twitter" href="https://twitter.com/" target="_blank"></a></li>
+                                    <li><a class="icon mdi mdi-instagram" href="https://www.instagram.com/" target="_blank"></a></li>
+                                    <li><a class="icon mdi mdi-google-plus" href="https://mail.google.com/" target="_blank"></a></li>
                                 </ul>
                             </div>
                         </div>

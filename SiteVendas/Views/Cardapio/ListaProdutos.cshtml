@@ -3,7 +3,6 @@
 @model IEnumerable<SiteVendas.Models.tb_produto>
 @inject IHttpContextAccessor _httpContextAccessor;
 
-
 @{
     var listaProdutosSelecionado = ViewData["ListaProdutosSelecionado"] as List<tb_produto>;
     var Usuario = _httpContextAccessor.HttpContext.Session.GetString("usuario");
@@ -64,11 +63,12 @@
                 <div class="row ">
                     <div class="col-1">
                         <a class="btn btn-primary" asp-controller="Cardapio" asp-action="ListaProdutos">Pizza</a>
+                       @* <button class="btn btn-Secundario" onclick="ListaProdutos()">Pizza</button> *@
                     </div>
 
                     <div class="col-2">
-                        <a class="btn " style="border: 2px solid rgb(96, 70, 182);font-family: Arial, sans-serif;"
-                        asp-controller="Cardapio" asp-action="ListaProdutosBebida">Bebida</a>
+                        <a class="btn  btn-Secundario" asp-controller="Cardapio" asp-action="ListaProdutosBebida">Bebida</a>
+                        @* <button class="btn  btn-primary" onclick="ListaProdutosBebida()">Bebida</button> *@
                     </div>
 
                     <div class="col-3">
@@ -87,12 +87,13 @@
 
                 <div class="row ">
                     <div class="col-1">
-                        <a class="btn " style="border: 2px solid rgb(96, 70, 182); font-family: Arial, sans-serif;"
-                        asp-controller="Cardapio" asp-action="ListaProdutos">Pizza</a>
+                        <a class="btn  btn-Secundario" asp-controller="Cardapio" asp-action="ListaProdutos">Pizza</a>
+                       @* <button class="btn btn-Secundario" onclick="ListaProdutos()">Pizza</button> *@
                     </div>
 
                     <div class="col-2">
                         <a class="btn  btn-primary" asp-controller="Cardapio" asp-action="ListaProdutosBebida">Bebida</a>
+                        @* <button class="btn  btn-primary" onclick="ListaProdutosBebida()">Bebida</button> *@
                     </div>
 
                     <div class="col-3">
@@ -201,21 +202,14 @@
                                         </div>
                                         <div class="modal-footer">
 
-                                            <button type="button" class="btn btn-default" data-dismiss="modal"
-                                                style="border: 2px solid rgb(96, 70, 182);">
-                                                Voltar
-                                            </button>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal" style="border: 2px solid rgb(96, 70, 182);">Voltar</button>
 
-                                            <button class=" btn btn-primary form-group"
-                                                onclick="passarParametro(@item.id_produto)" type="submit"
-                                                id="passarParametros">Adicionar no Carrinho</button>
+                                            <button class=" btn btn-primary form-group" onclick="passarParametro(@item.id_produto)" type="submit" id="passarParametros">Adicionar no Carrinho</button>
 
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-
 
                             <!-- Modal Adicionar Carrinho -->
                             <div class="modal" id="ModalCarrinho-@item.id_produto" tabindex="-1" role="dialog"
@@ -227,16 +221,14 @@
 
                                             <h4 class="modal-title text-center" id="myModalLabel">@item.pd_nome</h4>
 
-                                            <button type="button" class="btn btn-close" data-dismiss="modal"
-                                                aria-label="Close">
+                                            <button type="button" class="btn btn-close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true"></span>
                                             </button>
 
                                         </div>
                                         <div class="modal-body text-center">
 
-                                            <img alt="" width="161" height="162"
-                                                src="data:image/png;base64,@Convert.ToBase64String(@item.pd_imagem)" />
+                                            <img alt="" width="161" height="162" src="data:image/png;base64,@Convert.ToBase64String(@item.pd_imagem)" />
 
                                             <br />
                                             <br />
@@ -247,12 +239,8 @@
 
                                                 <div style="text-align: center;">
                                                     <h6>
-
                                                         <b>Quantidade:</b>
-
-                                                        <input name="quantidade" type="number" id="num1-@item.id_produto"
-                                                            value="1" min="1" max="99"
-                                                            onchange="multiplicar(@item.id_produto)">
+                                                        <input name="quantidade" type="number" id="num1-@item.id_produto" value="1" min="1" max="99" onchange="multiplicar(@item.id_produto)">
                                                     </h6>
 
                                                 </div>
@@ -269,14 +257,10 @@
 
                                                 <h6>
                                                     <b>
-                                                        <input class="d-none" id="num2-@item.id_produto"
-                                                            value="@item.pd_preco" readonly>
+                                                        <input class="d-none" id="num2-@item.id_produto" value="@item.pd_preco" readonly>
 
                                                         <h4>
-
-                                                            <label name="valor"
-                                                                id="resultadoMultiplicacao-@item.id_produto">@item.pd_preco.ToString("C2")</label>
-
+                                                            <label name="valor" id="resultadoMultiplicacao-@item.id_produto">@item.pd_preco.ToString("C2")</label>
                                                         </h4>
                                                     </b>
                                                 </h6>
@@ -311,19 +295,41 @@
     <script src="~/js/InputMasked.js"></script>
 
     <script>
+        function ListaProdutosBebida(){
+            $.ajax({
+                success: function(){
+                    window.location.href = "/Cardapio/ListaProdutosBebida"
+                },  
+                error: function (xhr, status, error) {
+                    console.log("Ocorreu um erro durante a requisição AJAX: " + error);
+                }
+            });
+        }
+    </script>
+
+    <script>
+        function ListaProdutos(){
+            $.ajax({
+                success: function(){
+                    window.location.href = "/Cardapio/ListaProdutos"
+                },  
+                error: function (xhr, status, error) {
+                    console.log("Ocorreu um erro durante a requisição AJAX: " + error);
+                }
+            });
+        }
+    </script>
+
+
+    <script>
         function botaoModal(_idProduto) {
             console.log("Entrou na função");
             console.log(_idProduto);
             var session = "@Usuario";
-
             if (session == "") {
-
                 window.location.href = "/Login/Login";
-
             } else {
-
                 $(`#ModalCarrinho-${_idProduto}`).modal();
-
             }
         }
     </script>
