@@ -49,13 +49,13 @@ namespace SiteVendas.Controllers
 
             try
             {
-                    // context.tb_endereco.Add(_cliente.endereco);
-                    // context.SaveChanges();
+                    context.tb_endereco.Add(_cliente.endereco);
+                    context.SaveChanges();
 
-                    // _cliente.cliente.fk_endereco = _cliente.endereco.id_endereco;
+                    _cliente.cliente.fk_endereco = _cliente.endereco.id_endereco;
 
-                    // context.tb_cadastro_cliente.Add(_cliente.cliente);
-                    // context.SaveChanges();
+                    context.tb_cadastro_cliente.Add(_cliente.cliente);
+                    context.SaveChanges();
             }
             catch (System.Exception)
             {

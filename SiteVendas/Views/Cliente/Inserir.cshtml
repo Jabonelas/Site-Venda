@@ -308,7 +308,8 @@
                     success: function(result) {
                         if (result == false) {
                             $('#cleave-verificacaoEmail').hide();
-                                document.getElementById("BotaoCadastrar").disabled = false;
+                            AtivarBotaoCadastrar();
+                                @* document.getElementById("BotaoCadastrar").disabled = false; *@
                         } else {
                             $('#cleave-verificacaoEmail').show();
                                 document.getElementById("BotaoCadastrar").disabled = true;
@@ -343,7 +344,8 @@
                     success: function(result) {
                         if (result == false) {
                             $('#cleave-verificacaoCPF').hide();
-                              document.getElementById("BotaoCadastrar").disabled = false;
+                            AtivarBotaoCadastrar();
+                              @* document.getElementById("BotaoCadastrar").disabled = false; *@
                         } else {
                             $('#cleave-verificacaoCPF').show();
                               document.getElementById("BotaoCadastrar").disabled = true;
@@ -377,7 +379,8 @@
                     success: function(result) {
                         if (result == false) {
                             $('#cleave-verificacaoRG').hide();
-                              document.getElementById("BotaoCadastrar").disabled = false;
+                            AtivarBotaoCadastrar();
+                              @* document.getElementById("BotaoCadastrar").disabled = false; *@
                         } else {
                             $('#cleave-verificacaoRG').show();
                               document.getElementById("BotaoCadastrar").disabled = true;
@@ -402,17 +405,33 @@
         }
     </script>
 
+    <script>
+        function AtivarBotaoCadastrar(){
+            var spanSenha = document.getElementById("cleave-confirmarSenha1");
+            var spanEmail = document.getElementById("cleave-verificacaoEmail");
+            var spanRG = document.getElementById("cleave-verificacaoRG");
+            var spanCPF = document.getElementById("cleave-verificacaoCPF");
+
+               if (spanSenha.style.display === "none" && 
+                  spanEmail.style.display === "none" && 
+                  spanRG.style.display === "none" && 
+                  spanCPF.style.display === "none") {
+                  document.getElementById("BotaoCadastrar").disabled = false;
+                } 
+            }
+    </script>
+
     @*Verificação se as senhas informadas são iguais*@
     <script>
         $("#cleave-confirmarSenha").blur(function () {
             var senha = $("#cleave-senha").val();
             var confirmarSenha = $("#cleave-confirmarSenha").val();
             if (senha == confirmarSenha) {
-                 $('#cleave-confirmarSenha1').show();
-                   document.getElementById("BotaoCadastrar").disabled = true;
-            } else {
                  $('#cleave-confirmarSenha1').hide();
-                   document.getElementById("BotaoCadastrar").disabled = false;
+                 AtivarBotaoCadastrar();
+            } else {
+                 $('#cleave-confirmarSenha1').show();
+                 document.getElementById("BotaoCadastrar").disabled = true;
             }
         });
     </script>

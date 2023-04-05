@@ -25,10 +25,12 @@ namespace SiteVendas.Models
         [StringLength(50)]
         [Unicode(false)]
         public string cc_cpf { get; set; }
+        [Required]
         [StringLength(50)]
         [Unicode(false)]
         public string cc_rg { get; set; }
         public DateOnly cc_data_nascimento { get; set; }
+        [Required]
         [StringLength(200)]
         [Unicode(false)]
         public string cc_email { get; set; }
