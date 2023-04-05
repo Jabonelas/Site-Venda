@@ -34,7 +34,6 @@ namespace SiteVendas.Controllers
         [HttpPost]
         public IActionResult Inserir(CadastroClienteViewModel _cliente)
         {
-
             if (!ModelState.IsValid)
             {
                 foreach (var stat in ModelState.Values)
@@ -50,25 +49,47 @@ namespace SiteVendas.Controllers
 
             try
             {
-                context.tb_endereco.Add(_cliente.endereco);
-                context.SaveChanges();
+                    // context.tb_endereco.Add(_cliente.endereco);
+                    // context.SaveChanges();
 
-                _cliente.cliente.fk_endereco = _cliente.endereco.id_endereco;
+                    // _cliente.cliente.fk_endereco = _cliente.endereco.id_endereco;
 
-                context.tb_cadastro_cliente.Add(_cliente.cliente);
-                context.SaveChanges();
+                    // context.tb_cadastro_cliente.Add(_cliente.cliente);
+                    // context.SaveChanges();
             }
             catch (System.Exception)
             {
                 return BadRequest("Erro ao Inserir Dados Cliente!");
             }
 
-
-            string mensagem = "Operação realizada com sucesso"!;
+            string mensagem = "Operação realizada com sucesso!";
             TempData["mensagem"] = mensagem;
 
-
             return View();
+        }
+
+        [HttpPost]
+        public JsonResult VerificarCPFExistente(string CPF)
+        {
+            bool CPFExiste = context.tb_cadastro_cliente.Where(x => x.cc_cpf == CPF).Any();
+
+            return Json(CPFExiste);
+        }
+
+        [HttpPost]
+        public JsonResult VerificarRGExistente(string RG)
+        {
+          bool RGExiste = context.tb_cadastro_cliente.Where(x => x.cc_rg == RG).Any();
+
+            return Json(RGExiste);
+        }
+
+        [HttpPost]
+        public JsonResult VerificarEmailExistente(string Email)
+        {
+           bool emailExiste = context.tb_cadastro_cliente.Where(x => x.cc_email == Email).Any();
+
+            return Json(emailExiste);
         }
 
         [HttpGet]

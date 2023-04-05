@@ -2,6 +2,13 @@
 @model SiteVendas.Models.ViewModel.CadastroClienteViewModel
 
 
+@{ 
+
+    List<tb_cadastro_cliente> listaVerificacao = new List<tb_cadastro_cliente>();
+    listaVerificacao = ViewData["Verificacao"] as List<tb_cadastro_cliente>;
+    
+    }
+
 @*Exibicao carregamento do Triangulo*@
 <div class="preloader">
     <div class="wrapper-triangle">
@@ -81,16 +88,20 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label class="control-label">CPF</label>
-                        <input asp-for="cliente.cc_cpf" class="form-control" id="cleave-cpf" minlength="14" />
+                        <input asp-for="cliente.cc_cpf" class="form-control" minlength="14" id="CPF"/>
+                        @* <input asp-for="cliente.cc_cpf" class="form-control" id="cleave-cpf" minlength="14" id="CPF"/> *@
                         <span asp-validation-for="cliente.cc_cpf" class="text-danger"></span>
+                        <span id="cleave-verificacaoCPF" style="display:none;color:red">CPF já cadastrado.</span>
                     </div>
                 </div>
 
                 <div class="col-md-3">
                     <div class="form-group">
                         <label class="control-label">RG</label>
-                        <input asp-for="cliente.cc_rg" class="form-control" id="cleave-rg" minlength="12" />
+                        <input asp-for="cliente.cc_rg" class="form-control" minlength="12" id="RG" />
+                        @* <input asp-for="cliente.cc_rg" class="form-control" id="cleave-rg" minlength="12" id="RG" /> *@
                         <span asp-validation-for="cliente.cc_rg" class="text-danger"></span>
+                        <span id="cleave-verificacaoRG" style="display:none;color:red">RG já cadastrado.</span>
                     </div>
                 </div>
 
@@ -232,8 +243,9 @@
             <div class="col-6">
                 <div class="form-group">
                     <label class="control-label">E-mail</label>
-                    <input asp-for="cliente.cc_email" class="form-control" minlength="10" maxlength="100" />
+                    <input asp-for="cliente.cc_email" class="form-control" minlength="10" maxlength="100" id="Email"/>
                     <span asp-validation-for="cliente.cc_email" class="text-danger"></span>
+                     <span id="cleave-verificacaoEmail" style="display:none;color:red">Este e-mail já está cadastrado.</span>
                 </div>
             </div>
 
@@ -249,7 +261,9 @@
                 <div class="form-group">
                     <label class="control-label">Confirmar Senha</label>
                     <input asp-for="confirmarSenha" class="form-control" minlength="5" maxlength="20" id="cleave-confirmarSenha" type="password" />
-                    <label class="text-danger d-none" id="cleave-confirmarSenha1">Senha diferente</label>
+                    <span id="cleave-confirmarSenha1" style="display:none;color:red">Senhas divergentes.</span>
+
+
                 </div>
             </div>
 
@@ -261,12 +275,11 @@
 
     <div class="form-group">
 
-        <input   type="submit" value="Cadastrar" class="btn btn-primary" />
+        <input id="BotaoCadastrar" type="submit" value="Cadastrar" class="btn btn-primary" />
 
     </div>
 
 </form>
-
 
 
 @section Scripts {
@@ -283,7 +296,99 @@
         });
     </script>
 
+  @*Verificação se E-mail ja esta cadatrado*@
+    <script>
+        $(function() {
+            $('#Email').blur(function() {
+                var email = $(this).val();
+                $.ajax({
+                    url: '@Url.Action("VerificarEmailExistente", "Cliente")',
+                    type: 'POST',
+                    data: { Email: email },
+                    success: function(result) {
+                        if (result == false) {
+                            $('#cleave-verificacaoEmail').hide();
+                                document.getElementById("BotaoCadastrar").disabled = false;
+                        } else {
+                            $('#cleave-verificacaoEmail').show();
+                                document.getElementById("BotaoCadastrar").disabled = true;
+                        }
+                    }
+                });
+            });
+        });
+    </script>
 
+
+    <script>
+
+        @*Formatação de campo de CPF*@
+        if (document.querySelector("#CPF")) {
+            var cleave = new Cleave("#CPF", {
+                delimiters: [".", ".", "-"],
+                blocks: [3, 3, 3, 2],
+                numericOnly: true,
+            });
+        }
+
+        @*Verificação se CPF ja esta cadatrado*@
+        $(function() {
+            $('#CPF').blur(function() {
+                console.log("Este aqui")
+                var cpf = $(this).val();
+                $.ajax({
+                    url: '@Url.Action("VerificarCPFExistente", "Cliente")',
+                    type: 'POST',
+                    data: { CPF: cpf },
+                    success: function(result) {
+                        if (result == false) {
+                            $('#cleave-verificacaoCPF').hide();
+                              document.getElementById("BotaoCadastrar").disabled = false;
+                        } else {
+                            $('#cleave-verificacaoCPF').show();
+                              document.getElementById("BotaoCadastrar").disabled = true;
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+
+
+    <script>
+
+        @*Formatação de campo de RG*@
+        if (document.querySelector("#RG")) {
+            var cleave = new Cleave("#RG", {
+                delimiters: [".", ".", "-"],
+                blocks: [2, 3, 3, 1],
+                numericOnly: true,
+            });
+        }
+
+      @*Verificação se RG ja esta cadatrado*@
+        $(function() {
+            $('#RG').blur(function() {
+                var rg = $(this).val();
+                $.ajax({
+                    url: '@Url.Action("VerificarRGExistente", "Cliente")',
+                    type: 'POST',
+                    data: { RG: rg },
+                    success: function(result) {
+                        if (result == false) {
+                            $('#cleave-verificacaoRG').hide();
+                              document.getElementById("BotaoCadastrar").disabled = false;
+                        } else {
+                            $('#cleave-verificacaoRG').show();
+                              document.getElementById("BotaoCadastrar").disabled = true;
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+
+    @*Voltar a tela inicial*@
     <script>
         function VoltarAoInicio(){
             $.ajax({
@@ -302,10 +407,12 @@
         $("#cleave-confirmarSenha").blur(function () {
             var senha = $("#cleave-senha").val();
             var confirmarSenha = $("#cleave-confirmarSenha").val();
-            if (senha != confirmarSenha) {
-                $("#cleave-confirmarSenha1").removeClass("d-none");
+            if (senha == confirmarSenha) {
+                 $('#cleave-confirmarSenha1').show();
+                   document.getElementById("BotaoCadastrar").disabled = true;
             } else {
-                $("#cleave-confirmarSenha1").addClass("d-none");
+                 $('#cleave-confirmarSenha1').hide();
+                   document.getElementById("BotaoCadastrar").disabled = false;
             }
         });
     </script>

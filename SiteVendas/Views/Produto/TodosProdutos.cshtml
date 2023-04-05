@@ -43,14 +43,24 @@
 
 <br />
 
-<div class="row">
-    <div class="col-2 justify-content-center d-flex">
+<div class="row col-9">
+    <div class="col-3">
         <button class="btn btn-Secundario" onclick="VoltarAoInicio()">Voltar ao Inicio</button>
     </div>
-    <div class="col-2 justify-content-center d-flex">
+    <div class="col-3">
         <button  class="btn btn-primary form-group;" onclick="NovoProduto()">Novo Produto</button>
     </div>
 </div>
+
+
+   @* <div class="col-12 d-flex justify-content-start">
+
+        <button class="btn btn-Secundario" onclick="VoltarAoInicio()">Voltar ao Inicio</button>
+
+        <button  class="btn btn-primary form-group;" onclick="NovoProduto()">Novo Produto</button>
+
+            </div> *@
+
 
 <br />
 
@@ -58,7 +68,7 @@
 
 <br />
 
-<table class="table text-center" id="myTable2">
+<table class="table text-center" id="myTable5">
     <thead>
         <tr>
             <th>
@@ -180,7 +190,15 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js"></script>
     <script src="~/js/InputMasked.js"></script>
-                                                                await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+
+    <script>
+        $(document).ready(function () {
+            $('#myTable5').DataTable({
+                "language": { "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json" }
+            });
+        });
+    </script>
 
     <script>
 
@@ -191,7 +209,6 @@
         }
 
     </script>
-
 
     <script>
     function NovoProduto(){
@@ -208,7 +225,6 @@
     }
     </script>
 
-
     <script>
     function VoltarAoInicio(){
     $.ajax({
@@ -222,8 +238,6 @@
     });
     }
     </script>
-
-
 }
 
 
