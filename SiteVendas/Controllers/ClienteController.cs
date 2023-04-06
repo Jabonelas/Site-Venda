@@ -10,6 +10,8 @@ namespace SiteVendas.Controllers
 {
     public class ClienteController : Controller
     {
+        string cpf = string.Empty;
+        string rg = string.Empty;
         private SiteVendasContext context = new SiteVendasContext();
 
         [HttpGet]
@@ -49,13 +51,13 @@ namespace SiteVendas.Controllers
 
             try
             {
-                    context.tb_endereco.Add(_cliente.endereco);
-                    context.SaveChanges();
+                context.tb_endereco.Add(_cliente.endereco);
+                context.SaveChanges();
 
-                    _cliente.cliente.fk_endereco = _cliente.endereco.id_endereco;
+                _cliente.cliente.fk_endereco = _cliente.endereco.id_endereco;
 
-                    context.tb_cadastro_cliente.Add(_cliente.cliente);
-                    context.SaveChanges();
+                context.tb_cadastro_cliente.Add(_cliente.cliente);
+                context.SaveChanges();
             }
             catch (System.Exception)
             {
@@ -71,6 +73,13 @@ namespace SiteVendas.Controllers
         [HttpPost]
         public JsonResult VerificarCPFExistente(string CPF)
         {
+            VerificarRGeCPF();
+
+            if (cpf.Equals(CPF))
+            {
+                return Json(false);
+            }
+
             bool CPFExiste = context.tb_cadastro_cliente.Where(x => x.cc_cpf == CPF).Any();
 
             return Json(CPFExiste);
@@ -79,15 +88,45 @@ namespace SiteVendas.Controllers
         [HttpPost]
         public JsonResult VerificarRGExistente(string RG)
         {
-          bool RGExiste = context.tb_cadastro_cliente.Where(x => x.cc_rg == RG).Any();
+            VerificarRGeCPF();
+
+            if (rg.Equals(RG))
+            {
+                return Json(false);
+            }
+
+            bool RGExiste = context.tb_cadastro_cliente.Where(x => x.cc_rg == RG).Any();
 
             return Json(RGExiste);
         }
 
+
+
+        public void VerificarRGeCPF()
+        {
+            string usuario = HttpContext.Session.GetString("usuario");
+
+            var verificarRGeCPF = context.tb_cadastro_cliente
+            .Where(x => x.cc_email == usuario)
+            .Select(x => new { x.cc_rg, x.cc_cpf })
+            .FirstOrDefault();
+
+            cpf = verificarRGeCPF.cc_cpf;
+            rg = verificarRGeCPF.cc_rg;
+        }
+
+
         [HttpPost]
         public JsonResult VerificarEmailExistente(string Email)
         {
-           bool emailExiste = context.tb_cadastro_cliente.Where(x => x.cc_email == Email).Any();
+            string usuario = HttpContext.Session.GetString("usuario");
+
+            if (Email == usuario)
+            {
+                return Json(false);
+            }
+
+            bool emailExiste = context.tb_cadastro_cliente.Where(x => x.cc_email == Email).Any();
 
             return Json(emailExiste);
         }

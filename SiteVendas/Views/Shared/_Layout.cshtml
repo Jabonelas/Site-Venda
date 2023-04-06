@@ -513,9 +513,9 @@
         function passarIdPedido(idPedido){
             $.ajax({
                 success: function (){
-                 var novaPagina = "https://localhost:7234/Pedidos/DetalhePedido/" + idPedido;
-                  window.location.href = novaPagina;
-
+                 @* var novaPagina = "https://localhost:7234/Pedidos/DetalhePedido/" + idPedido; *@
+                  @* window.location.href = novaPagina; *@
+                  window.location.href = `/Pedidos/DetalhePedido/ + ${idPedido}` ;
                 },
                 error: function (xhr, status, error){
                     console.log("Ocorreu um erro durante a requisição AJAX:" + error);
@@ -529,7 +529,7 @@
         function FinalizarPedido(){
             $.ajax({
                success: function (){
-                    window.location.href = "Pedidos/CarrinhoCompra"; 
+                    window.location.href = "/Pedidos/CarrinhoCompra"; 
                 }, 
                 error: function (xhr, status, error){
                     console.log("Ocorreu um erro durante a requisição AJAX:" + error);
