@@ -1,0 +1,112 @@
+﻿@model IEnumerable<SiteVendas.Models.ViewModel.PedidosViewModel>
+
+@if (Model != null)
+{
+    @if (Model.Count() > 0)
+    {
+            <button data-toggle="modal" data-target="#ModalPedido" class="button button-xs button-secondary button-winona" href="#">
+               
+                <span style="color: black"> @Model.Count()</span>
+
+                <span>
+                    <img src="~/images/create_order_30px.png">
+                </span>
+
+            </button>
+          
+            <!-- Modal Exibir Mensagens -->
+            <div class="modal" id="ModalPedido" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class=" d-flex justify-content-center">
+                            <h4>
+                                Pedido Pendentes
+                                <img src="~/images/create_order_30px.png">
+                            </h4>
+                        </div>
+                        <br>
+                        <div class="card">
+                            <div class="card-body row">
+                                <table class="table text-center" id="myTable3">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                Nº Pedido
+                                            </th>
+                                            <th>
+                                                Qtd.
+                                            </th>
+                                            <th>
+                                                Data
+                                            </th>
+                                            <th>
+                                                Valor
+                                            </th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                      {
+                                        <tr>
+                                            <td>
+                                                @item.pedido.pd_numero_pedido
+                                            </td>
+                                            <td>
+                                                @item.pedido.pd_quantidade
+                                            </td>
+                                            <td>
+                                                @item.pedido.pd_data
+                                            </td>
+                                            <td>
+                                                @item.valorTotal.ToString("C2")
+                                            </td>
+                                            <td>
+                                                <button  name="_idPedido" onclick="passarIdPedido(@item.pedido.pd_numero_pedido)" class="btn button-secondary">Exibir</button>
+                                            </td>
+                                        </tr>
+                                      }
+                                    </tbody>
+                                    <tfoot></tfoot>
+                                </table>
+                            </div>
+                        </div>
+
+                        <br>
+
+                        <div class="d-flex justify-content-end">
+
+                            <button type="button" class="btn btn-Secundario"  data-dismiss="modal" style="margin: 0 15px;">Voltar</button>
+
+                        </div>
+
+                        <br>
+                    </div>
+                </div>
+            </div>
+         
+        }
+}
+
+
+
+    @section Scripts {
+
+    @*Layout da GridView*@
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js"></script>
+        <script src="~/js/InputMasked.js"></script>
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+
+        <script>
+
+        $(document).ready(function () {
+            $('#myTable3').DataTable({
+                "language": { "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json" }
+            });
+        });
+
+        </script>
+
+
+    }
+

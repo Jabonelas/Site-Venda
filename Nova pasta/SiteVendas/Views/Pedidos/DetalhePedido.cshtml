@@ -1,0 +1,473 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using SiteVendas.Models.ViewModel
+@model IEnumerable<SiteVendas.Models.ViewModel.DetalhesPedidoViewModel>
+
+@{
+    decimal somarValoresCarrinho = 0;
+    int? numeroPedido = 0;
+}
+
+@*Exibicao carregamento do Triangulo*@
+<div class="preloader">
+    <div class="wrapper-triangle">
+        <div class="pen">
+            <div class="line-triangle">
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+            </div>
+            <div class="line-triangle">
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+            </div>
+            <div class="line-triangle">
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h1>Detalhe do Pedido</h1>
+
+<div class="col-2 justify-content-center d-flex ">
+    <div class="row">
+    <button class="btn btn-Secundario" onclick="Voltar()" >Voltar</button>
+    </div>
+</div>
+
+
+<br />
+<br />
+
+<form asp-controller="Pedidos" asp-action="DetalhePedido">
+
+    @if (User.IsInRole("Admin@hotmail.com"))
+    {
+
+        <h4>CLIENTE:</h4>
+
+        @* <div asp-validation-summary="ModelOnly" class="text-danger"></div> *@
+
+        <div class="card">
+
+            <div class="card-body">
+
+                @foreach (var item in Model)
+                {
+
+                    numeroPedido = item.pedido.pd_numero_pedido;
+
+                    <div class="row">
+
+                        <div class="col-md-8">
+
+                            <div class="form-group">
+
+                                <label class="control-label">Nome</label>
+                                <input class="form-control" asp-for="@item.cliente.cc_nome" readonly />
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-3">
+
+                            <div class="form-group">
+                                <label class="control-label">CPF</label>
+                                <input asp-for="@item.cliente.cc_cpf" class="form-control" readonly />
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-3">
+
+                            <div class="form-group">
+                                <label class="control-label">RG</label>
+                                <input class="form-control" asp-for="@item.cliente.cc_rg" readonly />
+                            </div>
+
+                        </div>
+
+                        <div class="col-3">
+
+                            <div class="form-group">
+                                <label class="control-label">Data Nascimento</label>
+                                <input class="form-control" asp-for="@item.cliente.cc_data_nascimento" readonly />
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-6">
+
+                            <div class="form-group">
+                                <label class="control-label">E-mail</label>
+                                <input class="form-control" asp-for="@item.cliente.cc_email" readonly />
+                            </div>
+
+                        </div>
+
+                        <div class="col-3">
+
+                            <div class="form-group">
+                                <label class="control-label">Telefone</label>
+                                <input class="form-control" asp-for="@item.cliente.cc_telefone" readonly />
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-3">
+
+                            <div class="form-group">
+                                <label class="control-label">Celular</label>
+                                <input class="form-control" asp-for="@item.cliente.cc_celular" readonly />
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    break;
+                }
+
+            </div>
+        </div>
+
+        <br />
+
+        <h4>ENDEREÇO:</h4>
+
+        <div class="card">
+
+            <div class="card-body">
+
+                @foreach (var item in Model)
+                {
+                    <div class="row">
+
+                        <div class="col-md-3">
+
+                            <div class="form-group">
+                                <label class="control-label">Tipo</label>
+
+                                <input asp-for="@item.endereco.ed_tipo" class="form-control" readonly />
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-2">
+
+                            <div class="form-group">
+
+                                <label class="control-label">CEP</label>
+                                <input asp-for="@item.endereco.ed_cep" class="form-control" readonly />
+                                <label class="text-danger d-none" id="cleave-cep2">CEP Inválido</label>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-1">
+
+                            <div class="form-group">
+                                <label class="control-label">Estado</label>
+                                <input asp-for="@item.endereco.ed_estado" class="form-control" readonly />
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-3">
+
+                            <div class="form-group">
+                                <label class="control-label">Cidade</label>
+                                <input asp-for="@item.endereco.ed_cidade" class="form-control" readonly />
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-3">
+
+                            <div class="form-group">
+                                <label class="control-label">Número</label>
+                                <input asp-for="@item.endereco.ed_numero" class="form-control" readonly />
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-3">
+
+                            <div class="form-group">
+                                <label class="control-label">Bairro</label>
+                                <input asp-for="@item.endereco.ed_bairro" class="form-control" readonly />
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <div class="form-group">
+                                <label class="control-label">Logradouro</label>
+                                <input asp-for="@item.endereco.ed_logradouro" class="form-control" readonly />
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-6">
+
+                            <div class="form-group">
+                                <label class="control-label">Complemento</label>
+                                <input asp-for="@item.endereco.ed_complemento" class="form-control" readonly />
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    break;
+                }
+            </div>
+
+
+        </div>
+
+        <br />
+    }
+
+    <h4>PEDIDO:</h4>
+
+    <div class="card">
+
+        <div class="card-body row">
+
+            <table class="table text-center">
+                
+                <thead>
+                    <tr>
+
+                        <th>
+                            Produto
+                        </th>
+                        <th>
+                            Qtd.
+                        </th>
+                        <th>
+                            Data Pedido
+                        </th>
+                        <th>
+                            Preço Und.
+                        </th>
+                        <th>
+                            Valor
+                        </th>
+                        <th>
+                            Tipo Pagamento
+                        </th>
+
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @item.produto.pd_nome
+                            </td>
+                            <td>
+                                @item.pedido.pd_quantidade
+                            </td>
+                            <td>
+                                @item.pedido.pd_data.ToShortDateString()
+                            </td>
+                            <td>
+                                @item.produto.pd_preco.ToString("C2")
+                            </td>
+                            <td>
+                                @{
+                                    somarValoresCarrinho += item.pedido.pd_valor;
+                                }
+
+                                @item.pedido.pd_valor.ToString("C2")
+
+                            </td>
+                            <td>
+                                @item.pedido.pd_tipo_pagamento
+                            </td>
+
+                            <td>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="4">
+                            <h6><b>Total:</b></h6>
+                        </td>
+                        <td>
+                            <h6><b>@somarValoresCarrinho.ToString("C2")</b></h6>
+                        </td>
+                    </tr>
+                </tfoot>
+
+            </table>
+        </div>
+    </div>
+
+    <br />
+
+
+@foreach (var item in Model)
+{
+    if (item.pedido.pd_entregue == null)
+    {
+         <div class="col-2 justify-content-center d-flex ">
+            
+            <div class="row">
+
+            <a class="btn btn-primary" data-toggle="modal" data-target="#ModalPedidoEntregue" href="#">Finalizar Pedido</a>
+     
+            </div>  
+        </div>
+
+        break;
+
+    } else
+    {
+        <div class="col-2 justify-content-center d-flex ">
+            <div class="row">
+
+            @* <button class="btn btn-primary" asp-controller="Pedidos" asp-action="MeusPedidos">Voltar</button> *@
+     <button class="btn btn-primary" onclick="Voltar()">Voltar</button>
+
+
+            </div>
+        </div>
+        
+        break;
+
+    }   
+}
+
+
+
+     <!-- Modal Deseja Confirmar Entrega Pedido -->
+            <div class="modal" id="ModalPedidoEntregue" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                @* <div class="modal-dialog modal-lg" role="document"> *@
+                    <div class="modal-content">
+                        <div class=" d-flex justify-content-center">
+                            <h4>
+                                Confirmar Entrega do Pedido?
+                                 <img src="~/images/ok_30px.png"> 
+                            </h4>
+                        </div>
+                        <br>
+                        <div class="card">
+                            <div class="card-body row  ">
+
+                                <div class="d-flex justify-content-center">
+                                
+                                Pedido Foi Entregue Com Sucesso?
+
+                                </div>
+                            </div>
+                        </div>
+
+                           <div class="modal-footer">
+
+                              <button class="btn btn-default" data-dismiss="modal" style="border: 2px solid rgb(96, 70, 182);margin: 0 15px;">NÃO</button>
+                              <button class="btn btn-primary" onclick="passarParametro(@numeroPedido)">Sim</button>
+
+                           </div>
+                  
+                    </div>
+                </div>
+            </div>
+
+</form>
+
+@section Scripts {
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js"></script>
+    <script src="~/js/InputMasked.js"></script>
+
+    @*Passando parametros para inserir na minha tabela de pedidos*@
+    <script>
+        function passarParametro(_idPedidoEntregue) {
+
+            $.ajax({
+                type: "GET",
+                url: "/Pedidos/BuscarDetalhesPedido/",
+                data: { _numeroPedido: _idPedidoEntregue },
+                success: function (data) {
+
+                    // Aqui você pode manipular a resposta da requisição AJAX
+
+                    @* $(modal).modal('show'); *@
+
+                    },
+                error: function (xhr, status, error) {
+                    // Aqui você pode tratar os erros que ocorrem durante a requisição AJAX
+                    console.log("Ocorreu um erro durante a requisição AJAX: " + error);
+                }
+            });
+        }
+    </script>
+
+    <script>
+        function Voltar(){
+        $.ajax({
+             success: function () {
+                   window.location.href = `Pedidos/MeusPedidos/${idMensagem}`; 
+                    },
+                error: function (xhr, status, error) {
+                    // Aqui você pode tratar os erros que ocorrem durante a requisição AJAX
+                    console.log("Ocorreu um erro durante a requisição AJAX: " + error);
+                }
+            });
+        }
+    </script>
+
+}

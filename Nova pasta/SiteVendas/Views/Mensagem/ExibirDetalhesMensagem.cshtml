@@ -1,0 +1,194 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model SiteVendas.Models.tb_mensagens
+
+@{
+
+var mensagem =  ViewData["Mensagem"] as List<tb_mensagens>;
+ string destinatario = string.Empty;
+ string clienteNome = string.Empty;
+ int idMensagem =  0;
+
+}
+
+    @*Exibicao carregamento do Triangulo*@
+        <div class="preloader">
+            <div class="wrapper-triangle">
+                <div class="pen">
+                    <div class="line-triangle">
+                        <div class="triangle"></div>
+                        <div class="triangle"></div>
+                        <div class="triangle"></div>
+                        <div class="triangle"></div>
+                        <div class="triangle"></div>
+                        <div class="triangle"></div>
+                        <div class="triangle"></div>
+                    </div>
+                    <div class="line-triangle">
+                        <div class="triangle"></div>
+                        <div class="triangle"></div>
+                        <div class="triangle"></div>
+                        <div class="triangle"></div>
+                        <div class="triangle"></div>
+                        <div class="triangle"></div>
+                        <div class="triangle"></div>
+                    </div>
+                    <div class="line-triangle">
+                        <div class="triangle"></div>
+                        <div class="triangle"></div>
+                        <div class="triangle"></div>
+                        <div class="triangle"></div>
+                        <div class="triangle"></div>
+                        <div class="triangle"></div>
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h1>Reserva</h1>
+        
+        <div class=" row col-2 justify-content-center d-flex">
+            <button class="btn btn-Secundario" onclick="ExibirMensagem()">Voltar</button>
+        </div>
+        <hr>
+      
+            <h4>Mensagem:</h4>
+            <div class="card">
+                <div class="card-body">
+
+                    @foreach (var item in mensagem)
+                {
+
+                    @* Passando parametros para fora do Mutex foreach *@
+                    clienteNome = item.mg_nome; 
+                    destinatario = item.mg_email; 
+                    idMensagem = item.id_mensagem;
+
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label class="control-label">Nome</label>
+                                <input class="form-control" asp-for="@item.mg_nome" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">E-mail</label>
+                                <input class="form-control" asp-for="@item.mg_email" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="control-label">Data Recebimento</label>
+                                <input class="form-control" asp-for="@item.mg_data_recebimento" readonly>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="control-label">Data Retorno</label>
+                                <input class="form-control" asp-for="@item.mg_data_retorno" readonly>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="control-label">Tipo</label>
+                                <input class="form-control" asp-for="@item.mg_servico" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="control-label">Mensagem</label>
+                                <textarea asp-for="@item.mg_mensagem" class="form-input textarea-lg" id="contact-message-6" readonldy></textarea>
+                            </div>
+                        </div>
+                    </div>
+                 }
+                </div>
+            </div>
+            <div class="col-md-2">
+                <br>
+                @* Passando e-meil e nomecliente como parametro para minha controler *@
+                <form action="/Mensagem/EnviarEmail">
+
+                    <input type="text" name="destinatario" value="@destinatario" class="d-none">
+
+                    <input type="text" name="nomeCliente" value="@clienteNome" class="d-none">
+                    
+                    <button  data-toggle="modal" data-target="#ModalEnviarMensagem" class="btn btn-primary" >Enviar E-mail</button>
+
+                </form>
+            </div>
+        
+            <!-- Modal Verificação de envio de e-mail -->
+            <div class="modal" id="ModalEnviarMensagem" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class=" d-flex justify-content-center">
+                            <h4>
+                                Confirmar Reserva
+                                <img src="~/images/forward_message_30px.png">
+                            </h4>
+                        </div>
+                        <br>
+                        <div class="card">
+                            <div class="card-body row d-flex justify-content-center">
+                                
+                             Reserva foi Realizada?
+                                   
+                            </div>
+                        </div>
+                        <br>
+                        <div class="d-flex justify-content-end">
+                          
+                            <button class="btn btn-Secundario" data-dismiss="modal">Voltar</button>
+
+                            <button  style="margin: 0 15px;" onclick="passarIdMensagem(@idMensagem)" class="btn btn-primary d-flex justify-content-end">Confirmar</button>
+                          
+                        </div>
+                        <br>
+                    </div>
+                </div>
+            </div>
+
+
+@section Scripts {
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js"></script>
+        <script src="~/js/InputMasked.js"></script>
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+
+        <script>
+             function passarIdMensagem(idMensagem){
+                 $.ajax({
+                  url: `/Mensagem/MarcarVisualizacaoMensagem/${idMensagem}`,
+                  type: "POST",
+                  success: function (){
+                  },
+                  error: function (xhr, status, error){
+                  console.log("Ocorreu um erro durante a requisição AJAX:" + error);
+                }
+            });
+        }
+        </script>
+
+        <script>
+            function ExibirMensagem(){
+                $.ajax({
+                    success: function(){
+                        window.location.href = "/Mensagem/ExibirTodasReservas"
+                    },
+                     error: function (xhr, status, error){
+                      console.log("Ocorreu um erro durante a requisição AJAX:" + error);
+                    }
+                });
+            }
+        </script>
+}

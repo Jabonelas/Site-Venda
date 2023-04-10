@@ -1,0 +1,245 @@
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model SiteVendas.Models.ViewModel.DadosEmpresaViewModel
+@using SiteVendas.Models.ViewModel
+   
+@{    
+    var listaDadosEmpresa = ViewData["DadosEmpresa"] as List <DadosEmpresaViewModel>;
+
+    System.Console.WriteLine($"Entrou:{listaDadosEmpresa}");
+}
+
+@*Exibicao carregamento do Triangulo*@
+        <div class="preloader">
+            <div class="wrapper-triangle">
+                <div class="pen">
+                    <div class="line-triangle">
+                        <div class="triangle"></div>
+                        <div class="triangle"></div>
+                        <div class="triangle"></div>
+                        <div class="triangle"></div>
+                        <div class="triangle"></div>
+                        <div class="triangle"></div>
+                        <div class="triangle"></div>
+                    </div>
+                    <div class="line-triangle">
+                        <div class="triangle"></div>
+                        <div class="triangle"></div>
+                        <div class="triangle"></div>
+                        <div class="triangle"></div>
+                        <div class="triangle"></div>
+                        <div class="triangle"></div>
+                        <div class="triangle"></div>
+                    </div>
+                    <div class="line-triangle">
+                        <div class="triangle"></div>
+                        <div class="triangle"></div>
+                        <div class="triangle"></div>
+                        <div class="triangle"></div>
+                        <div class="triangle"></div>
+                        <div class="triangle"></div>
+                        <div class="triangle"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h1>Cadastrar Empresa</h1>
+        <div class="col-2 justify-content-center d-flex ">
+            <div class="row">
+                <button onclick="VoltarAoInicio()" class="btn btn-Secundario" >Voltar ao Inicio</button>
+            </div>
+        </div>
+        <br>
+        <h4>Dados Empresa:</h4>
+        <form asp-controller="DadosEmpresa" asp-action="CadastrarDados" method="post">
+            @if (TempData["mensagem"] != null)
+            {
+            <div class="alert alert-success" role="alert"> @TempData["mensagem"]</div>
+            }
+            <div class="card">
+                <div class="card-body">
+            @foreach (var item in listaDadosEmpresa)
+            {
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label class="control-label">Nome Fantasia</label>
+                            <input asp-for="dadosEmpresa.de_nome_fantasia" class="form-control" minlength="10" maxlength="200" value="@item.dadosEmpresa.de_nome_fantasia">
+                            <span asp-validation-for="dadosEmpresa.de_nome_fantasia" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="control-label">Telefone</label>
+                                <input asp-for="dadosEmpresa.de_telefone" class="form-control" id="cleave-telefone" value="@item.dadosEmpresa.de_telefone">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">E-mail</label>
+                                <input asp-for="dadosEmpresa.de_email" class="form-control" id="cleave-telefone" value="@item.dadosEmpresa.de_email">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class=" col-md-4">
+                            <div class="form-group">
+                                <label class="control-label">CNPJ</label>
+                                <input asp-for="dadosEmpresa.de_cnpj" class="form-control" id="cleave-cnpj" value="@item.dadosEmpresa.de_cnpj">
+                                <span asp-validation-for="dadosEmpresa.de_cnpj" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="control-label">Horáio de Inicio</label>
+                                <input asp-for="dadosEmpresa.de_horario_inicio" class="form-control" id="cleave-horarioInicio" minlength="5" maxlength="5" value="@item.dadosEmpresa.de_horario_inicio">
+                                <span asp-validation-for="dadosEmpresa.de_horario_inicio" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="control-label">Horáio de Fechamento</label>
+                                <input asp-for="dadosEmpresa.de_horario_fechamento" class="form-control" id="cleave-horarioFechamento" minlength="5" maxlength="5" value="@item.dadosEmpresa.de_horario_fechamento">
+                                <span asp-validation-for="dadosEmpresa.de_horario_inicio" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div></div>
+            } 
+                </div>
+            </div>
+            <br>
+            <h4>ENDEREÇO:</h4>
+            <div class="card">
+                <div class="card-body">
+                     @foreach (var item in listaDadosEmpresa)
+                    {
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="control-label">Tipo</label>
+                                <select asp-for="endereco.ed_tipo" value="@item.endereco.ed_tipo" class="form-control" asp-items="ViewBag.ed_tipo">
+                                    @if (item.endereco.ed_tipo == "Principal")
+                                    {
+                                    <option selected>@item.endereco.ed_tipo</option>
+                                    <option>Trabalho</option>
+                                    }else
+                                    {
+                                    <option selected>@item.endereco.ed_tipo</option>
+                                    <option>Principal</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="form-group">
+                                <label class="control-label">CEP</label>
+                                <input asp-for="endereco.ed_cep" class="form-control" minlength="9" id="cleave-cep1"
+                                 value="@item.endereco.ed_cep"
+                                >
+                                <label class="text-danger d-none" id="cleave-cep2">CEP Inválido</label>
+                                <span asp-validation-for="endereco.ed_cep" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <div class="form-group">
+                                <label class="control-label">Estado</label>
+                                <input asp-for="endereco.ed_estado" class="form-control" minlength="2" id="cleave-estado" value="@item.endereco.ed_estado">
+                                <span asp-validation-for="endereco.ed_estado" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="control-label">Cidade</label>
+                                <input asp-for="endereco.ed_cidade" class="form-control" minlength="5" maxlength="100" id="cleave-cidade" value="@item.endereco.ed_cidade">
+                                <span asp-validation-for="endereco.ed_cidade" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="control-label">Número</label>
+                                <input asp-for="endereco.ed_numero" class="form-control" minlength="1" maxlength="10" value="@item.endereco.ed_numero">
+                                <span asp-validation-for="endereco.ed_numero" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="control-label">Bairro</label>
+                                <input asp-for="endereco.ed_bairro" class="form-control" minlength="5" maxlength="100" id="cleave-bairro" value="@item.endereco.ed_bairro">
+                                <span asp-validation-for="endereco.ed_bairro" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Logradouro</label>
+                                <input asp-for="endereco.ed_logradouro" class="form-control" minlength="5" maxlength="100" id="cleave-logradouro" value="@item.endereco.ed_logradouro">
+                                <span asp-validation-for="endereco.ed_logradouro" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Complemento</label>
+                                <input asp-for="endereco.ed_complemento" class="form-control" minlength="0" maxlength="200" id="cleave-comlemento" value="@item.endereco.ed_complemento">
+                                <span asp-validation-for="endereco.ed_complemento" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    } 
+                </div>
+            </div>
+            <br>
+            <div class="form-group">
+                <input type="submit" value="Cadastrar" class="btn btn-primary">
+            </div>
+        </form>
+
+@section Scripts {
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js"></script>
+        <script src="~/js/InputMasked.js"></script>
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+
+        <script> 
+            function VoltarAoInicio(){
+                $.ajax({
+                    success: function(){
+                        window.location.href = "/Home/Index";
+                    },
+                    error: function (xhr, status, error) {
+                        console.log("Ocorreu um erro durante a requisição AJAX: " + error);
+                    }
+                });
+            }
+        </script>
+
+    @*Setando Endereço com base no CEP*@
+        <script>
+        $(document).ready(function () {
+            var cepInput = $("#cleave-cep1");
+            $("#cleave-cep1").change(function () {
+                var cep = cepInput.val();
+                if (cep.length >= 9) {
+                    $.ajax({
+                        url: `/Cliente/GetCep/${cep}`,
+                        method: "GET",
+                        success: (data) => {
+                            $("#cleave-estado").val(data.uf);
+                            $("input[id='cleave-cidade']").val(data.localidade);
+                            $("input[id='cleave-bairro']").val(data.bairro);
+                            $("input[id='cleave-logradouro']").val(data.logradouro);
+                            $("input[id='cleave-comlemento']").val(data.complemento);
+                        },
+                        error: (error) => {
+                            console.error(error);
+                        }
+                    });
+                    $("#cleave-cep2").addClass("d-none");
+                } else {
+                    $("#cleave-cep2").removeClass("d-none");
+                }
+            });
+        });
+        </script>
+}

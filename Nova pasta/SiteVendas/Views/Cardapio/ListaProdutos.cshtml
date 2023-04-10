@@ -1,0 +1,412 @@
+﻿@using Azure
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model IEnumerable<SiteVendas.Models.tb_produto>
+@inject IHttpContextAccessor _httpContextAccessor;
+
+@{
+    var listaProdutosSelecionado = ViewData["ListaProdutosSelecionado"] as List<tb_produto>;
+    var Usuario = _httpContextAccessor.HttpContext.Session.GetString("usuario");
+}
+
+@*Exibicao carregamento do Triangulo*@
+<div class="preloader">
+    <div class="wrapper-triangle">
+        <div class="pen">
+            <div class="line-triangle">
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+            </div>
+            <div class="line-triangle">
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+            </div>
+            <div class="line-triangle">
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="section section-lg bg-default">
+
+    <h1>Cardápio</h1>
+
+    <br />
+
+    <div class="container">
+
+        <h4>Selecione seu Pedido</h4>
+
+        <br />
+
+        @*Verificação do tipo do produto se no caso e PIZZA ou BEBIDA*@
+        @if (listaProdutosSelecionado.Select(x => x.pd_tipo).First() == "Pizza")
+        {
+            <form method="post" asp-controller="Cardapio" asp-action="BuscarProduto">
+
+                <div class="row ">
+                    <div class="col-1">
+                        <a class="btn btn-primary" asp-controller="Cardapio" asp-action="ListaProdutos">Pizza</a>
+                       @* <button class="btn btn-Secundario" onclick="ListaProdutos()">Pizza</button> *@
+                    </div>
+
+                    <div class="col-2">
+                        <a class="btn  btn-Secundario" asp-controller="Cardapio" asp-action="ListaProdutosBebida">Bebida</a>
+                        @* <button class="btn  btn-primary" onclick="ListaProdutosBebida()">Bebida</button> *@
+                    </div>
+
+                    <div class="col-3">
+                        <input class="form-control" type="text" name="pesquisa" placeholder="Buscar..." />
+                    </div>
+
+                    <div class="col-2">
+                        <button class="btn btn-primary" type="submit">Pesquisar</button>
+                    </div>
+                </div>
+            </form>
+        }
+        else
+        {
+            <form method="post" asp-controller="Cardapio" asp-action="BuscarProduto">
+
+                <div class="row ">
+                    <div class="col-1">
+                        <a class="btn  btn-Secundario" asp-controller="Cardapio" asp-action="ListaProdutos">Pizza</a>
+                       @* <button class="btn btn-Secundario" onclick="ListaProdutos()">Pizza</button> *@
+                    </div>
+
+                    <div class="col-2">
+                        <a class="btn  btn-primary" asp-controller="Cardapio" asp-action="ListaProdutosBebida">Bebida</a>
+                        @* <button class="btn  btn-primary" onclick="ListaProdutosBebida()">Bebida</button> *@
+                    </div>
+
+                    <div class="col-3">
+                        <input class="form-control" type="text" name="pesquisa" placeholder="Buscar..." />
+                    </div>
+
+                    <div class="col-2">
+                        <button class="btn btn-primary" type="submit">Pesquisar</button>
+                    </div>
+                </div>
+            </form>
+        }
+
+        @*<button type="button" class="btn btn-primary" id="myBtn">Abrir modal</button>*@
+        <div class="row row-lg row-30">
+
+            @foreach (var item in @listaProdutosSelecionado)
+            {
+                <div class="col-sm-6 col-lg-4 col-xl-3" id="cleave-bebidaExibicao">
+
+                    <!-- Product-->
+                    <article class="product wow fadeInLeft" data-wow-delay=".15s">
+                        <div class="product-figure">
+
+                            <img alt="" width="161" height="162"
+                                src="data:image/png;base64,@Convert.ToBase64String(@item.pd_imagem)" />
+
+                        </div>
+                        <div class="product-rating">
+
+                            <span class="mdi mdi-star"></span><span class="mdi mdi-star"></span><span
+                                class="mdi mdi-star"></span><span class="mdi mdi-star"></span><span
+                                class="mdi mdi-star text-gray-13"></span>
+
+                        </div>
+
+                        <h6 class="product-title">@item.pd_nome</h6>
+
+                        <div class="product-price-wrap">
+
+                            <div class="product-price">@item.pd_preco.ToString("C2")</div>
+
+                        </div>
+
+                        <div class="product-button">
+                    
+                            <div class="button-wrap">
+                                <button onclick="botaoModal(@item.id_produto)"
+                                    class="button button-xs button-secondary button-winona" href="#">Adicionar ao
+                                    Carrinho</button>
+                            </div>
+
+                            <div class="button-wrap">
+                                <a type="button" data-toggle="modal" data-target="#ModalDetalhe-@item.id_produto"
+                                    class="button button-xs button-secondary button-winona" href="#">Ver Detalhes</a>
+                            </div>
+
+                            <!-- Modal Detalher Produto -->
+                            <div class="modal" id="ModalDetalhe-@item.id_produto" tabindex="-1" role="dialog"
+                                aria-labelledby="myModalLabel">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+
+                                            <h4 class="modal-title text-center" id="myModalLabel">@item.pd_nome</h4>
+
+                                            <button type="button" class="btn btn-close" data-dismiss="modal"
+                                                aria-label="Close">
+                                                <span aria-hidden="true"></span>
+                                            </button>
+
+                                        </div>
+                                        <div class="modal-body text-center">
+
+                                            <img alt="" width="161" height="162"
+                                                src="data:image/png;base64,@Convert.ToBase64String(@item.pd_imagem)" />
+
+                                            <br />
+                                            <br />
+
+                                            <div class="card">
+
+                                                <h6>
+                                                    <b>Descrição:</b>
+                                                </h6>
+
+                                                @item.pd_descricao
+
+                                            </div>
+
+                                            <br />
+
+                                            <div class="card justify-content-center d-flex ">
+
+                                                <h6>Valor:</h6>
+
+                                                <h6>
+                                                    <b>
+                                                        @item.pd_preco.ToString("C2")
+                                                    </b>
+                                                </h6>
+
+                                            </div>
+
+
+                                        </div>
+                                        <div class="modal-footer">
+
+                                            <button type="button" class="btn btn-default" data-dismiss="modal" style="border: 2px solid rgb(96, 70, 182);">Voltar</button>
+
+                                            <button class=" btn btn-primary form-group" onclick="passarParametro(@item.id_produto)" type="submit" id="passarParametros">Adicionar no Carrinho</button>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Modal Adicionar Carrinho -->
+                            <div class="modal" id="ModalCarrinho-@item.id_produto" tabindex="-1" role="dialog"
+                                aria-labelledby="myModalLabel">
+
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+
+                                            <h4 class="modal-title text-center" id="myModalLabel">@item.pd_nome</h4>
+
+                                            <button type="button" class="btn btn-close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true"></span>
+                                            </button>
+
+                                        </div>
+                                        <div class="modal-body text-center">
+
+                                            <img alt="" width="161" height="162" src="data:image/png;base64,@Convert.ToBase64String(@item.pd_imagem)" />
+
+                                            <br />
+                                            <br />
+
+                                            <div class="card">
+
+                                                <br />
+
+                                                <div style="text-align: center;">
+                                                    <h6>
+                                                        <b>Quantidade:</b>
+                                                        <input name="quantidade" type="number" id="num1-@item.id_produto" value="1" min="1" max="99" onchange="multiplicar(@item.id_produto)">
+                                                    </h6>
+
+                                                </div>
+
+                                                <br />
+
+                                            </div>
+
+                                            <br />
+
+                                            <div class="card justify-content-center d-flex ">
+
+                                                <h6>Valor:</h6>
+
+                                                <h6>
+                                                    <b>
+                                                        <input class="d-none" id="num2-@item.id_produto" value="@item.pd_preco" readonly>
+
+                                                        <h4>
+                                                            <label name="valor" id="resultadoMultiplicacao-@item.id_produto">@item.pd_preco.ToString("C2")</label>
+                                                        </h4>
+                                                    </b>
+                                                </h6>
+
+                                            </div>
+
+                                        </div>
+                                        <div class="modal-footer">
+
+                                            <button type="button" class="btn btn-default" data-dismiss="modal" style="border: 2px solid rgb(96, 70, 182);">Voltar</button>
+
+                                            <button class=" btn btn-primary form-group" onclick="passarParametro(@item.id_produto)" type="submit" id="passarParametros">Adicionar no Carrinho</button>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </article>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+
+@section Scripts {
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js"></script>
+    <script src="~/js/InputMasked.js"></script>
+
+    <script>
+        function ListaProdutosBebida(){
+            $.ajax({
+                success: function(){
+                    window.location.href = "/Cardapio/ListaProdutosBebida"
+                },  
+                error: function (xhr, status, error) {
+                    console.log("Ocorreu um erro durante a requisição AJAX: " + error);
+                }
+            });
+        }
+    </script>
+
+    <script>
+        function ListaProdutos(){
+            $.ajax({
+                success: function(){
+                    window.location.href = "/Cardapio/ListaProdutos"
+                },  
+                error: function (xhr, status, error) {
+                    console.log("Ocorreu um erro durante a requisição AJAX: " + error);
+                }
+            });
+        }
+    </script>
+
+
+    <script>
+        function botaoModal(_idProduto) {
+            console.log("Entrou na função");
+            console.log(_idProduto);
+            var session = "@Usuario";
+            if (session == "") {
+                window.location.href = "/Login/Login";
+            } else {
+                $(`#ModalCarrinho-${_idProduto}`).modal();
+            }
+        }
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $("#myBtn").click(function () {
+                $("#myModal").modal();
+            });
+        });
+    </script>
+
+    @*Calcular Valor Total de Itens conforme a quantidade*@
+    <script>
+        function multiplicar(_idProduto) {
+
+            var num1 = document.getElementById(`num1-${_idProduto}`).value;
+            var num2 = document.getElementById(`num2-${_idProduto}`).value;
+            var resultado = num1 * num2.replace(",", ".");
+
+            document.getElementById(`resultadoMultiplicacao-${_idProduto}`).innerHTML = resultado.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+        }
+    </script>
+
+    <script>
+        function ChamarModal() {
+            var modal = `#ModalCarrinho-${_idProduto1}`;
+            (modal).modal('hide');
+        }
+    </script>
+
+    @*Passando parametros para inserir na minha tabela de pedidos*@
+    <script>
+        function passarParametro(_idProduto1) {
+            var quantidade = document.getElementById(`num1-${_idProduto1}`).value;
+            var valor = document.getElementById(`num2-${_idProduto1}`).value;
+            var modal = `#ModalCarrinho-${_idProduto1}`;
+            var resultado = quantidade * parseFloat(valor.replace(",", "."));
+
+            $.ajax({
+                type: "POST",
+                url: "/Pedidos/BuscarPedidosCarrinho",
+                data: { _idProduto: _idProduto1, _valor: resultado.toString(), _quantidade: quantidade },
+                success: function (data) {
+                    // Aqui você pode manipular a resposta da requisição AJAX
+                    console.log(data);
+
+                    $(modal).modal('hide');
+
+                    location.reload();
+                },
+                error: function (xhr, status, error) {
+                    // Aqui você pode tratar os erros que ocorrem durante a requisição AJAX
+                    console.log("Ocorreu um erro durante a requisição AJAX: " + error);
+                }
+            });
+        }
+    </script>
+
+    @*Passando parametro para buscar produto no banco com base na requisição do usuario*@
+    <script>
+
+        $("#cleave-BuscarProduto").blur(function () {
+            $.ajax({
+                url: "/cardapio/BuscarProduto",
+                type: "GET",
+                success: function (data) {
+                    // Aqui você pode manipular a resposta da requisição AJAX
+                    console.log(data);
+                },
+                error: function (xhr, status, error) {
+                    // Aqui você pode tratar os erros que ocorrem durante a requisição AJAX
+                    console.log("Ocorreu um erro durante a requisição AJAX: " + error);
+                }
+            });
+        });
+
+    </script>
+}

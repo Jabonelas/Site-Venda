@@ -1,0 +1,65 @@
+﻿{
+   "CodeGenerationMode": 2,
+   "ContextClassName": "SiteVendasContext",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": true,
+   "ModelNamespace": "",
+   "OutputContextPath": null,
+   "OutputPath": "Models",
+   "PreserveCasingWithRegex": true,
+   "ProjectRootNamespace": "SiteVendas",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 0,
+   "Tables": [
+      {
+         "Name": "[dbo].[tb_cadastro_cliente]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tb_dados_empresa]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tb_endereco]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tb_mensagens]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tb_nota_fiscal]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tb_pedido]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tb_produto]",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": "ISRAEL\\SQLEXPRESS.SiteVendas",
+   "UncountableWords": null,
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": true,
+   "UseDateOnlyTimeOnly": true,
+   "UseDbContextSplitting": false,
+   "UseFluentApiOnly": false,
+   "UseHandleBars": false,
+   "UseHierarchyId": false,
+   "UseInflector": false,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": false,
+   "UseNoDefaultConstructor": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UseSchemaFolders": false,
+   "UseSpatial": false,
+   "UseT4": false
+}

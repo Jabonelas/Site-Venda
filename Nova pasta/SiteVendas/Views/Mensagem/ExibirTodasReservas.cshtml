@@ -1,0 +1,156 @@
+@using SiteVendas.Models.ViewModel
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model List<SiteVendas.Models.tb_mensagens>
+
+@*Exibicao carregamento do Triangulo*@
+<div class="preloader">
+    <div class="wrapper-triangle">
+        <div class="pen">
+            <div class="line-triangle">
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+            </div>
+            <div class="line-triangle">
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+            </div>
+            <div class="line-triangle">
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<h1>Pedidos</h1>
+
+<button class="btn btn-Secundario" onclick="VoltarAoInicio()" >Voltar ao Inicio</button>
+
+<br />
+<br />
+
+<h4>Meus Pedidos:</h4>
+
+<br />
+
+  <div class="card">
+    <div class="card-body row">
+    <table class="table text-center" id="myTable1">
+    <thead>
+        <tr>
+            <th>
+                Nome
+            </th>
+            <th>
+                E-mail
+            </th>
+            <th>
+                Serviço
+            </th>
+            <th>
+                Data Recebimento
+            </th>
+            <th>
+                Data Retorno
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.mg_nome
+                </td>
+                <td>
+                    @item.mg_email
+                </td>
+                <td>
+                    @item.mg_servico
+                </td>
+                <td>
+                    @item.mg_data_recebimento
+                </td>
+                <td>
+                    @item.mg_data_retorno
+                </td>
+                <td>
+                   <button  name="_idMensagem" onclick="passarIdMensagem(@item.id_mensagem)" class="btn btn-info form-group">Detalhes</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+  </div>
+  </div>
+<br/>
+
+<div class="col-2 justify-content-center d-flex ">
+    <div class="row">
+       <button class="btn btn-primary" onclick="VoltarAoInicio()">Voltar ao Inicio</button>
+    </div>
+</div>
+
+
+
+@section Scripts {
+
+  @*Layout da GridView*@
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js"></script>
+        <script src="~/js/InputMasked.js"></script>
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+
+
+    <script>
+        $(document).ready(function () {
+            $('#myTable1').DataTable({
+                "language": { "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json" }
+            });
+        });
+    </script>
+
+    <script>
+        function passarIdMensagem(idMensagem){
+            $.ajax({
+                success: function (){
+                     window.location.href = `ExibirDetalhesMensagem/${idMensagem}`; 
+                },
+                error: function (xhr, status, error){
+                    console.log("Ocorreu um erro durante a requisição AJAX:" + error);
+                }
+            });
+        }
+    </script>
+
+    <script>
+        function VoltarAoInicio(){
+            $.ajax({success:function(){
+                window.location.href = "/Home/Index";
+                },error: function (xhr, status, error){
+                console.log("Ocorreu um erro durante a requisição AJAX:" + error);
+                }
+            });
+        }
+    </script>
+
+}
+
+
+

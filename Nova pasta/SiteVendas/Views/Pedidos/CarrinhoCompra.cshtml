@@ -1,0 +1,384 @@
+﻿@using SiteVendas.Models.ViewModel
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    int? numeroPedido = 0;
+    decimal somarValoresCarrinho = 0;
+    var quantiadeProduto = ViewData["quantidadePedidos1"] as List<CarrinhoViewModel>;
+    var chavePix = ViewData["chavePix"];
+}
+
+@*Exibicao carregamento do Triangulo*@
+<div class="preloader">
+    <div class="wrapper-triangle">
+        <div class="pen">
+            <div class="line-triangle">
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+            </div>
+            <div class="line-triangle">
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+            </div>
+            <div class="line-triangle">
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h1>Finalizar Pedido</h1>
+
+<br />
+
+<table class="table text-center" id="myTable">
+
+    <thead>
+        <tr>
+            <th>
+                Nº Pedido
+            </th>
+            <th>
+                Qtd.
+            </th>
+            <th>
+                Valor Unt.
+            </th>
+            <th>
+                Valor Total
+            </th>
+            <th>
+                Nome
+            </th>
+            <th>
+                Tamanho
+            </th>
+            <th>
+                Imagem
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in quantiadeProduto)
+        {
+            somarValoresCarrinho += @item.valorTotal;
+            numeroPedido = @item.numeroPedido;
+
+            <tr>
+                <td>
+                    @item.numeroPedido
+                </td>
+                <td>
+                    @item.quantidade
+                </td>
+                <td>
+                    @item.valorUnitario.ToString("C2")
+                </td>
+                <td>
+                    @item.valorTotal.ToString("C2")
+                </td>
+                <td>
+                    @item.nome
+                </td>
+                <td>
+                    @item.tamanho
+                </td>
+                <td>
+                    <img alt="" width="100" height="100"
+                        src="data:image/png;base64,@Convert.ToBase64String(@item.imagem)" />
+                </td>
+
+                <td>
+                    <a onclick="confirmarExclusao(@item.idPedido)" type="button" class="btn btn-default  " href="#">
+                        <span style="color: black"></span>
+                        <span><img src="~/images/trash_30px.png" /></span>
+                    </a>
+
+                </td>
+            </tr>
+        }
+
+    </tbody>
+
+    <tfoot>
+        <tr>
+            <td colspan="4">
+                <h6><b>Total:</b></h6>
+            </td>
+            <td>
+                <h6><b>@somarValoresCarrinho.ToString("C2")</b></h6>
+            </td>
+        </tr>
+    </tfoot>
+
+</table>
+
+<br />
+
+<div class="form-group">
+
+    <div class="row ">
+
+        <div class="col-5">
+            <label class="control-label">Forma de Pagamento</label>
+
+            <select id="cleave-tipoPagamento" class="form-control" asp-items="ViewBag.ed_tipo">
+
+                <option selected value="">Escolha uma Opção...</option>
+                <option>Cartão</option>
+                <option>Dinheiro</option>
+                <option>Pix</option>
+
+            </select>
+
+            <label class="text-danger d-none" id="cleave-opcaoPagamento">Escolha um tipo de pagamento</label>
+
+        </div>
+
+        <div class="col-5">
+            <label class="control-label d-none" id="cleave-formaPagamentoDinheiroLabel">Troco para</label>
+            <label class="control-label d-none" id="cleave-formaPagamentoPixLabel">Chave Pix</label>
+
+            <input class="form-control d-none" id="cleave-formaPagamentoDinheiro"/>
+            <span id="cleave-troco" style="display:none;color:red">Valor informado é menor que o valor da compra.</span>
+            <input class="form-control d-none" id="cleave-formaPagamentoPix" value="@chavePix" />
+        </div>
+
+    </div>
+
+</div>
+
+<br />
+
+<div class=" d-flex justify-content-end">
+
+
+     <button class="btn btn-Secundario " onclick="VoltarCardapio()">Voltar</button>
+
+     <button id="BotaoFinalizarPedido" style="margin: 0 15px;" onclick="passarParametro(@numeroPedido)" class="btn btn-primary d-flex justify-content-end">Finalizar Pedido</button>
+
+</div>
+
+ <!-- Modal Mostrar Que Pedido Foi Realizado Com Sucesso -->
+            <div class="modal" id="ModalRealizarPedido" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static">
+                <div class="modal-dialog modal-dialog-centered clickable-modal" role="document">
+                    <div class="modal-content">
+                        <div class=" d-flex justify-content-center">
+                            <h4>
+                                Confirmação De Pedido
+                                @* <img src="~/images/create_order_30px.png"> *@
+                            </h4>
+                        </div>
+                        <br>
+                        <div class="card">
+                            <div class="card-body row  ">
+                                <div class="d-flex justify-content-center">
+                                
+                                Seus Pedido Foi Realizado Com Sucesso!
+
+                                </div>
+                            </div>
+                        </div>
+
+                           <div class="modal-footer">
+
+                              <button onclick="VoltarInicio()" class="btn btn-primary" data-dismiss="modal">Ok</button>
+
+                           </div>
+                  
+                    </div>
+                </div>
+            </div>
+
+
+@section Scripts
+{
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js"></script>
+    <script src="~/js/InputMasked.js"></script>
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+
+
+    <script>
+
+        function VoltarInicio(){
+            $.ajax({
+                success: function(){
+                    window.location.href = "/Home/Index";
+                },error: function (xhr, status, error) {
+                    console.log("Ocorreu um erro durante a requisição AJAX: " + error);
+                }
+            });
+        }
+
+    </script>
+
+    <script>
+            function VoltarCardapio(){
+                $.ajax({
+                success: function(){
+               window.location.href = "/Cardapio/ListaProdutos";
+                },
+                error: function (xhr, status, error) {
+                    console.log("Ocorreu um erro durante a requisição AJAX: " + error);
+                }
+            });
+        }
+    </script>
+
+
+   @*Verificar se o valor indicado do troco e valido*@
+    <script>
+        $("#cleave-formaPagamentoDinheiro").blur(function () {
+            console.log("este")
+            var valorTroco = parseFloat($("#cleave-formaPagamentoDinheiro").val().replace("R$","")); 
+            @* var senha = $("#cleave-senha").val(); *@
+            @* var confirmarSenha = $("#cleave-confirmarSenha").val(); *@
+            if (valorTroco >= parseFloat(@somarValoresCarrinho)) {
+            console.log("estou aqui")
+                 $('#cleave-troco').hide();
+                 document.getElementById("BotaoFinalizarPedido").disabled = false;
+            } else {
+            console.log("estou la")
+                   $('#cleave-troco').show();
+                 document.getElementById("BotaoFinalizarPedido").disabled = true;
+            }
+        });
+    </script>
+
+
+    @* <script>
+        function VoltarMeusPedidos(){
+        $.ajax({    
+             success: function () {
+                   window.location.href = `Pedidos/MeusPedidos/${idMensagem}`; 
+                    },
+                error: function (xhr, status, error) {
+                    // Aqui você pode tratar os erros que ocorrem durante a requisição AJAX
+                    console.log("Ocorreu um erro durante a requisição AJAX: " + error);
+                }
+            });
+        }
+    </script> *@
+
+
+
+
+
+    @*Passando parametros para inserir na minha tabela de pedidos*@
+    <script>
+        function passarParametro(numeroPedido) {
+
+            var modal = `#ModalRealizarPedido`;
+    
+            var tipoPagamento = document.getElementById("cleave-tipoPagamento").value;
+
+            var valorTroco = document.getElementById("cleave-formaPagamentoDinheiro").value;
+
+            if (tipoPagamento != "" && tipoPagamento != "Escolha uma Opção...") {
+                $.ajax({
+                    type: "POST",
+                    url: "/Pedidos/FinalizarPedido",
+                    data: { _numeroPedido: numeroPedido, _tipoPagamento: tipoPagamento, _troco: valorTroco },
+                    success: function (data) {
+                        $("#cleave-opcaoPagamento").addClass("d-none");
+                         @* window.location.href = `/Home/Index`;  *@
+                        $(modal).modal('show');
+                    },
+                    error: function (xhr, status, error) {
+                        console.log("Ocorreu um erro durante a requisição AJAX: " + error);
+                    }
+                });
+
+            } else {
+
+                $("#cleave-opcaoPagamento").removeClass("d-none");
+            }
+        }
+    </script>
+
+    @*Colocando o R$ no campo de dinheiro*@
+    <script>
+
+        function removerSimboloR$() {
+            var input = document.getElementById("cleave-dinheiro");
+            var valorSemSimbolo = input.value.replace("R$ ", "").trim();
+            input.value = valorSemSimbolo;
+        }
+
+    </script>
+
+    @*Setando tipo pagamento*@
+    <script>
+        $("#cleave-tipoPagamento").change(function () {
+
+            var formaPagamento = $("#cleave-tipoPagamento").val();
+
+            if (formaPagamento == "Cartão") {
+
+                $("#cleave-formaPagamentoPix").addClass("d-none");
+                $("#cleave-formaPagamentoPixLabel").addClass("d-none");
+
+                $("#cleave-formaPagamentoDinheiroLabel").addClass("d-none");
+                $("#cleave-formaPagamentoDinheiro").addClass("d-none");
+
+            } else if (formaPagamento == "Dinheiro") {
+
+                $("#cleave-formaPagamentoDinheiroLabel").removeClass("d-none");
+                $("#cleave-formaPagamentoDinheiro").removeClass("d-none");
+
+                $("#cleave-formaPagamentoPix").addClass("d-none");
+                $("#cleave-formaPagamentoPixLabel").addClass("d-none");
+
+                //formatando campo para receber valor em R$
+                var cleavePrefix = new Cleave("#cleave-formaPagamentoDinheiro", {
+                    prefix: "R$ ",
+                    numeral: true,
+                    numeralDecimalScale: 2,
+                    delimiter: ".",
+                    numeralDecimalMark: ",",
+                    onValueChanged: function (e) {
+                        var value = e.target.value.replace(/^R\$\s/g, ""); // remove o prefixo "R$ "
+                        value = value.replace(/\./g, ""); // remove os pontos
+                        value = value.replace(/[^0-9,]/g, ""); // remove tudo que não for número ou vírgula
+                        var parts = value.split(",");
+                        var integerPart = parts[0] || "0";
+                        var decimalPart = parts[1] || "";
+                        integerPart = integerPart.replace(/^0+/g, ""); // remove zeros à esquerda
+                        decimalPart = decimalPart.padEnd(2, "0").substring(0, 2); // completa com zeros à direita e limita a duas casas decimais
+                        value = integerPart + (decimalPart ? "," + decimalPart : ""); // adiciona a vírgula, se houver casas decimais
+                        e.target.value = "R$ " + value; // adiciona o prefixo "R$ " e atualiza o valor do campo
+                    },
+                });
+
+            } else if (formaPagamento == "Pix") {
+
+                $("#cleave-formaPagamentoPix").removeClass("d-none");
+                $("#cleave-formaPagamentoPixLabel").removeClass("d-none");
+
+                $("#cleave-formaPagamentoDinheiroLabel").addClass("d-none");
+                $("#cleave-formaPagamentoDinheiro").addClass("d-none");
+            }
+        })
+    </script>
+    
+}

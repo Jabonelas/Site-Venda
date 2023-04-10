@@ -1,0 +1,214 @@
+﻿@model SiteVendas.Models.tb_produto
+
+@{
+    var editaProduto = ViewData["EditarProduto"] as List<tb_produto>;
+}
+
+@*Exibicao carregamento do Triangulo*@
+<div class="preloader">
+    <div class="wrapper-triangle">
+        <div class="pen">
+            <div class="line-triangle">
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+            </div>
+            <div class="line-triangle">
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+            </div>
+            <div class="line-triangle">
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+                <div class="triangle"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h1>Produto</h1>
+
+<div class=" row col-2 justify-content-center d-flex">
+
+<button class="btn btn-Secundario" onclick="Voltar()">Voltar</button>
+
+</div>
+
+<br/>
+
+<h4>Editar Produto:</h4>
+<hr />
+<div class="row">
+    
+        @foreach (var item in editaProduto)
+        {
+            <form method="post" enctype="multipart/form-data" onsubmit="removerSimboloR$()">
+
+                @*Passando Id de produto remotamente*@
+                <input value="@item.id_produto" asp-for="@Model.id_produto" class="d-none">
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label class="control-label">Tipo Produto</label>
+                            <select value="@item.pd_tipo" asp-for="@Model.pd_tipo" class="form-control" asp-items="ViewBag.ed_tipo">
+
+                                @if (@item.pd_tipo == "Pizza")
+                                {
+                                    <option selected>@item.pd_tipo</option>
+                                    <option>Bebida</option>
+                                }
+                                else
+                                {
+                                    <option selected>@item.pd_tipo</option>
+                                    <option>Pizza</option>
+                                }
+
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-4">
+
+                        <div class="form-group">
+                            <label class="control-label">Nome</label>
+                            <input value="@item.pd_nome"
+                               asp-for="@Model.pd_nome"
+                               class="form-control" />
+                            <span asp-validation-for="@item.pd_nome" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-8">
+
+                        <div class="form-group">
+                            <label class="control-label">Descrição</label>
+                            <input value="@item.pd_descricao"
+                               asp-for="@Model.pd_descricao"
+                               class="form-control" />
+                            <span asp-validation-for="@item.pd_descricao" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label class="control-label">Tamanho</label>
+                            <input value="@item.pd_tamanho" asp-for="@Model.pd_tamanho" class="form-control" />
+                            <span asp-validation-for="@item.pd_tamanho" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label class="control-label">Preço</label>
+
+                            <input value="@item.pd_preco" asp-for="@Model.pd_preco" class="form-control" id="cleave-dinheiro" />
+
+                            <span asp-validation-for="pd_preco" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <br />
+                
+                @if (@item.pd_disponivel == true)
+                {
+                    <div class="form-group form-check">
+
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="@Model.pd_disponivel" checked="" /> Disponível
+                        </label>
+
+                    </div>
+                }
+                else
+                {
+                    <div class="form-group form-check">
+
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="@Model.pd_disponivel" /> Disponível
+                        </label>
+
+                    </div>
+                }
+                
+                <br />
+                <h6>Inserir Imagem:</h6>
+                <input value="@item.pd_imagem" asp-for="@Model.pd_imagem" type="file" name="imagem" />
+
+                <br />
+
+                <label style="color: red;" class="control-label">Atenção ao Formato de imagens compativeis: JPG e PNG.</label>
+
+                <div class="row col-2 form-group">
+
+                    <input type="submit" value="Editar Produto" class="btn btn-primary" />
+
+                </div>
+                                
+            </form>
+        }
+</div>
+
+
+
+
+@section Scripts
+    {
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js"></script>
+    <script src="~/js/InputMasked.js"></script>
+                            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+
+    <script>
+
+        function removerSimboloR$() {
+            var input = document.getElementById("cleave-dinheiro");
+            var valorSemSimbolo = input.value.replace("R$ ", "").trim();
+            input.value = valorSemSimbolo;
+        }
+
+    </script>
+
+
+    <script>
+
+
+    function Voltar(){
+
+    $.ajax({
+        type: "GET",
+          success: function (data) {
+
+           window.location.href = `/Produto/TodosProdutos`; 
+
+          },
+
+          error: function (xhr, status, error) {
+                  console.log("Ocorreu um erro durante a requisição AJAX: " + error);
+          }
+    });
+    }
+   
+    </script>
+
+}
