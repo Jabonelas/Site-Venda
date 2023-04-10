@@ -158,7 +158,8 @@
             <label class="control-label d-none" id="cleave-formaPagamentoDinheiroLabel">Troco para</label>
             <label class="control-label d-none" id="cleave-formaPagamentoPixLabel">Chave Pix</label>
 
-            <input class="form-control d-none" id="cleave-formaPagamentoDinheiro" />
+            <input class="form-control d-none" id="cleave-formaPagamentoDinheiro"/>
+            <span id="cleave-troco" style="display:none;color:red">Valor informado é menor que o valor da compra.</span>
             <input class="form-control d-none" id="cleave-formaPagamentoPix" value="@chavePix" />
         </div>
 
@@ -173,7 +174,7 @@
 
      <button class="btn btn-Secundario " onclick="VoltarCardapio()">Voltar</button>
 
-     <button style="margin: 0 15px;" onclick="passarParametro(@numeroPedido)" class="btn btn-primary d-flex justify-content-end">Finalizar Pedido</button>
+     <button id="BotaoFinalizarPedido" style="margin: 0 15px;" onclick="passarParametro(@numeroPedido)" class="btn btn-primary d-flex justify-content-end">Finalizar Pedido</button>
 
 </div>
 
@@ -219,15 +220,15 @@
 
     <script>
 
-    function VoltarInicio(){
-    $.ajax({
-    success: function(){
-    window.location.href = "/Home/Index";
-    },error: function (xhr, status, error) {
-    console.log("Ocorreu um erro durante a requisição AJAX: " + error);
-    }
-    });
-    }
+        function VoltarInicio(){
+            $.ajax({
+                success: function(){
+                    window.location.href = "/Home/Index";
+                },error: function (xhr, status, error) {
+                    console.log("Ocorreu um erro durante a requisição AJAX: " + error);
+                }
+            });
+        }
 
     </script>
 
@@ -242,6 +243,26 @@
                 }
             });
         }
+    </script>
+
+
+   @*Verificar se o valor indicado do troco e valido*@
+    <script>
+        $("#cleave-formaPagamentoDinheiro").blur(function () {
+            console.log("este")
+            var valorTroco = parseFloat($("#cleave-formaPagamentoDinheiro").val().replace("R$","")); 
+            @* var senha = $("#cleave-senha").val(); *@
+            @* var confirmarSenha = $("#cleave-confirmarSenha").val(); *@
+            if (valorTroco >= parseFloat(@somarValoresCarrinho)) {
+            console.log("estou aqui")
+                 $('#cleave-troco').hide();
+                 document.getElementById("BotaoFinalizarPedido").disabled = false;
+            } else {
+            console.log("estou la")
+                   $('#cleave-troco').show();
+                 document.getElementById("BotaoFinalizarPedido").disabled = true;
+            }
+        });
     </script>
 
 
