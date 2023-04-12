@@ -18,34 +18,34 @@ namespace SiteVendas.Models
 
         [Key]
         public int id_endereco { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Esta informação é necessária.")]
         [StringLength(255)]
         [Unicode(false)]
         public string ed_tipo { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Esta informação é necessária.")]
         [StringLength(255)]
         [Unicode(false)]
         public string ed_cep { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Esta informação é necessária.")]
         [StringLength(255)]
         [Unicode(false)]
         public string ed_estado { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Esta informação é necessária.")]
         [StringLength(255)]
         [Unicode(false)]
         public string ed_logradouro { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Esta informação é necessária.")]
         [StringLength(255)]
         [Unicode(false)]
         public string ed_numero { get; set; }
         [StringLength(255)]
         [Unicode(false)]
         public string ed_complemento { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Esta informação é necessária.")]
         [StringLength(255)]
         [Unicode(false)]
         public string ed_bairro { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Esta informação é necessária.")]
         [StringLength(255)]
         [Unicode(false)]
         public string ed_cidade { get; set; }

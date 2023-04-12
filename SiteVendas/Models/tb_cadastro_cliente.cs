@@ -17,31 +17,32 @@ namespace SiteVendas.Models
 
         [Key]
         public int id_cadastro_cliente { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Esta informação é necessária.")]
         [StringLength(200)]
         [Unicode(false)]
         public string cc_nome { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Esta informação é necessária.")]
         [StringLength(50)]
         [Unicode(false)]
         public string cc_cpf { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Esta informação é necessária.")]
         [StringLength(50)]
         [Unicode(false)]
         public string cc_rg { get; set; }
+        [Required(ErrorMessage = "Esta informação é necessária.")]
         public DateOnly cc_data_nascimento { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Esta informação é necessária.")]
         [StringLength(200)]
         [Unicode(false)]
         public string cc_email { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Esta informação é necessária.")]
         [StringLength(50)]
         [Unicode(false)]
         public string cc_celular { get; set; }
         [StringLength(50)]
         [Unicode(false)]
         public string cc_telefone { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Esta informação é necessária.")]
         [StringLength(50)]
         [Unicode(false)]
         public string cc_senha { get; set; }

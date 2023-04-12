@@ -12,11 +12,11 @@ namespace SiteVendas.Models
     {
         [Key]
         public int id_dados_empresa { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Esta informação é necessária.")]
         [StringLength(200)]
         [Unicode(false)]
         public string de_nome_fantasia { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Esta informação é necessária.")]
         [StringLength(50)]
         [Unicode(false)]
         public string de_cnpj { get; set; }

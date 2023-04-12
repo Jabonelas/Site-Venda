@@ -12,19 +12,19 @@ namespace SiteVendas.Models
     {
         [Key]
         public int id_mensagem { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Esta informação é necessária.")]
         [StringLength(100)]
         [Unicode(false)]
         public string mg_nome { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Esta informação é necessária.")]
         [StringLength(100)]
         [Unicode(false)]
         public string mg_email { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Esta informação é necessária.")]
         [StringLength(50)]
         [Unicode(false)]
         public string mg_servico { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Esta informação é necessária.")]
         [StringLength(200)]
         [Unicode(false)]
         public string mg_mensagem { get; set; }
