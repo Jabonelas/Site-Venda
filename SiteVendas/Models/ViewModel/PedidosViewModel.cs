@@ -12,6 +12,11 @@ namespace SiteVendas.Models.ViewModel
         // public tb_cadastro_cliente cliente { get; set; }
 
         public decimal valorTotal {get;set;}
+
+        public string usuario {get; set;}
+
+
+
     }
 
 }

@@ -46,7 +46,7 @@
 
 <div class="col-2 justify-content-center d-flex ">
     <div class="row">
-    <button class="btn btn-Secundario" onclick="Voltar()" >Voltar</button>
+        <button class="btn btn-Secundario" onclick="Voltar()" >Voltar</button>
     </div>
 </div>
 
@@ -360,7 +360,7 @@
 
 @foreach (var item in Model)
 {
-    if (item.pedido.pd_entregue == null)
+        if (item.pedido.pd_entregue == null && item.usuario == "Admin@hotmail.com")
     {
          <div class="col-2 justify-content-center d-flex ">
             
@@ -378,9 +378,7 @@
         <div class="col-2 justify-content-center d-flex ">
             <div class="row">
 
-            @* <button class="btn btn-primary" asp-controller="Pedidos" asp-action="MeusPedidos">Voltar</button> *@
-     <button class="btn btn-primary" onclick="Voltar()">Voltar</button>
-
+              <button class="btn btn-primary" onclick="Voltar()">Voltar</button>
 
             </div>
         </div>
@@ -460,7 +458,9 @@
         function Voltar(){
         $.ajax({
              success: function () {
-                   window.location.href = `Pedidos/MeusPedidos/${idMensagem}`; 
+                   //window.location.href = `Pedidos/MeusPedidos/${idMensagem}`; 
+                   window.location.href = `https://localhost:7234/Pedidos/MeusPedidos`; 
+                   @* window.location.href = `Pedidos/MeusPedidos`;  *@
                     },
                 error: function (xhr, status, error) {
                     // Aqui você pode tratar os erros que ocorrem durante a requisição AJAX

@@ -17,6 +17,8 @@ namespace SiteVendas.Models.ViewModel
 
         public tb_endereco endereco { get; set; }
 
+        public string usuario { get; set; }
+
     }
    
 }

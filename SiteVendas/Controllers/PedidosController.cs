@@ -17,43 +17,48 @@ namespace SiteVendas.Controllers
         private SiteVendasContext context = new SiteVendasContext();
 
         [HttpGet]
-        // [Authorize]
         public IActionResult MeusPedidos()
         {
             string usuario = HttpContext.Session.GetString("usuario");
 
             List<PedidosViewModel> listaPedidos = new List<PedidosViewModel>();
 
+            listaPedidos.Clear();
+
             if (usuario == "Admin@hotmail.com")
             {
                 listaPedidos = (from pedido in context.tb_pedido
                                 join cliente in context.tb_cadastro_cliente
-                                on pedido.fk_cadastro_cliente equals cliente.id_cadastro_cliente
+                                    on pedido.fk_cadastro_cliente equals cliente.id_cadastro_cliente
                                 where pedido.pd_confirmado == true
-                                group pedido by pedido.pd_numero_pedido into pedidosGroup
+                                group pedido by pedido.pd_numero_pedido
+                    into pedidosGroup
                                 orderby pedidosGroup.Key descending
                                 select new PedidosViewModel
                                 {
                                     pedido = pedidosGroup.First(),
                                     valorTotal = pedidosGroup.Sum(p => p.pd_valor)
                                 }).ToList();
-
             }
             else
             {
                 listaPedidos = (from pedido in context.tb_pedido
                                 join cliente in context.tb_cadastro_cliente
-                                on pedido.fk_cadastro_cliente equals cliente.id_cadastro_cliente
+                                    on pedido.fk_cadastro_cliente equals cliente.id_cadastro_cliente
                                 where cliente.cc_email == usuario && pedido.pd_confirmado == true
-                                group pedido by pedido.pd_numero_pedido into pedidosGroup
+                                group pedido by pedido.pd_numero_pedido
+                    into pedidosGroup
                                 orderby pedidosGroup.Key descending
                                 select new PedidosViewModel
                                 {
                                     pedido = pedidosGroup.First(),
                                     valorTotal = pedidosGroup.Sum(p => p.pd_valor)
                                 }).ToList();
+            }
 
-
+            foreach (var item in listaPedidos)
+            {
+                item.usuario = usuario;
             }
 
             return View(listaPedidos);
@@ -269,8 +274,8 @@ namespace SiteVendas.Controllers
                     fk_pedido = item.id_pedido
                 };
 
-                // context.tb_nota_fiscal.Add(inserirNF);
-                // context.SaveChanges();
+                context.tb_nota_fiscal.Add(inserirNF);
+                context.SaveChanges();
             }
         }
 
@@ -305,6 +310,11 @@ namespace SiteVendas.Controllers
                                 endereco = endereco
                             }).ToList();
 
+            foreach (var item in listaDetalhePedido)
+            {
+                item.usuario = HttpContext.Session.GetString("usuario");
+            }
+
             return View(listaDetalhePedido);
         }
 
@@ -330,6 +340,5 @@ namespace SiteVendas.Controllers
 
             return RedirectToAction("MeusPedidos");
         }
-
     }
 }

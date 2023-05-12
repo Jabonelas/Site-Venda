@@ -155,13 +155,10 @@
                                             asp-action="Cadastrar">Empresa</a>
                                         </li>
 
-
-
                                         <li class="rd-nav-item">
                                         <a class="rd-nav-link" asp-area="" asp-controller="Mensagem"
                                             asp-action="ExibirTodasReservas">Reservas</a>
                                         </li>
-
 
                                          @* <li class="rd-nav-item">
                                             @await Component.InvokeAsync("CarrinhoCompra")
@@ -171,8 +168,7 @@
                                             @await Component.InvokeAsync("Mensagem")
                                         </li>
 
-
-                                            <li class="rd-nav-item">
+                                        <li class="rd-nav-item">
                                             @await Component.InvokeAsync("Pedido")
                                         </li>
 
@@ -502,7 +498,10 @@
             $.ajax({
                 success: function (){
 
-                     window.location.href = `Mensagem/ExibirDetalhesMensagem/${idMensagem}`; 
+console.log(`Essa coisa entrou no id - ${idMensagem}`);
+
+                     window.location.href = `https://localhost:7234/Mensagem/ExibirDetalhesMensagem/${idMensagem}`; 
+                     @* window.location.href = `Mensagem/ExibirDetalhesMensagem/${idMensagem}`;  *@
                 },
                 error: function (xhr, status, error){
                     console.log("Ocorreu um erro durante a requisição AJAX:" + error);
@@ -517,7 +516,7 @@
                 success: function (){
                  @* var novaPagina = "https://localhost:7234/Pedidos/DetalhePedido/" + idPedido; *@
                   @* window.location.href = novaPagina; *@
-                  window.location.href = `/Pedidos/DetalhePedido/ + ${idPedido}` ;
+                  window.location.href = `/Pedidos/DetalhePedido/${idPedido}` ;
                 },
                 error: function (xhr, status, error){
                     console.log("Ocorreu um erro durante a requisição AJAX:" + error);

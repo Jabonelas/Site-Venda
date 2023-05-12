@@ -52,7 +52,6 @@
     </div>
 </div>
 
-
    @* <div class="col-12 d-flex justify-content-start">
 
         <button class="btn btn-Secundario" onclick="VoltarAoInicio()">Voltar ao Inicio</button>
@@ -60,7 +59,6 @@
         <button  class="btn btn-primary form-group;" onclick="NovoProduto()">Novo Produto</button>
 
             </div> *@
-
 
 <br />
 
@@ -141,10 +139,11 @@
                     <br/>
                     <br/>
                     
-                    <button type="button" class="btn btn-danger form-group" data-toggle="modal" data-target="#myModal-@item.id_produto">Deletar</button>
+                    @* <button type="button" class="btn btn-danger form-group" data-toggle="modal" data-target="#myModal-@item.id_produto">Deletar</button> *@
+                    <button onclick="confirmarExclusao(@item.id_produto)" type="button" class="btn btn-danger form-group" >Deletar</button>
                     
                     <!-- Modal -->
-                    <div class="modal fade" id="myModal-@item.id_produto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    @* <div class="modal fade" id="myModal-@item.id_produto" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                         <div class="modal-dialog modal-dialog-centered" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -161,16 +160,14 @@
                                 </div>
                                 <div class="modal-footer">
 
-                                    <button type="button" class="btn btn-default" data-dismiss="modal" style=" border: 2px solid  rgb(96, 70, 182);">Cancelar</button>
-
+                                    <button type="button" class="btn btn-default" data-dismiss="modal" style=" border: 2px solid  rgb(96, 70, 182);">não</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal" style=" border: 2px solid  rgb(96, 70, 182);">Sim</button>
                                   
                                 </div>
                             </div>
                         </div>
-                    </div>
-
+                    </div> *@
                 </td>
-
             </tr>
         }
     </tbody>
@@ -238,6 +235,32 @@
     });
     }
     </script>
+
+    <script>
+        function confirmarExclusao(idPedido) {
+            if (confirm("Tem certeza que deseja excluir?")) {
+
+                $.ajax({
+                    type: "DELETE",
+                    url: "/Produto/DeletarProduto",
+                    @* url: "/Pedidos/ExcluirPedido", *@
+                    data: { _idProduto: idPedido },
+                    success: function () {
+
+                        location.reload();
+
+                    },
+                    error: function (xhr, status, error) {
+
+                        console.log("Ocorreu um erro durante a requisição AJAX: " + error);
+                    }
+                });
+            }
+        }
+    </script>
+
+
+
 }
 
 

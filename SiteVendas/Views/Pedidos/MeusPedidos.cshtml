@@ -38,71 +38,89 @@
     </div>
 </div>
 
+
 <h1>Pedidos</h1>
+
 
 <div class="col-2 justify-content-center d-flex ">
     <div class="row">
-    <button class="btn btn-Secundario" onclick="VoltarAoInicio()" >Voltar ao Inicio</button>
+        <button class="btn btn-Secundario" onclick="VoltarAoInicio()">Voltar ao Inicio</button>
     </div>
 </div>
 
 <br />
 <br />
 
-<h4>Meus Pedidos:</h4>
+
+@foreach (var item in Model)
+{
+    if (item.usuario == "Admin@hotmail.com")
+    {
+        <h4>Todos os Pedidos:</h4>
+
+        break;
+    }
+    else
+    {
+        <h4>Meus Pedidos:</h4>
+
+        break;
+    }
+}
+
 
 <br />
 
-  <div class="card">
-            <div class="card-body">
-<table class="table text-center" id="myTable2">
-    <thead>
-        <tr>
+<div class="card">
+    <div class="card-body">
+        <table class="table text-center" id="myTable2">
+            <thead>
+                <tr>
 
-            <th>
-                Nº Pedido
-            </th>
-            <th>
-                Data do Pedido
-            </th>
-            <th>
-                Valor Total
-            </th>
+                    <th>
+                        Nº Pedido
+                    </th>
+                    <th>
+                        Data do Pedido
+                    </th>
+                    <th>
+                        Valor Total
+                    </th>
 
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
 
-        {
-            <tr>
-                <td>
-                    @item.pedido.pd_numero_pedido
-                </td>
-                <td>
-                    @item.pedido.pd_data.ToShortDateString()
-                </td>
-                <td>
-                    @item.valorTotal.ToString("C2")
-                </td>
-                <td>
+                {
+                    <tr>
+                        <td>
+                            @item.pedido.pd_numero_pedido
+                        </td>
+                        <td>
+                            @item.pedido.pd_data.ToShortDateString()
+                        </td>
+                        <td>
+                            @item.valorTotal.ToString("C2")
+                        </td>
+                        <td>
 
-                    <a class="btn btn-info form-group"
-                        href="@Url.Action("DetalhePedido", "Pedidos" , new {_numeroPedido = item.pedido.pd_numero_pedido})">Detalhes</a>
+                            <a class="btn btn-info form-group"
+                           href="@Url.Action("DetalhePedido", "Pedidos" , new {_numeroPedido = item.pedido.pd_numero_pedido})">Detalhes</a>
 
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-  </div>
-  </div>
-<br/>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<br />
 
 <div class="col-2 justify-content-center d-flex ">
     <div class="row">
-       <button class="btn btn-primary" onclick="VoltarAoInicio()">Voltar ao Inicio</button>
+        <button class="btn btn-primary" onclick="VoltarAoInicio()">Voltar ao Inicio</button>
     </div>
 </div>
 
@@ -133,7 +151,7 @@
                     // Aqui você pode manipular a resposta da requisição AJAX
                     $(modal).modal('show');
 
-                    },
+                },
                 error: function (xhr, status, error) {
                     // Aqui você pode tratar os erros que ocorrem durante a requisição AJAX
                     console.log("Ocorreu um erro durante a requisição AJAX: " + error);
@@ -143,16 +161,16 @@
     </script>
 
     <script>
-       function VoltarAoInicio(){
-    $.ajax({
-          success: function (data) {
-           window.location.href = `/Home/Index`; 
-          },
-          error: function (xhr, status, error) {
-                  console.log("Ocorreu um erro durante a requisição AJAX: " + error);
-          }
-        });
-    }
+        function VoltarAoInicio() {
+            $.ajax({
+                success: function (data) {
+                    window.location.href = `/Home/Index`;
+                },
+                error: function (xhr, status, error) {
+                    console.log("Ocorreu um erro durante a requisição AJAX: " + error);
+                }
+            });
+        }
     </script>
 
 

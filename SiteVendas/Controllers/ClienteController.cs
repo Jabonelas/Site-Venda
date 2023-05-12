@@ -10,8 +10,8 @@ namespace SiteVendas.Controllers
 {
     public class ClienteController : Controller
     {
-        string cpf = string.Empty;
-        string rg = string.Empty;
+        private string cpf = string.Empty;
+        private string rg = string.Empty;
         private SiteVendasContext context = new SiteVendasContext();
 
         [HttpGet]
@@ -73,7 +73,12 @@ namespace SiteVendas.Controllers
         [HttpPost]
         public JsonResult VerificarCPFExistente(string CPF)
         {
-            VerificarRGeCPF();
+            string usuario = HttpContext.Session.GetString("usuario");
+
+            if (usuario != null)
+            {
+                VerificarRGeCPFUsuarioLogado(usuario);
+            }
 
             if (cpf.Equals(CPF))
             {
@@ -88,7 +93,12 @@ namespace SiteVendas.Controllers
         [HttpPost]
         public JsonResult VerificarRGExistente(string RG)
         {
-            VerificarRGeCPF();
+            string usuario = HttpContext.Session.GetString("usuario");
+
+            if (usuario != null)
+            {
+                VerificarRGeCPFUsuarioLogado(usuario);
+            }
 
             if (rg.Equals(RG))
             {
@@ -98,14 +108,11 @@ namespace SiteVendas.Controllers
             bool RGExiste = context.tb_cadastro_cliente.Where(x => x.cc_rg == RG).Any();
 
             return Json(RGExiste);
+
         }
 
-
-
-        public void VerificarRGeCPF()
+        public void VerificarRGeCPFUsuarioLogado(string usuario)
         {
-            string usuario = HttpContext.Session.GetString("usuario");
-
             var verificarRGeCPF = context.tb_cadastro_cliente
             .Where(x => x.cc_email == usuario)
             .Select(x => new { x.cc_rg, x.cc_cpf })
@@ -115,6 +122,7 @@ namespace SiteVendas.Controllers
             rg = verificarRGeCPF.cc_rg;
         }
 
+  
 
         [HttpPost]
         public JsonResult VerificarEmailExistente(string Email)
@@ -245,7 +253,6 @@ namespace SiteVendas.Controllers
         [Route("Cliente/DetalheCliente/{_idCliente}")]
         public IActionResult DetalheCliente(int _idCliente)
         {
-
             var detalheCliente = context.tb_cadastro_cliente.Join(context.tb_endereco, cliente => cliente.fk_endereco,
             endereco => endereco.id_endereco, (cliente, endereco) =>
             new DetalhesClienteViewModel { cliente = cliente, endereco = endereco })
@@ -253,6 +260,5 @@ namespace SiteVendas.Controllers
 
             return View(detalheCliente);
         }
-
     }
 }

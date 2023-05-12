@@ -232,10 +232,11 @@ namespace SiteVendas.Controllers
             }
         }
 
+        [HttpDelete]
         [Authorize(Roles = "Admin@hotmail.com")]
         public IActionResult DeletarProduto(int _idProduto)
         {
-            var produtoDeletar = context.tb_produto.Where(x => x.id_produto.Equals(_idProduto)).First();
+            var produtoDeletar = context.tb_produto.Where(x => x.id_produto.Equals(_idProduto)).FirstOrDefault();
 
             context.tb_produto.Remove(produtoDeletar);
             context.SaveChanges();
@@ -244,7 +245,7 @@ namespace SiteVendas.Controllers
 
             return View("~/Views/Produto/TodosProdutos.cshtml");
         }
-    
+
 
     }
 }
