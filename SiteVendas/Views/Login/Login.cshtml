@@ -8,40 +8,40 @@
     <link href="~/css/Login/Login.css" rel="stylesheet" />
 }
 
-@*Exibicao carregamento do Triangulo*@
-<div class="preloader">
-    <div class="wrapper-triangle">
-        <div class="pen">
-            <div class="line-triangle">
-                <div class="triangle"></div>
-                <div class="triangle"></div>
-                <div class="triangle"></div>
-                <div class="triangle"></div>
-                <div class="triangle"></div>
-                <div class="triangle"></div>
-                <div class="triangle"></div>
-            </div>
-            <div class="line-triangle">
-                <div class="triangle"></div>
-                <div class="triangle"></div>
-                <div class="triangle"></div>
-                <div class="triangle"></div>
-                <div class="triangle"></div>
-                <div class="triangle"></div>
-                <div class="triangle"></div>
-            </div>
-            <div class="line-triangle">
-                <div class="triangle"></div>
-                <div class="triangle"></div>
-                <div class="triangle"></div>
-                <div class="triangle"></div>
-                <div class="triangle"></div>
-                <div class="triangle"></div>
-                <div class="triangle"></div>
+    @*Exibicao carregamento do Triangulo*@
+    <div class="preloader">
+        <div class="wrapper-triangle">
+            <div class="pen">
+                <div class="line-triangle">
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                </div>
+                <div class="line-triangle">
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                </div>
+                <div class="line-triangle">
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                    <div class="triangle"></div>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 
     <h1>Acessar</h1>
@@ -56,7 +56,7 @@
                     <div class="row d-flex justify-content-center">
                         <div class="col-4">
                             <label asp-for="Email" class="control-label">Login</label>
-                            <input type="email" placeholder="Email" asp-for="Email"  class="form-control" minlength="5" maxlength="50" />
+                            <input type="email" placeholder="Email" asp-for="Email" class="form-control" minlength="5" maxlength="50" />
                         </div>
                     </div>
 
@@ -67,34 +67,31 @@
                         </div>
                     </div>
 
-                    <div class="row d-flex justify-content-center">
-                        <div class="col-3">
 
-                            <button type="submit" value="Entrar" class="btn btn-primary botaoEntrar" id="exibirView">Entrar</button>
-
-                        </div>
-                    </div>
-
-                    @* <div class="d-flex justify-content-center">
-
-                        <label><input type="checkbox" asp-for="ManterConectado"/> Manter-se Conectado.</label>
-
-                    </div> *@
+                @if (ViewData["ValidateMessage"] != null)
+                {
 
                     <div class="d-flex justify-content-center">
 
-                    <a class="rd-nav-link" asp-area="" asp-controller="Cliente" asp-action="Inserir">Cadastrar-se</a>
-
+                        <label style="color: red;">Usúario/Senha não encontrado</label>
                     </div>
 
-                    <div class="row d-flex justify-content-center">
-                        <div class="col-3">
-                        @if (ViewData["ValidateMessage"] != null)
-                        {
-                            <label>@ViewData["ValidateMessage"]</label>
-                        }
-                    </div>
+                }
+
+            </div>
+
+            <div class="row d-flex justify-content-center">
+                <div class="col-3">
+
+                    <button type="submit" value="Entrar" class="btn btn-primary botaoEntrar" id="exibirView">Entrar</button>
+
                 </div>
+            </div>
+
+            <div class="d-flex justify-content-center">
+
+                <a class="rd-nav-link" asp-area="" asp-controller="Cliente" asp-action="Inserir">Cadastrar-se</a>
+
             </div>
 
         </div>
@@ -102,4 +99,3 @@
     </form>
 </body>
 
-    

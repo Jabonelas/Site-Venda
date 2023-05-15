@@ -11,7 +11,6 @@ namespace SiteVendas.Controllers
         [HttpPost]
         public IActionResult InserirMensagem(tb_mensagens _mensagem)
         {
-
             DateTime dataHoraAtual = DateTime.Now;
             string formato = "dd/MM/yyyy HH:mm:ss"; // Formato desejado
             string dataHoraAtualFormatada = dataHoraAtual.ToString(formato);
@@ -49,7 +48,7 @@ namespace SiteVendas.Controllers
                 context.SaveChanges();
             }
 
-            return View("~/Home/Index");
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
@@ -62,9 +61,7 @@ namespace SiteVendas.Controllers
             ViewData["Mensagem"] = mensagem;
 
             return View();
-       
         }
-
 
         //Pegar dados do cliente para gerar e-mail
         [HttpPost]
@@ -88,17 +85,10 @@ namespace SiteVendas.Controllers
             return View(todasReservas);
         }
 
-
         [HttpGet]
-
         public void ElogiosClientes()
         {
-
-// var elogios = context.tb_mensagens.
-
-
-
+            // var elogios = context.tb_mensagens.
         }
-
     }
 }

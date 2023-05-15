@@ -318,11 +318,19 @@
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
+            <div id="mensagem">
+                
+
+
+            </div>
+
         </main>
     </div>
 
+    
 
-    <!-- Page Footer-->
+
+<!-- Page Footer-->
     <footer class="section footer-modern context-dark footer-modern-2">
         @* <div class="footer-modern-line">
             <div class="container">
@@ -427,13 +435,16 @@
                     <div class="col-md-auto">
                         <!-- Rights-->
                         <p class="rights"><span>&copy;&nbsp;</span><span
-                                class="copyright-year"></span><span></span><span>.&nbsp;</span><span>All Rights
-                                Reserved.</span><span> Design&nbsp;by&nbsp;<a
-                                    href="https://www.templatemonster.com">TemplateMonster</a></span></p>
+                                                                       class="copyright-year"></span><span></span><span>.&nbsp;</span><span>All Rights
+                            Reserved.</span><span> Design&nbsp;by&nbsp;<a
+                                                                           href="https://www.templatemonster.com">TemplateMonster</a></span></p>
                     </div>
                 </div>
             </div>
         </div>
+        
+        
+
     </footer>
 
 
@@ -492,23 +503,7 @@
     }
     </script>
 
-
-    <script>
-        function passarIdMensagem(idMensagem){
-            $.ajax({
-                success: function (){
-
-console.log(`Essa coisa entrou no id - ${idMensagem}`);
-
-                     window.location.href = `https://localhost:7234/Mensagem/ExibirDetalhesMensagem/${idMensagem}`; 
-                     @* window.location.href = `Mensagem/ExibirDetalhesMensagem/${idMensagem}`;  *@
-                },
-                error: function (xhr, status, error){
-                    console.log("Ocorreu um erro durante a requisição AJAX:" + error);
-                }
-            });
-        }
-    </script>
+    
 
       <script>
         function passarIdPedido(idPedido){

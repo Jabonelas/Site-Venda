@@ -4,50 +4,50 @@
 {
     @if (Model.Count() > 0)
     {
-            <button data-toggle="modal" data-target="#ModalCarrinho" class="button button-xs button-secondary button-winona" href="#">
-               
-                <span style="color: black"> @Model.Count()</span>
+        <button data-toggle="modal" data-target="#ModalCarrinho" class="button button-xs button-secondary button-winona" href="#">
 
-                <span>
-                    <img src="~/images/new_message_30px.png">
-                </span>
+            <span style="color: black"> @Model.Count()</span>
 
-            </button>
-          
-            <!-- Modal Exibir Mensagens -->
-            <div class="modal" id="ModalCarrinho" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                <div class="modal-dialog modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class=" d-flex justify-content-center">
-                            <h4>
-                                Mensagens
-                                <img src="~/images/new_message_30px.png">
-                            </h4>
-                        </div>
-                        <br>
-                        <div class="card">
-                            <div class="card-body row">
-                                <table class="table text-center" id="myTable">
-                                    <thead>
-                                        <tr>
-                                            <th>
-                                                Nome
-                                            </th>
-                                            <th>
-                                                E-mail
-                                            </th>
-                                            <th>
-                                                Serviço
-                                            </th>
-                                            <th>
-                                                Data
-                                            </th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (var item in Model)
-                                      {
+            <span>
+                <img src="~/images/new_message_30px.png">
+            </span>
+
+        </button>
+
+        <!-- Modal Exibir Mensagens -->
+        <div class="modal" id="ModalCarrinho" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class=" d-flex justify-content-center">
+                        <h4>
+                            Mensagens
+                            <img src="~/images/new_message_30px.png">
+                        </h4>
+                    </div>
+                    <br>
+                    <div class="card">
+                        <div class="card-body row">
+                            <table class="table text-center" id="myTable">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Nome
+                                        </th>
+                                        <th>
+                                            E-mail
+                                        </th>
+                                        <th>
+                                            Serviço
+                                        </th>
+                                        <th>
+                                            Data
+                                        </th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
                                         <tr>
                                             <td>
                                                 @item.mg_nome
@@ -62,42 +62,52 @@
                                                 @item.mg_data_recebimento
                                             </td>
                                             <td>
-                                                <button  name="_idMensagem" onclick="passarIdMensagem(@item.id_mensagem)" class="btn button-secondary">Exibir</button>
+                                                <button name="_idMensagem" onclick="passarIdMensagem1(@item.id_mensagem)" class="btn button-secondary">Exibir</button>
                                             </td>
                                         </tr>
-                                      }
-                                    </tbody>
-                                    <tfoot></tfoot>
-                                </table>
-                            </div>
+                                    }
+                                </tbody>
+                                <tfoot></tfoot>
+                            </table>
                         </div>
-
-                        <br>
-
-                        <div class="d-flex justify-content-end">
-
-                            <button class="btn btn-Secundario" data-dismiss="modal" style="margin: 0 15px;">Voltar</button>
-
-                        </div>
-
-                        <br>
                     </div>
+
+                    <br>
+
+                    <div class="d-flex justify-content-end">
+
+                        <button class="btn btn-Secundario" data-dismiss="modal" style="margin: 0 15px;">Voltar</button>
+
+                    </div>
+
+                    <br>
                 </div>
             </div>
-         
-        }
+        </div>
+
+
+        <script>
+            function passarIdMensagem1(idMensagem) {
+                //window.location.href = `Mensagem/ExibirDetalhesMensagem/${idMensagem}`;
+                window.location.href = `https://localhost:7234/Mensagem/ExibirDetalhesMensagem/${idMensagem}`;
+            }
+
+        </script>
+
+
+    }
 }
 
 
 
-    @section Scripts {
+@section Scripts {
 
     @*Layout da GridView*@
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js"></script>
-        <script src="~/js/InputMasked.js"></script>
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js"></script>
+    <script src="~/js/InputMasked.js"></script>
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
 
-        <script>
+    <script>
 
         $(document).ready(function () {
             $('#myTable').DataTable({
@@ -105,7 +115,7 @@
             });
         });
 
-        </script>
+    </script>
 
 
         }
