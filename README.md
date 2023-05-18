@@ -1,4 +1,4 @@
-## Site de Venda - AspNet Core - HTL - CSS - JavaScript - SQL Server
+## Site de Venda - AspNet Core - HTML - CSS - JavaScript - SQL Server
 
 Site de venda para uma Pizzaria com áreas de cadastro de dados da empresa, clientes e produtos,  cardapio, pedidos, alteração de dados cadastrados, reservas, carrinhos de compras e diferentes níveis de acessos por usuário. Desenvolvido apenas por experiência , para aplicação dos conhecimento e habilidade até o momento adquiridos.
 
