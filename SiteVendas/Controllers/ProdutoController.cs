@@ -62,7 +62,7 @@ namespace SiteVendas.Controllers
 
                     var dadosProduto = new tb_produto()
                     {
-                        pd_preco = _produto.pd_preco,
+                        pd_preco = (_produto.pd_preco / 100),
                         pd_tipo = _produto.pd_tipo,
                         pd_tamanho = _produto.pd_tamanho,
                         pd_descricao = _produto.pd_descricao,
@@ -164,8 +164,11 @@ namespace SiteVendas.Controllers
                 {
                     foreach (var item in BuscarProduto(_produto.id_produto))
                     {
+                        decimal valor = _produto.pd_preco / 100;
+
                         item.pd_nome = _produto.pd_nome;
-                        item.pd_preco = _produto.pd_preco;
+                        item.pd_preco = valor;
+                        //item.pd_preco = _produto.pd_preco;
                         item.pd_tipo = _produto.pd_tipo;
                         item.pd_tamanho = _produto.pd_tamanho;
                         item.pd_descricao = _produto.pd_descricao;
@@ -245,7 +248,5 @@ namespace SiteVendas.Controllers
 
             return View("~/Views/Produto/TodosProdutos.cshtml");
         }
-
-
     }
 }

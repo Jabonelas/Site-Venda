@@ -64,21 +64,6 @@ namespace SiteVendas.Models
                     .HasConstraintName("FK_tb_nota_fiscal_tb_pedido");
             });
 
-            modelBuilder.Entity<tb_pedido>(entity =>
-            {
-                entity.HasOne(d => d.fk_cadastro_clienteNavigation)
-                    .WithMany(p => p.tb_pedido)
-                    .HasForeignKey(d => d.fk_cadastro_cliente)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_tb_pedido_tb_cadastro_cliente");
-
-                entity.HasOne(d => d.fk_produtoNavigation)
-                    .WithMany(p => p.tb_pedido)
-                    .HasForeignKey(d => d.fk_produto)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_tb_pedido_tb_produto");
-            });
-
             OnModelCreatingPartial(modelBuilder);
         }
 

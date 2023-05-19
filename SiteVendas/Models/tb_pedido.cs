@@ -31,15 +31,10 @@ namespace SiteVendas.Models
         public bool pd_confirmado { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime? pd_entregue { get; set; }
+        public bool? pd_valido { get; set; }
         public int fk_cadastro_cliente { get; set; }
         public int fk_produto { get; set; }
 
-        [ForeignKey("fk_cadastro_cliente")]
-        [InverseProperty("tb_pedido")]
-        public virtual tb_cadastro_cliente fk_cadastro_clienteNavigation { get; set; }
-        [ForeignKey("fk_produto")]
-        [InverseProperty("tb_pedido")]
-        public virtual tb_produto fk_produtoNavigation { get; set; }
         [InverseProperty("fk_pedidoNavigation")]
         public virtual ICollection<tb_nota_fiscal> tb_nota_fiscal { get; set; }
     }

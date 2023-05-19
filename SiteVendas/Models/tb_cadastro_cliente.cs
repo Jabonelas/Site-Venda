@@ -10,11 +10,6 @@ namespace SiteVendas.Models
 {
     public partial class tb_cadastro_cliente
     {
-        public tb_cadastro_cliente()
-        {
-            tb_pedido = new HashSet<tb_pedido>();
-        }
-
         [Key]
         public int id_cadastro_cliente { get; set; }
         [Required(ErrorMessage = "Esta informação é necessária.")]
@@ -29,7 +24,6 @@ namespace SiteVendas.Models
         [StringLength(50)]
         [Unicode(false)]
         public string cc_rg { get; set; }
-        [Required(ErrorMessage = "Esta informação é necessária.")]
         public DateOnly cc_data_nascimento { get; set; }
         [Required(ErrorMessage = "Esta informação é necessária.")]
         [StringLength(200)]
@@ -51,7 +45,5 @@ namespace SiteVendas.Models
         [ForeignKey("fk_endereco")]
         [InverseProperty("tb_cadastro_cliente")]
         public virtual tb_endereco fk_enderecoNavigation { get; set; }
-        [InverseProperty("fk_cadastro_clienteNavigation")]
-        public virtual ICollection<tb_pedido> tb_pedido { get; set; }
     }
 }

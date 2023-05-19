@@ -121,8 +121,13 @@
                             <label class="control-label">Preço</label>
 
                             <input value="@item.pd_preco" asp-for="@Model.pd_preco" class="form-control" id="cleave-dinheiro" />
+                            @*<span asp-validation-for="pd_preco" class="text-danger"></span>*@
 
-                            <span asp-validation-for="pd_preco" class="text-danger"></span>
+
+
+
+
+
                         </div>
                     </div>
 
@@ -183,15 +188,19 @@
 
         function removerSimboloR$() {
             var input = document.getElementById("cleave-dinheiro");
-            var valorSemSimbolo = input.value.replace("R$ ", "").trim();
+            var valorSemSimbolo = input.value.replace(/R\$|\,/g, "").trim();
+
             input.value = valorSemSimbolo;
         }
 
     </script>
 
 
-    <script>
 
+
+
+
+    <script>
 
     function Voltar(){
 

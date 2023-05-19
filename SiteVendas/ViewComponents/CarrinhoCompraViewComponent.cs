@@ -10,9 +10,8 @@ public class CarrinhoCompraViewComponent : ViewComponent
 {
     private SiteVendasContext context = new SiteVendasContext();
 
-
-[HttpGet]
-[Authorize]
+    [HttpGet]
+    [Authorize]
     public IViewComponentResult Invoke()
     {
         string usuario = HttpContext.Session.GetString("usuario");
@@ -28,7 +27,7 @@ public class CarrinhoCompraViewComponent : ViewComponent
                 Produto = produto,
                 Cliente = pedido1.Cliente
             })
-            .Where(x => x.Cliente.cc_email == usuario && x.Pedido.pd_confirmado == false)
+            .Where(x => x.Cliente.cc_email == usuario && x.Pedido.pd_confirmado == false && x.Pedido.pd_valido == true)
             .Select(x => new CarrinhoViewModel
             {
                 idPedido = x.Pedido.id_pedido,
@@ -39,7 +38,8 @@ public class CarrinhoCompraViewComponent : ViewComponent
                 imagem = x.Produto.pd_imagem,
                 nome = x.Produto.pd_nome,
                 tamanho = x.Produto.pd_tamanho,
-                valorUnitario = x.Produto.pd_preco
+                valorUnitario = x.Produto.pd_preco,
+                isValido = x.Pedido.pd_valido
             }).ToList();
 
         ViewData["quantidadePedidos"] = null;

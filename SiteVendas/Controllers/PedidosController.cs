@@ -98,6 +98,7 @@ namespace SiteVendas.Controllers
                 pd_data = DateTime.Today,
                 pd_valor = valor,
                 pd_confirmado = false,
+                pd_valido = true,
                 fk_cadastro_cliente = idUsuario,
                 fk_produto = idProduto,
             };
@@ -131,6 +132,7 @@ namespace SiteVendas.Controllers
                 pd_data = DateTime.Today,
                 pd_valor = valor,
                 pd_confirmado = false,
+                pd_valido = true,
                 fk_cadastro_cliente = idUsuario,
                 fk_produto = idProduto,
             };
@@ -171,11 +173,12 @@ namespace SiteVendas.Controllers
 
         [HttpDelete]
         [Authorize]
-        public IActionResult ExcluirPedido(int _idProduto)
+        public IActionResult ExcluirPedido(int _idPedido)
         {
-            var pedidoExcluir = context.tb_pedido.Where(x => x.id_pedido.Equals(_idProduto)).FirstOrDefault();
+            var pedidoExcluir = context.tb_pedido.Where(x => x.id_pedido.Equals(_idPedido)).FirstOrDefault();
 
-            context.tb_pedido.Remove(pedidoExcluir);
+            pedidoExcluir.pd_valido = false;
+
             context.SaveChanges();
 
             return Ok();
@@ -199,7 +202,7 @@ namespace SiteVendas.Controllers
                         Produto = produto,
                         Cliente = pedido1.Cliente
                     })
-                .Where(x => x.Cliente.cc_email == usuario && x.Pedido.pd_confirmado == false)
+                .Where(x => x.Cliente.cc_email == usuario && x.Pedido.pd_confirmado == false && x.Pedido.pd_valido == true)
                 .Select(x => new CarrinhoViewModel
                 {
                     idPedido = x.Pedido.id_pedido,
@@ -210,7 +213,8 @@ namespace SiteVendas.Controllers
                     imagem = x.Produto.pd_imagem,
                     nome = x.Produto.pd_nome,
                     tamanho = x.Produto.pd_tamanho,
-                    valorUnitario = x.Produto.pd_preco
+                    valorUnitario = x.Produto.pd_preco,
+                    isValido = x.Pedido.pd_valido
                 }).ToList();
 
             ViewData["quantidadePedidos1"] = null;

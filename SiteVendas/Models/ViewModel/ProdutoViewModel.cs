@@ -6,11 +6,10 @@ namespace SiteVendas.Models.ViewModel
 {
     public class ProdutoViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Esta informação é necessária.")]
         public tb_produto produto { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Esta informação é necessária.")]
         public tb_pedido pedido { get; set; }
-
     }
 }

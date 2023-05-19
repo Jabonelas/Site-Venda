@@ -37,7 +37,8 @@ namespace SiteVendas.Controllers
         [HttpPost]
         [Authorize(Roles = "Admin@hotmail.com")]
         [Route("Mensagem/MarcarVisualizacaoMensagem/{idMensagem}")]
-        public IActionResult MarcarVisualizacaoMensagem(int idMensagem)
+        //public IActionResult MarcarVisualizacaoMensagem(int idMensagem)
+        public void MarcarVisualizacaoMensagem(int idMensagem)
         {
             if (idMensagem != null)
             {
@@ -48,7 +49,7 @@ namespace SiteVendas.Controllers
                 context.SaveChanges();
             }
 
-            return RedirectToAction("Index");
+            //return View("ExibirDetalhesMensagem");
         }
 
         [HttpGet]

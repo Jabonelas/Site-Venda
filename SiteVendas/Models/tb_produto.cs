@@ -10,11 +10,6 @@ namespace SiteVendas.Models
 {
     public partial class tb_produto
     {
-        public tb_produto()
-        {
-            tb_pedido = new HashSet<tb_pedido>();
-        }
-
         [Key]
         public int id_produto { get; set; }
         [Required(ErrorMessage = "Esta informação é necessária.")]
@@ -33,6 +28,8 @@ namespace SiteVendas.Models
         [StringLength(50)]
         [Unicode(false)]
         public string pd_tamanho { get; set; }
+        
+        [Required(ErrorMessage = "Esta informação é necessária.")]
         [Column(TypeName = "decimal(10, 2)")]
         public decimal pd_preco { get; set; }
         public bool pd_disponivel { get; set; }
@@ -40,8 +37,5 @@ namespace SiteVendas.Models
         public DateTime pd_data { get; set; }
         [Column(TypeName = "image")]
         public byte[] pd_imagem { get; set; }
-
-        [InverseProperty("fk_produtoNavigation")]
-        public virtual ICollection<tb_pedido> tb_pedido { get; set; }
     }
 }
